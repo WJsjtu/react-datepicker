@@ -214,6 +214,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 			});
     	},
     	onWheel: function(deltaMode){
+    		deltaMode.preventDefault();
     		deltaMode.deltaY > 0 ? this.goNext() : this.goPrev();
     	},
 		goPrev: function(event){
