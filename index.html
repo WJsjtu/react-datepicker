@@ -20,9 +20,9 @@
     <script type="text/javascript" src="dist/js/datepicker.min.js"></script>
     <script type="text/javascript">
       var select = function(year, month, day){
-        alert(Array.prototype.join.call(arguments,"-"));
+        console.log(Array.prototype.join.call(arguments,"-"));
       };
-      Datepicker(document.getElementById('example'), null, select);
+      Datepicker(document.getElementById('example'), 2015, 2, 3, select);
     </script>
   </body>
 </html>
