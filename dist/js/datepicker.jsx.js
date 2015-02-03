@@ -8,7 +8,12 @@
 		DISABLED: "am-datepicker-day am-disabled",
 		CURRENT: "am-datepicker-day am-datepicker-current"
 	},
-	monthClassSet = yearClassSet = {
+	monthClassSet = {
+		BASIC: "am-datepicker-month",
+		ACTIVE: "am-datepicker-month am-active",
+		CURRENT: "am-datepicker-month am-datepicker-current"
+	},
+	yearClassSet = {
 		BASIC: "",
 		ACTIVE: "am-active",
 		CURRENT: "am-datepicker-current"
@@ -161,7 +166,7 @@
 			return React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {colSpan: "7"}, spans)));
 		}
 	}),
-	Datepicker = React.createClass({displayName: "Datepicker",
+	DatepickerPanel = React.createClass({displayName: "DatepickerPanel",
 		getDate: function(){
 			return {
 				year: this.state.year,
@@ -184,9 +189,7 @@
 			this.setState({panel: this.state.panel + 1});
     	},
     	selectDay: function(day){
-    		var month = this.state.month < 10 ? "0" + this.state.month : "" + this.state.month,
-    			day = day < 10 ? "0" + day : "" + day;
-    		typeof this.props.select === "function" && this.props.select(this.state.year, month, day);
+    		typeof this.props.select === "function" && this.props.select(this.state.year, this.state.month, day);
     	},
     	selectMonth: function(month){
 	    	var year = this.state.year,
@@ -331,10 +334,6 @@
 			    	);
 		 }
     });
-window.Datepicker = function(dom, date, select){
-	if(!date) date = new Date();
-	React.render(
-        React.createElement(Datepicker, {year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate(), select: select}),
-        dom
-    );
-};})(React, window);
+window.Datepicker = function(dom, year, month, day ,select){
+	React.render(React.createElement(DatepickerPanel, {year: year, month: month, day: day, select: select}), dom);
+}})(React, window);
