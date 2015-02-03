@@ -1,29 +1,42 @@
+Date.prototype.Format = function(fmt) {
+	var o = {
+		"M+": this.getMonth() + 1,
+		"d+": this.getDate(),
+		"h+": this.getHours(),
+		"m+": this.getMinutes(),
+		"s+": this.getSeconds(),
+		"q+": Math.floor((this.getMonth() + 3) / 3),
+		"S": this.getMilliseconds()
+	};
+	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	for (var k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	return fmt;
+}
 var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 	yearMonths = ["一","二","三","四","五","六","七","八","九","十","十一","十二"],
-	classPreffix = "class-",
-	itemPreffix = "item-",
+	classPreffix = "c",
+	itemPreffix = "i",
+	classPrefix = "am-datepicker-",
 	dayClassSet = {
-		BASIC: "am-datepicker-day",
-		ACTIVE: "am-datepicker-day am-active",
-		DISABLED: "am-datepicker-day am-disabled",
-		CURRENT: "am-datepicker-day am-datepicker-current"
+		BASIC: classPrefix + "day",
+		ACTIVE: classPrefix + "day am-active",
+		DISABLED: classPrefix + "day am-disabled",
+		CURRENT: classPrefix + "day am-current"
 	},
-	monthClassSet = {
-		BASIC: "am-datepicker-month",
-		ACTIVE: "am-datepicker-month am-active",
-		CURRENT: "am-datepicker-month am-datepicker-current"
-	},
-	yearClassSet = {
+	monthClassSet = yearClassSet = {
 		BASIC: "",
 		ACTIVE: "am-active",
-		CURRENT: "am-datepicker-current"
+		CURRENT: "am-current"
+	},
+	getDate = function(year, month, day){
+		var date = new Date();
+		date.setFullYear(year);
+		date.setMonth(month);
+		date.setDate(day);
+		return date;
 	},
     getDayOfWeek = function(year, month){
-    	var _date = new Date();
-		_date.setFullYear(year);
-		_date.setMonth(month - 1);
-		_date.setDate(1);
-		return _date.getDay();
+		return getDate(year, month, 1).getDay();
     },
     getMonthDayCount = function(year, month){
     	var leap = (month == 2) && (year % 4 == 0 && year % 100!=0 || year % 400 == 0) ? 1 : 0;
@@ -101,7 +114,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 				this.activeItem = name;
 				this.setState(temp);
 			}
-			typeof this.props.select === "function" && this.props.select(this.state[itemPreffix + name]);
+			this.props.select(this.state[itemPreffix + name]);
 		}
 	},
 	DatepickerDayTbody = React.createClass({
@@ -167,13 +180,6 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		}
 	}),
 	DatepickerPanel = React.createClass({
-		getDate: function(){
-			return {
-				year: this.state.year,
-				month: this.state.month,
-				day: this.state.day
-			};
-		},
 		getInitialState: function () {
 			var year = this.props.year,
 				month = this.props.month,
@@ -189,7 +195,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 			this.setState({panel: this.state.panel + 1});
     	},
     	selectDay: function(day){
-    		typeof this.props.select === "function" && this.props.select(this.state.year, this.state.month, day);
+    		this.props.select(this.state.year, this.state.month, day);
     	},
     	selectMonth: function(month){
 	    	var year = this.state.year,
@@ -269,42 +275,40 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		   	}
     	},
 		render: function() {
-			var table = null;
+			var table = null,
+				tableClass = classPrefix + "table",
+				headClass = classPrefix + "header",
+				switchClass = classPrefix + "switch",
+				selectClass = classPrefix + "select",
+				prevTh = <th className={classPrefix + "prev"}>
+							<i className={classPrefix + "prev-icon"} onClick={this.goPrev}></i>
+						</th>,
+				nextTh = <th className={classPrefix + "next"}>
+							<i className={classPrefix + "next-icon"} onClick={this.goNext}></i>
+						</th>;
 			if(this.state.panel == 1){
-				table = <table className="am-datepicker-table" onWheel={this.onWheel}>
+				table = <table className={tableClass} onWheel={this.onWheel}>
 							<thead>
-									<tr className="am-datepicker-header">
-										<th className="am-datepicker-prev">
-										    <i className="am-datepicker-prev-icon" onClick={this.goPrev}></i>
-										</th>
-										<th colSpan="5" className="am-datepicker-switch">
-											<div className="am-datepicker-select" onClick={this.changePanel}>{this.state.year}年{this.state.month}月</div>
-										</th>
-										<th className="am-datepicker-next">
-										    <i className="am-datepicker-next-icon" onClick={this.goNext}></i>
-										</th>
+									<tr className={headClass}>{prevTh}
+										<th colSpan="5" className={switchClass}>
+											<div className={selectClass} onClick={this.changePanel}>{this.state.year}年{this.state.month}月</div>
+										</th>{nextTh}
 									</tr>
 									<tr>
 										{["一","二","三","四","五","六","日"].map(function(day, index){
-										    return <th key={"th-"+ index} className="am-datepicker-dow">{day}</th>
+										    return <th key={"th-"+ index} className={classPrefix + "dow"}>{day}</th>
 										})}
 									</tr>
 							</thead>
 		  					<DatepickerDayTbody year={this.state.year} month={this.state.month} day={this.state.day} select={this.selectDay}/>
 		  				</table>;
 			} else if(this.state.panel == 2){
-				table = <table className="am-datepicker-table" onWheel={this.onWheel}>
+				table = <table className={tableClass} onWheel={this.onWheel}>
 							<thead>
-								<tr className="am-datepicker-header">
-									<th className="am-datepicker-prev">
-									    <i className="am-datepicker-prev-icon" onClick={this.goPrev}></i>
-									</th>
-									<th colSpan="5" className="am-datepicker-switch">
-										<div className="am-datepicker-select" onClick={this.changePanel}>{this.state.year}</div>
-									</th>
-									<th className="am-datepicker-next">
-									    <i className="am-datepicker-next-icon" onClick={this.goNext}></i>
-									</th>
+								<tr className={headClass}>{prevTh}
+									<th colSpan="5" className={switchClass}>
+										<div className={selectClass} onClick={this.changePanel}>{this.state.year}</div>
+									</th>{nextTh}
 								</tr>
 							</thead>
 							<DatepickerMonthTbody month={this.state.month} select={this.selectMonth}/>
@@ -312,28 +316,56 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 			} else if(this.state.panel == 3){
 				var start = this.state.year - this.state.year % 10,
 					year = start == (this.props.year - this.props.year % 10) ? this.props.year : null;
-				table = <table className="am-datepicker-table" onWheel={this.onWheel}>
+				table = <table className={tableClass} onWheel={this.onWheel}>
 							<thead>
-								<tr className="am-datepicker-header">
-									<th className="am-datepicker-prev">
-									    <i className="am-datepicker-prev-icon" onClick={this.goPrev}></i>
-									</th>
-									<th colSpan="5" className="am-datepicker-switch">
-										<div className="am-datepicker-select">{start}-{start + 9}</div>
-									</th>
-									<th className="am-datepicker-next">
-									    <i className="am-datepicker-next-icon" onClick={this.goNext}></i>
-									</th>
+								<tr className={headClass}>{prevTh}
+									<th colSpan="5" className={switchClass}>
+										<div className={selectClass}>{start}-{start + 9}</div>
+									</th>{nextTh}
 								</tr>
 							</thead>
 							<DatepickerYearTbody start={start} year={year} select={this.selectYear}/>
 						</table>;
 			}
 		    return <div className="am-datepicker" style={{display: "block"}} onWheel={this.onWheel}>
-			    		<div className="am-datepicker-days" style={{display: "block"}}>{table}</div>
+			    		<div className={classPrefix + "days"} style={{display: "block"}}>{table}</div>
 			    	</div>;
 		 }
     });
-window.Datepicker = function(dom, year, month, day ,select){
-	React.render(<DatepickerPanel year={year} month={month} day={day} select={select} />, dom);
+	DatepickerInput = React.createClass({
+		isMouseOver: false,
+		getInitialState: function(){
+			return {
+				visible: false,
+				value: this.props.date.Format(this.props.format)
+			};
+		},
+		onClick: function(){
+			!this.isMouseOver && this.setState({visible: !this.state.visible});
+		},
+		select: function(year, month, day){
+			var date = getDate(year, month, day);
+			typeof this.props.select === "function" && this.props.select(date);
+			this.setState({
+				visible: false,
+				value: date.Format(this.props.format)
+			});
+		},
+		render: function(){
+			return  <div className="am-input-group">
+					  <input type="text" className="am-form-field" value={this.state.value} onClick={this.onClick}/>
+					  <div style={this.state.visible ? null : {display: "none"}}>
+					  	<DatepickerPanel year={this.props.date.getFullYear()}
+					  					 month={this.props.date.getMonth() + 1} 
+					  					 day={this.props.date.getDate()} 
+					  					 select={this.select}/>
+					  </div>
+					</div>;
+		}
+	});
+
+window.Datepicker = function(dom, options){
+	options.date || (options.date = new Date());
+	options.format || (options.format = "yyyy-MM-dd");
+	React.render(<DatepickerInput date={options.date} format={options.format} select={options.onSelect} />, dom);
 }

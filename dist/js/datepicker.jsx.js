@@ -1,29 +1,42 @@
-(function(React, window){var __ReactCreateElement = React.createElement;var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+(function(React, window){var __ReactCreateElement = React.createElement;Date.prototype.Format = function(fmt) {
+	var o = {
+		"M+": this.getMonth() + 1,
+		"d+": this.getDate(),
+		"h+": this.getHours(),
+		"m+": this.getMinutes(),
+		"s+": this.getSeconds(),
+		"q+": Math.floor((this.getMonth() + 3) / 3),
+		"S": this.getMilliseconds()
+	};
+	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	for (var k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	return fmt;
+}
+var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 	yearMonths = ["一","二","三","四","五","六","七","八","九","十","十一","十二"],
-	classPreffix = "class-",
-	itemPreffix = "item-",
+	classPreffix = "c",
+	itemPreffix = "i",
+	classPrefix = "am-datepicker-",
 	dayClassSet = {
-		BASIC: "am-datepicker-day",
-		ACTIVE: "am-datepicker-day am-active",
-		DISABLED: "am-datepicker-day am-disabled",
-		CURRENT: "am-datepicker-day am-datepicker-current"
+		BASIC: classPrefix + "day",
+		ACTIVE: classPrefix + "day am-active",
+		DISABLED: classPrefix + "day am-disabled",
+		CURRENT: classPrefix + "day am-current"
 	},
-	monthClassSet = {
-		BASIC: "am-datepicker-month",
-		ACTIVE: "am-datepicker-month am-active",
-		CURRENT: "am-datepicker-month am-datepicker-current"
-	},
-	yearClassSet = {
+	monthClassSet = yearClassSet = {
 		BASIC: "",
 		ACTIVE: "am-active",
-		CURRENT: "am-datepicker-current"
+		CURRENT: "am-current"
+	},
+	getDate = function(year, month, day){
+		var date = new Date();
+		date.setFullYear(year);
+		date.setMonth(month);
+		date.setDate(day);
+		return date;
 	},
     getDayOfWeek = function(year, month){
-    	var _date = new Date();
-		_date.setFullYear(year);
-		_date.setMonth(month - 1);
-		_date.setDate(1);
-		return _date.getDay();
+		return getDate(year, month, 1).getDay();
     },
     getMonthDayCount = function(year, month){
     	var leap = (month == 2) && (year % 4 == 0 && year % 100!=0 || year % 400 == 0) ? 1 : 0;
@@ -101,7 +114,7 @@
 				this.activeItem = name;
 				this.setState(temp);
 			}
-			typeof this.props.select === "function" && this.props.select(this.state[itemPreffix + name]);
+			this.props.select(this.state[itemPreffix + name]);
 		}
 	},
 	DatepickerDayTbody = React.createClass({displayName: "DatepickerDayTbody",
@@ -121,11 +134,11 @@
 		  				case 1: className = dayClassSet.ACTIVE; break;
 		  				case 2: className = dayClassSet.CURRENT; break;
 		  			}
-		  			tr.push(React.createElement("td", {key: name, className: className, onClick: onClick}, this.state[itemPreffix + name]));
+		  			tr.push(__ReactCreateElement("td", {key: name, className: className, onClick: onClick}, this.state[itemPreffix + name]));
 		  		}
-		  		tbody.push(React.createElement("tr", {key: i}, tr));
+		  		tbody.push(__ReactCreateElement("tr", {key: i}, tr));
 		    }
-			return React.createElement("tbody", null, tbody);
+			return __ReactCreateElement("tbody", null, tbody);
     	}
 	}),
 	DatepickerMonthTbody = React.createClass({displayName: "DatepickerMonthTbody",
@@ -142,9 +155,9 @@
 		  			case 1: className = monthClassSet.ACTIVE; break;
 		  			case 2: className = monthClassSet.CURRENT; break;
 		  		}
-		  		spans.push(React.createElement("span", {key: "m-" + i, className: className, onClick: onClick}, yearMonths[this.state[itemPreffix + i] - 1] + "月"));
+		  		spans.push(__ReactCreateElement("span", {key: "m-" + i, className: className, onClick: onClick}, yearMonths[this.state[itemPreffix + i] - 1] + "月"));
 			}
-			return React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {colSpan: "7"}, spans)));
+			return __ReactCreateElement("tbody", null, __ReactCreateElement("tr", null, __ReactCreateElement("td", {colSpan: "7"}, spans)));
 		}
 	}),
 	DatepickerYearTbody = React.createClass({displayName: "DatepickerYearTbody",
@@ -161,19 +174,12 @@
 		  			case 1: className = yearClassSet.ACTIVE; break;
 		  			case 2: className = yearClassSet.CURRENT; break;
 		  		}
-		  		spans.push(React.createElement("span", {key: "y-" + i, className: className, onClick: onClick}, this.state[itemPreffix + i]));
+		  		spans.push(__ReactCreateElement("span", {key: "y-" + i, className: className, onClick: onClick}, this.state[itemPreffix + i]));
 			}
-			return React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {colSpan: "7"}, spans)));
+			return __ReactCreateElement("tbody", null, __ReactCreateElement("tr", null, __ReactCreateElement("td", {colSpan: "7"}, spans)));
 		}
 	}),
 	DatepickerPanel = React.createClass({displayName: "DatepickerPanel",
-		getDate: function(){
-			return {
-				year: this.state.year,
-				month: this.state.month,
-				day: this.state.day
-			};
-		},
 		getInitialState: function () {
 			var year = this.props.year,
 				month = this.props.month,
@@ -189,7 +195,7 @@
 			this.setState({panel: this.state.panel + 1});
     	},
     	selectDay: function(day){
-    		typeof this.props.select === "function" && this.props.select(this.state.year, this.state.month, day);
+    		this.props.select(this.state.year, this.state.month, day);
     	},
     	selectMonth: function(month){
 	    	var year = this.state.year,
@@ -269,71 +275,97 @@
 		   	}
     	},
 		render: function() {
-			var table = null;
+			var table = null,
+				tableClass = classPrefix + "table",
+				headClass = classPrefix + "header",
+				switchClass = classPrefix + "switch",
+				selectClass = classPrefix + "select",
+				prevTh = __ReactCreateElement("th", {className: classPrefix + "prev"}, 
+							__ReactCreateElement("i", {className: classPrefix + "prev-icon", onClick: this.goPrev})
+						),
+				nextTh = __ReactCreateElement("th", {className: classPrefix + "next"}, 
+							__ReactCreateElement("i", {className: classPrefix + "next-icon", onClick: this.goNext})
+						);
 			if(this.state.panel == 1){
-				table = React.createElement("table", {className: "am-datepicker-table", onWheel: this.onWheel}, 
-							React.createElement("thead", null, 
-									React.createElement("tr", {className: "am-datepicker-header"}, 
-										React.createElement("th", {className: "am-datepicker-prev"}, 
-										    React.createElement("i", {className: "am-datepicker-prev-icon", onClick: this.goPrev})
-										), 
-										React.createElement("th", {colSpan: "5", className: "am-datepicker-switch"}, 
-											React.createElement("div", {className: "am-datepicker-select", onClick: this.changePanel}, this.state.year, "年", this.state.month, "月")
-										), 
-										React.createElement("th", {className: "am-datepicker-next"}, 
-										    React.createElement("i", {className: "am-datepicker-next-icon", onClick: this.goNext})
-										)
+				table = __ReactCreateElement("table", {className: tableClass, onWheel: this.onWheel}, 
+							__ReactCreateElement("thead", null, 
+									__ReactCreateElement("tr", {className: headClass}, prevTh, 
+										__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
+											__ReactCreateElement("div", {className: selectClass, onClick: this.changePanel}, this.state.year, "年", this.state.month, "月")
+										), nextTh
 									), 
-									React.createElement("tr", null, 
+									__ReactCreateElement("tr", null, 
 										["一","二","三","四","五","六","日"].map(function(day, index){
-										    return React.createElement("th", {key: "th-"+ index, className: "am-datepicker-dow"}, day)
+										    return __ReactCreateElement("th", {key: "th-"+ index, className: classPrefix + "dow"}, day)
 										})
 									)
 							), 
-		  					React.createElement(DatepickerDayTbody, {year: this.state.year, month: this.state.month, day: this.state.day, select: this.selectDay})
+		  					__ReactCreateElement(DatepickerDayTbody, {year: this.state.year, month: this.state.month, day: this.state.day, select: this.selectDay})
 		  				);
 			} else if(this.state.panel == 2){
-				table = React.createElement("table", {className: "am-datepicker-table", onWheel: this.onWheel}, 
-							React.createElement("thead", null, 
-								React.createElement("tr", {className: "am-datepicker-header"}, 
-									React.createElement("th", {className: "am-datepicker-prev"}, 
-									    React.createElement("i", {className: "am-datepicker-prev-icon", onClick: this.goPrev})
-									), 
-									React.createElement("th", {colSpan: "5", className: "am-datepicker-switch"}, 
-										React.createElement("div", {className: "am-datepicker-select", onClick: this.changePanel}, this.state.year)
-									), 
-									React.createElement("th", {className: "am-datepicker-next"}, 
-									    React.createElement("i", {className: "am-datepicker-next-icon", onClick: this.goNext})
-									)
+				table = __ReactCreateElement("table", {className: tableClass, onWheel: this.onWheel}, 
+							__ReactCreateElement("thead", null, 
+								__ReactCreateElement("tr", {className: headClass}, prevTh, 
+									__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
+										__ReactCreateElement("div", {className: selectClass, onClick: this.changePanel}, this.state.year)
+									), nextTh
 								)
 							), 
-							React.createElement(DatepickerMonthTbody, {month: this.state.month, select: this.selectMonth})
+							__ReactCreateElement(DatepickerMonthTbody, {month: this.state.month, select: this.selectMonth})
 						);
 			} else if(this.state.panel == 3){
 				var start = this.state.year - this.state.year % 10,
 					year = start == (this.props.year - this.props.year % 10) ? this.props.year : null;
-				table = React.createElement("table", {className: "am-datepicker-table", onWheel: this.onWheel}, 
-							React.createElement("thead", null, 
-								React.createElement("tr", {className: "am-datepicker-header"}, 
-									React.createElement("th", {className: "am-datepicker-prev"}, 
-									    React.createElement("i", {className: "am-datepicker-prev-icon", onClick: this.goPrev})
-									), 
-									React.createElement("th", {colSpan: "5", className: "am-datepicker-switch"}, 
-										React.createElement("div", {className: "am-datepicker-select"}, start, "-", start + 9)
-									), 
-									React.createElement("th", {className: "am-datepicker-next"}, 
-									    React.createElement("i", {className: "am-datepicker-next-icon", onClick: this.goNext})
-									)
+				table = __ReactCreateElement("table", {className: tableClass, onWheel: this.onWheel}, 
+							__ReactCreateElement("thead", null, 
+								__ReactCreateElement("tr", {className: headClass}, prevTh, 
+									__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
+										__ReactCreateElement("div", {className: selectClass}, start, "-", start + 9)
+									), nextTh
 								)
 							), 
-							React.createElement(DatepickerYearTbody, {start: start, year: year, select: this.selectYear})
+							__ReactCreateElement(DatepickerYearTbody, {start: start, year: year, select: this.selectYear})
 						);
 			}
-		    return React.createElement("div", {className: "am-datepicker", style: {display: "block"}, onWheel: this.onWheel}, 
-			    		React.createElement("div", {className: "am-datepicker-days", style: {display: "block"}}, table)
+		    return __ReactCreateElement("div", {className: "am-datepicker", style: {display: "block"}, onWheel: this.onWheel}, 
+			    		__ReactCreateElement("div", {className: classPrefix + "days", style: {display: "block"}}, table)
 			    	);
 		 }
     });
-window.Datepicker = function(dom, year, month, day ,select){
-	React.render(React.createElement(DatepickerPanel, {year: year, month: month, day: day, select: select}), dom);
+	DatepickerInput = React.createClass({displayName: "DatepickerInput",
+		isMouseOver: false,
+		getInitialState: function(){
+			return {
+				visible: false,
+				value: this.props.date.Format(this.props.format)
+			};
+		},
+		onClick: function(){
+			!this.isMouseOver && this.setState({visible: !this.state.visible});
+		},
+		select: function(year, month, day){
+			var date = getDate(year, month, day);
+			typeof this.props.select === "function" && this.props.select(date);
+			this.setState({
+				visible: false,
+				value: date.Format(this.props.format)
+			});
+		},
+		render: function(){
+			return  __ReactCreateElement("div", {className: "am-input-group"}, 
+					  __ReactCreateElement("input", {type: "text", className: "am-form-field", value: this.state.value, onClick: this.onClick}), 
+					  __ReactCreateElement("div", {style: this.state.visible ? null : {display: "none"}}, 
+					  	__ReactCreateElement(DatepickerPanel, {year: this.props.date.getFullYear(), 
+					  					 month: this.props.date.getMonth() + 1, 
+					  					 day: this.props.date.getDate(), 
+					  					 select: this.select})
+					  )
+					);
+		}
+	});
+
+window.Datepicker = function(dom, options){
+	options.date || (options.date = new Date());
+	options.format || (options.format = "yyyy-MM-dd");
+	React.render(__ReactCreateElement(DatepickerInput, {date: options.date, format: options.format, select: options.onSelect}), dom);
 }})(React, window);
