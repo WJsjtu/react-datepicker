@@ -2,7 +2,7 @@
 A datepicker component written in React.js
 
 ###Demo
-![](http://wjsjtu.github.io/react-datepicker/react-datepicker-demo.png)
+![](http://wjsjtu.github.io/react-datepicker/demo.png)
 
 ###Usage
 ####Create DOM like:
