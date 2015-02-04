@@ -33,10 +33,7 @@ A datepicker component written in React.js
 		}
 	}), document.getElementById('example1'));
 	
-	var test = new Date;
-	    test.setFullYear(2008);
-			test.setMonth(4);
-			test.setDate(12);
+	var test = new Date(2008, 4, 12);
 
 	React.render(React.createElement(myDatepicker, {
 		current: test,
