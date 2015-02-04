@@ -9,6 +9,7 @@
 		</script>
 		<link rel="stylesheet" type="text/css" href="dist/vendor/css/amazeui.min.css">
 		<style type="text/css">
+			body { padding: 20px;}
 			.am-current{ border: #efefef 1px solid; background-color: #A6CFE4; } .am-current:hover
 			{ background-color: #D4E5EE !important; }
 			.demo {float: left; margin-right: 30px;}
@@ -44,6 +45,11 @@
 				}
 			}), document.getElementById('example1'));
 
+			var test = new Date;
+			test.setFullYear(2008);
+			test.setMonth(4);
+			test.setDate(12);
+
 			React.render(React.createElement(myDatepicker, {
 				current: null,
 				panel: 2,
@@ -72,8 +78,6 @@
 				}
 			}), document.getElementById('example3'));
 
-			
 		</script>
 	</body>
-
 </html>
