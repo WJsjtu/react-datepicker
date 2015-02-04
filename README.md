@@ -2,7 +2,7 @@
 A datepicker component written in React.js
 
 ###Demo
-![](http://wjsjtu.github.io/react-datepicker/demo.PNG)
+![](http://wjsjtu.github.io/react-datepicker/react-datepicker-demo.png)
 
 ###Usage
 ####Create DOM like:
@@ -61,6 +61,7 @@ A datepicker component written in React.js
 		current: null,
 		panel: 1,
 		lang: "en",
+		format: "M/dd/yyyy",
 		onSelect: function(date) {
 		  console.log(date);
 		}
@@ -109,6 +110,14 @@ Type: `String`
 Default: `"zh"`
 
 Set the language of this datepicker.
+
+#### `format`
+
+Type: `String`
+
+Default: `"yyyy-dd-MM"`
+
+Set the format of value of input.
 
 #### onSelect
 
