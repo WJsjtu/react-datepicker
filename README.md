@@ -101,7 +101,7 @@ Type: `Number`
 
 Default: `1`
 
-Panel `1` refers to the date panel.`2` refers to month panel like `example2 & example3`. `3` refers to year panel.
+Panel `1` refers to the date panel.`2` refers to month panel like `example3`. `3` refers to year panel like `example2` .
 
 #### lang
 
@@ -111,7 +111,7 @@ Default: `"zh"`
 
 Set the language of this datepicker.
 
-#### `format`
+#### format
 
 Type: `String`
 
