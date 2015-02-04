@@ -10,11 +10,8 @@ DateItem = function(date){
 	self.init.d = self.d = date.getDate();
 }, DateItemPrototype = DateItem.prototype;
 DateItemPrototype.toDate = function(){
-	var self = this, date = new Date;
-	date.setFullYear(self.y);
-	date.setMonth(self.m - 1);
-	date.setDate(self.d);
-	return date;
+	var self = this;
+	return new Date(self.y, self.m - 1, self.d);
 };
 DateItemPrototype.monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1];
 DateItemPrototype.nextMonth = function(){
