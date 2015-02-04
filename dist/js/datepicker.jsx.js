@@ -1,5 +1,6 @@
 (function(React, window){var __ReactCreateElement = React.createElement;
-var DateItem = function(date){
+var _Datepicker = window.Datepicker,
+DateItem = function(date){
 	if(!(date instanceof Date)){
 		date = new Date;
 	}
@@ -56,7 +57,10 @@ DateItemPrototype.format = function(fmt) {
 
 var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 	weekDays = ["一","二","三","四","五","六","日"],
-	yearMonths = ["一","二","三","四","五","六","七","八","九","十","十一","十二"],
+	yearMonths = ["一","二","三","四","五","六","七","八","九","十","十一","十二"].map(function(item){ return item + "月";}),
+	dayTitle = function(year, month){
+		return year + " 年 " + month + " 月";
+	},
 	classPreffix = "c",
 	itemPreffix = "i",
 	classPrefix = "am-datepicker-",
@@ -212,7 +216,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		  							self.onClick.bind(self, i)
 		  						);
 		  		className = temp[0], onClick = temp[1];
-		  		spans.push(__ReactCreateElement("span", {key: "m-" + i, className: className, onClick: onClick}, yearMonths[self.state[itemPreffix + i] - 1] + "月"));
+		  		spans.push(__ReactCreateElement("span", {key: "m-" + i, className: className, onClick: onClick}, yearMonths[self.state[itemPreffix + i] - 1]));
 			}
 			return __ReactCreateElement("tbody", null, __ReactCreateElement("tr", null, __ReactCreateElement("td", {colSpan: "7"}, spans)));
 		}
@@ -243,10 +247,10 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		    };
 		},
 		getInitialState: function(){
-			var self = this;
+			var prop = this.props;
 			return {
-				panel: 1,
-				current: self.props.current
+				panel: prop.panel,
+				current: prop.current
 			};
 		},
 		componentWillReceiveProps: function(nextProps){
@@ -323,7 +327,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 									__ReactCreateElement("tr", {className: headClass}, prevTh, 
 										__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
 											__ReactCreateElement("div", {className: selectClass, onClick: self.changePanel}, 
-												stateArgs.current.y, "年", stateArgs.current.m, "月"
+												dayTitle(stateArgs.current.y, stateArgs.current.m)
 											)
 										), nextTh
 									), 
@@ -380,7 +384,8 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		    	to: null,
 		    	current: new DateItem,
 		    	format: "yyyy-MM-dd",
-		    	onSelect: null
+		    	onSelect: null,
+		    	panel: 1
 		    };
 		},
 		getInitialState: function(){
@@ -419,10 +424,21 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 					  __ReactCreateElement("div", {style: {display: stateArgs.visible ? null : "none"}}, 
 					  	__ReactCreateElement(DatepickerPanel, {from: propArgs.from, 
 					  					 to: propArgs.to, 
+					  					 panel: propArgs.panel, 
 					  					 current: stateArgs.current, 
 					  					 select: self.onSelect})
 					  )
 					);
 		}
 	});
-window.Datepicker = DatepickerInput;})(React, window);
+
+window.Datepicker = DatepickerInput;
+DatepickerInput.setTitle = function(lang){
+	lang.weekDays && (weekDays = lang.weekDays);
+	lang.yearMonths && (yearMonths = lang.yearMonths);
+	lang.dayTitle && (dayTitle = lang.dayTitle);
+};
+DatepickerInput.noConflict = function(){
+	window.Datepicker = _Datepicker;
+	return DatepickerInput;
+};})(React, window);

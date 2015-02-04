@@ -11,14 +11,29 @@
 		<style type="text/css">
 			.am-current{ border: #efefef 1px solid; background-color: #A6CFE4; } .am-current:hover
 			{ background-color: #D4E5EE !important; }
+			.demo {float: left; margin-right: 30px;}
 		</style>
 	</head>
 	<body>
-		<div id="example">
+		<div class="demo">
+			<h1>example1</h1>
+			<div id="example1">
+			</div>
+		</div>
+		<div class="demo">
+			<h1>example2</h1>
+			<div id="example2">
+			</div>
+		</div>
+		<div class="demo">
+			<h1>example3</h1>
+			<div id="example3">
+			</div>
 		</div>
 		<script type="text/javascript" src="dist/js/datepicker.min.js">
 		</script>
 		<script type="text/javascript">
+
 			React.render(React.createElement(Datepicker, {
 				from: null,
 				to: null,
@@ -26,7 +41,43 @@
 				onSelect: function(date) {
 					console.log(date);
 				}
-			}), document.getElementById('example'));
+			}), document.getElementById('example1'));
+
+			React.render(React.createElement(Datepicker, {
+				from: null,
+				to: null,
+				current: null,
+				panel: 2,
+				onSelect: function(date) {
+					console.log(date);
+				}
+			}), document.getElementById('example2'));
+
+
+			//import: this is a global config
+			var weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+				yearMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+			Datepicker.setTitle({
+				weekDays: weekDays,
+				yearMonths: yearMonths,
+				dayTitle: function(year, month){
+					return year + " " + yearMonths[month - 1];
+				}
+			});
+
+			React.render(React.createElement(Datepicker, {
+				from: null,
+				to: null,
+				current: null,
+				panel: 1,
+				onSelect: function(date) {
+					console.log(date);
+				}
+			}), document.getElementById('example3'));
+
+			//to avoid conflict
+			var myDatepicker = Datepicker.noConflict();
 		</script>
 	</body>
 
