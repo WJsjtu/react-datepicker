@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello React</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="dist/vendor/js/react-with-addons.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="dist/vendor/css/amazeui.min.css">
-    <style type="text/css">
-    	.am-current{
-    		border: #efefef 1px solid;
-    		background-color: #A6CFE4;
-    	}
-    	.am-current:hover {
-    		background-color: #D4E5EE !important;
-    	}
-    </style>
-  </head>
-  <body>
-    <div id="example"></div>
-    <script type="text/javascript" src="dist/js/datepicker.min.js"></script>
-    <script type="text/javascript">
+	<head>
+		<title>
+			Hello React Datepicker
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="dist/vendor/js/react-with-addons.min.js">
+		</script>
+		<link rel="stylesheet" type="text/css" href="dist/vendor/css/amazeui.min.css">
+		<style type="text/css">
+			.am-current{ border: #efefef 1px solid; background-color: #A6CFE4; } .am-current:hover
+			{ background-color: #D4E5EE !important; }
+		</style>
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/javascript" src="dist/js/datepicker.min.js">
+		</script>
+		<script type="text/javascript">
+			React.render(React.createElement(Datepicker, {
+				from: null,
+				to: null,
+				current: null,
+				onSelect: function(date) {
+					console.log(date);
+				}
+			}), document.getElementById('example'));
+		</script>
+	</body>
 
-      var options ={
-        onSelect: function(date){
-          console.log(date);
-        }
-      };
-      Datepicker(document.getElementById('example'), options);
-    </script>
-  </body>
 </html>
