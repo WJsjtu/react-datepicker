@@ -87,25 +87,33 @@ If yoo want to know more about it, click the link above.
 ### Options
 
 #### current
+
 Type: `Date` 
+
 Default: `new Date`
 
 Set the start date of this datepicker.
 
 #### panel
+
 Type: `Number`
+
 Default: `1`
 
 Panel `1` refers to the date panel.`2` refers to month panel like `example2 & example3`. `3` refers to year panel.
 
 #### lang
+
 Type: `String`
+
 Default: `"zh"`
 
 Set the language of this datepicker.
 
 #### onSelect
+
 Type: `"Function( Object )"`
+
 Default: `null`
 
 This sets the callback when you select a day.And the`Object` is a new class `DateItem`, the following code is about its details:
@@ -192,6 +200,7 @@ document.getElementById('example3'));
 ```
 
 #### addLang
+
 arguments `String` name, `{ dayTitle: Array, monthTitle: Array, dateTitle: String or Function }`
 
 Note: `"zh"` is default name for lang, and the Object is configured in code.If you want to replace it. You can override the `"zh"`'s object.
@@ -199,9 +208,11 @@ Note: `"zh"` is default name for lang, and the Object is configured in code.If y
 For details, see code of `example3`.
 
 #### noConflict
+
 To avoid the confliction that caused by the same name as Datepicker.
 
 ###Todolist
+
 Add props to set range of the date.
 
 Set styleshhet apart.
