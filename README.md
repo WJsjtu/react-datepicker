@@ -185,6 +185,7 @@ For details, see code of `example3`.
 #### noConflict
 To avoid the confliction that caused by the same name as Datepicker.
 
-###Todo
+###Todolist
 Add props to set range of the date.
-Set style apart.
+
+Set styleshhet apart.
