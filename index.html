@@ -48,8 +48,8 @@
 			var test = new Date(2008, 4, 12);
 
 			React.render(React.createElement(myDatepicker, {
-				current: null,
-				panel: 2,
+				current: test,
+				panel: 3,
 				onSelect: function(date) {
 					console.log(date);
 				}
@@ -68,7 +68,7 @@
 
 			React.render(React.createElement(myDatepicker, {
 				current: null,
-				panel: 1,
+				panel: 2,
 				format: "M/dd/yyyy",
 				lang: "en",
 				onSelect: function(date) {
