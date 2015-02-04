@@ -34,18 +34,17 @@
 		</script>
 		<script type="text/javascript">
 
-			React.render(React.createElement(Datepicker, {
-				from: null,
-				to: null,
+			//to avoid conflict
+			var myDatepicker = Datepicker.noConflict();
+
+			React.render(React.createElement(myDatepicker, {
 				current: null,
 				onSelect: function(date) {
 					console.log(date);
 				}
 			}), document.getElementById('example1'));
 
-			React.render(React.createElement(Datepicker, {
-				from: null,
-				to: null,
+			React.render(React.createElement(myDatepicker, {
 				current: null,
 				panel: 2,
 				onSelect: function(date) {
@@ -53,31 +52,27 @@
 				}
 			}), document.getElementById('example2'));
 
-
-			//import: this is a global config
 			var weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
 				yearMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-			Datepicker.setTitle({
-				weekDays: weekDays,
-				yearMonths: yearMonths,
-				dayTitle: function(year, month){
+			myDatepicker.addLang("en", {
+				dayTitle: weekDays,
+				monthTitle: yearMonths,
+				dateTitle: function(year, month, day){
 					return year + " " + yearMonths[month - 1];
 				}
 			});
 
-			React.render(React.createElement(Datepicker, {
-				from: null,
-				to: null,
+			React.render(React.createElement(myDatepicker, {
 				current: null,
 				panel: 1,
+				lang: "en",
 				onSelect: function(date) {
 					console.log(date);
 				}
 			}), document.getElementById('example3'));
 
-			//to avoid conflict
-			var myDatepicker = Datepicker.noConflict();
+			
 		</script>
 	</body>
 

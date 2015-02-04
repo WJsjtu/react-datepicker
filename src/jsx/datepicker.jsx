@@ -56,8 +56,15 @@ DateItemPrototype.format = function(fmt) {
 
 
 var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-	weekDays = ["一","二","三","四","五","六","日"],
-	yearMonths = ["一","二","三","四","五","六","七","八","九","十","十一","十二"].map(function(item){ return item + "月";}),
+	titleLang ={
+		"zh": {
+			dayTitle: ["一","二","三","四","五","六","日"],
+			monthTitle: ["一","二","三","四","五","六","七","八","九","十","十一","十二"].map(function(item){ return item + "月";}),
+			dateTitle: function(y, m, d){
+				return y + " 年 " + m + " 月";
+			}
+		}
+	},
 	dayTitle = function(year, month){
 		return year + " 年 " + month + " 月";
 	},
@@ -209,14 +216,14 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		mixins: [tbodyMixin],
 		caculate: getMonthCaculate,
 		render: function(){
-			var self = this, spans = [], i = 0, className, onClick, temp;
+			var self = this, spans = [], i = 0, className, onClick, temp, _lang = titleLang[self.props.lang] || titleLang["zh"];
 			for(; i < 12; i++){
 				temp = getClassSet( self.state[classPreffix + i],
 		  							monthClassSet,
 		  							self.onClick.bind(self, i)
 		  						);
 		  		className = temp[0], onClick = temp[1];
-		  		spans.push(<span key={"m-" + i} className={className} onClick={onClick}>{yearMonths[self.state[itemPreffix + i] - 1]}</span>);
+		  		spans.push(<span key={"m-" + i} className={className} onClick={onClick}>{_lang.monthTitle[self.state[itemPreffix + i] - 1]}</span>);
 			}
 			return <tbody><tr><td colSpan="7">{spans}</td></tr></tbody>;
 		}
@@ -309,7 +316,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		   	});
     	},
 		render: function() {
-			var self = this; stateArgs = self.state, propArgs = self.props,
+			var self = this; stateArgs = self.state, propArgs = self.props, _lang = titleLang[propArgs.lang] || titleLang["zh"],
 				table = null,
 				tableClass = classPrefix + "table",
 				headClass = classPrefix + "header",
@@ -327,12 +334,12 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 									<tr className={headClass}>{prevTh}
 										<th colSpan="5" className={switchClass}>
 											<div className={selectClass} onClick={self.changePanel}>
-												{dayTitle(stateArgs.current.y, stateArgs.current.m)}
+												{_lang.dateTitle(stateArgs.current.y, stateArgs.current.m, stateArgs.d)}
 											</div>
 										</th>{nextTh}
 									</tr>
 									<tr>
-										{weekDays.map(function(day, index){
+										{_lang.dayTitle.map(function(day, index){
 										    return <th key={"th-"+ index} className={classPrefix + "dow"}>{day}</th>
 										})}
 									</tr>
@@ -354,6 +361,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 							<DatepickerMonthTbody from={propArgs.from} 
 												  to={propArgs.to} 
 												  current={stateArgs.current} 
+												  lang={propArgs.lang}
 												  select={self.selectPanel.bind(self, 1)}/>
 						</table>;
 			} else if(stateArgs.panel == 3){
@@ -385,6 +393,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		    	current: new DateItem,
 		    	format: "yyyy-MM-dd",
 		    	onSelect: null,
+		    	lang: "zh",
 		    	panel: 1
 		    };
 		},
@@ -425,7 +434,8 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 					  	<DatepickerPanel from={propArgs.from}
 					  					 to={propArgs.to}
 					  					 panel={propArgs.panel}
-					  					 current={stateArgs.current} 
+					  					 current={stateArgs.current}
+					  					 lang={propArgs.lang}
 					  					 select={self.onSelect}/>
 					  </div>
 					</div>;
@@ -433,12 +443,10 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 	});
 
 window.Datepicker = DatepickerInput;
-DatepickerInput.setTitle = function(lang){
-	lang.weekDays && (weekDays = lang.weekDays);
-	lang.yearMonths && (yearMonths = lang.yearMonths);
-	lang.dayTitle && (dayTitle = lang.dayTitle);
-};
 DatepickerInput.noConflict = function(){
 	window.Datepicker = _Datepicker;
 	return DatepickerInput;
+};
+DatepickerInput.addLang = function(name, lang){
+	titleLang[name] = lang;
 };
