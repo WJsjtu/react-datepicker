@@ -37,7 +37,7 @@ A datepicker component written in React.js
 
 	React.render(React.createElement(myDatepicker, {
 		current: test,
-		panel: 2,
+		panel: 3,
 		onSelect: function(date) {
 			console.log(date);
 		}
@@ -56,7 +56,7 @@ A datepicker component written in React.js
 
 	React.render(React.createElement(myDatepicker, {
 		current: null,
-		panel: 1,
+		panel: 2,
 		lang: "en",
 		format: "M/dd/yyyy",
 		onSelect: function(date) {
