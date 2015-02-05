@@ -19,11 +19,11 @@ module.exports = function(grunt) {
         copy: [{
             expand: true,
             cwd: components + "react/",
-            src: [ "react-with-addons.min.js"],
+            src: [ "react.min.js"],
             dest: "dist/js/"
         }, {
             expand: true,
-            cwd: components + "amazeui/dist/",
+            cwd: "vendor/",
             src: [ "fonts/*.*" ],
             dest: "dist/"
         }],
@@ -58,6 +58,9 @@ module.exports = function(grunt) {
                     ext: '.min.css'
                 }]
             }
+        },
+        clean: {
+          main: ["dist/"]
         }
     });
 
@@ -66,5 +69,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.registerTask("default", ["reactjs", "copy", "uglify:module", "less:main", "cssmin:main"]);
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.registerTask("default", ["clean", "reactjs", "copy", "uglify:module", "less:main", "cssmin:main"]);
 };
