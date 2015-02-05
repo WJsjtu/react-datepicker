@@ -68,6 +68,7 @@ A datepicker component written in React.js
 
 ####build
 ```
+bower install
 npm install
 grunt
 ```
