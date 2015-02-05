@@ -1,8 +1,32 @@
 # react-datepicker
 A datepicker component written in React.js
 
-###Demo
 ![](http://wjsjtu.github.io/react-datepicker/demo.png)
+
+### Get Started
+
+####install
+```
+bower install react-ui-datepicker
+```
+
+####build my yourslef
+```
+bower install
+npm install
+grunt
+```
+
+This component is based on ReactJS.
+The website of React introduced react-tools for nodejs.
+To work with grunt, I did ([wjsjtu-reactjs](https://github.com/WJsjtu/wjsjtu-reactjs)) ,a grunt task, myself.
+
+If yoo want to know more about it, click the link above.
+
+####online demo
+
+[See demos here.](http://wjsjtu.github.io/react-datepicker/)
+
 
 ###Usage
 ####Create DOM like:
@@ -64,24 +88,6 @@ A datepicker component written in React.js
 		}
 	}), document.getElementById('example3'));
 ```
-### Get Started
-
-####build
-```
-bower install
-npm install
-grunt
-```
-
-This component is based on ReactJS.
-The website of React introduced react-tools for nodejs.
-To work with grunt, I did ([wjsjtu-reactjs](https://github.com/WJsjtu/wjsjtu-reactjs)) ,a grunt task, myself.
-
-If yoo want to know more about it, click the link above.
-
-####online demo
-
-[See demos here.](http://wjsjtu.github.io/react-datepicker/)
 
 ### Options
 
