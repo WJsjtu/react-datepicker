@@ -1,5 +1,5 @@
 {
-  "name": "wjsjtu-react-datepicker",
+  "name": "react-ui-datepicker",
   "version": "0.0.2",
   "authors": ["Jason Wang"],
   "ignore":[
@@ -10,7 +10,8 @@
   	"*.gitignore",
   	"Gruntfile.js"
   ],
-  "dependencies": {
+  "keywords": "React Datepicker",
+  "devDependencies": {
     "react": "~0.12.2"
   }
 }
