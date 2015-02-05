@@ -10,7 +10,7 @@ A datepicker component written in React.js
 bower install react-ui-datepicker
 ```
 
-####build my yourslef
+####build the source code
 ```
 bower install
 npm install
