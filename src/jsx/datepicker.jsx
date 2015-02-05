@@ -422,7 +422,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		},
 		render: function(){
 			var self = this, stateArgs = self.state, propArgs = self.props;
-			return  <div className="am-input-group">
+			return  <div>
 					  <input type="text"
 					  		 className="am-form-field"
 					  		 value={stateArgs.current.format(propArgs.format)} 

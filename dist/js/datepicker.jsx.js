@@ -202,11 +202,11 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		  									self.onClick.bind(self, name)
 		  									);
 		  			var className = temp[0], onClick = temp[1];
-		  			tr.push(__ReactCreateElement("td", {key: name, className: className, onClick: onClick}, self.state[itemPreffix + name]));
+		  			tr.push(React.createElement("td", {key: name, className: className, onClick: onClick}, self.state[itemPreffix + name]));
 		  		}
-		  		tbody.push(__ReactCreateElement("tr", {key: i}, tr));
+		  		tbody.push(React.createElement("tr", {key: i}, tr));
 		    }
-			return __ReactCreateElement("tbody", null, tbody);
+			return React.createElement("tbody", null, tbody);
     	}
 	}),
 	DatepickerMonthTbody = React.createClass({displayName: "DatepickerMonthTbody",
@@ -220,9 +220,9 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		  							self.onClick.bind(self, i)
 		  						);
 		  		className = temp[0], onClick = temp[1];
-		  		spans.push(__ReactCreateElement("span", {key: "m-" + i, className: className, onClick: onClick}, _lang.monthTitle[self.state[itemPreffix + i] - 1]));
+		  		spans.push(React.createElement("span", {key: "m-" + i, className: className, onClick: onClick}, _lang.monthTitle[self.state[itemPreffix + i] - 1]));
 			}
-			return __ReactCreateElement("tbody", null, __ReactCreateElement("tr", null, __ReactCreateElement("td", {colSpan: "7"}, spans)));
+			return React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {colSpan: "7"}, spans)));
 		}
 	}),
 	DatepickerYearTbody = React.createClass({displayName: "DatepickerYearTbody",
@@ -236,9 +236,9 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		  							self.onClick.bind(self, i)
 		  						);
 		  		className = temp[0], onClick = temp[1];
-		  		spans.push(__ReactCreateElement("span", {key: "y-" + i, className: className, onClick: onClick}, self.state[itemPreffix + i]));
+		  		spans.push(React.createElement("span", {key: "y-" + i, className: className, onClick: onClick}, self.state[itemPreffix + i]));
 			}
-			return __ReactCreateElement("tbody", null, __ReactCreateElement("tr", null, __ReactCreateElement("td", {colSpan: "7"}, spans)));
+			return React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {colSpan: "7"}, spans)));
 		}
 	}),
 	DatepickerPanel = React.createClass({displayName: "DatepickerPanel",
@@ -319,43 +319,43 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 				headClass = classPrefix + "header",
 				switchClass = classPrefix + "switch",
 				selectClass = classPrefix + "select",
-				prevTh = __ReactCreateElement("th", {className: classPrefix + "prev"}, 
-							__ReactCreateElement("i", {className: classPrefix + "prev-icon", onClick: self.goIcon.bind(self, 1)})
+				prevTh = React.createElement("th", {className: classPrefix + "prev"}, 
+							React.createElement("i", {className: classPrefix + "prev-icon", onClick: self.goIcon.bind(self, 1)})
 						),
-				nextTh = __ReactCreateElement("th", {className: classPrefix + "next"}, 
-							__ReactCreateElement("i", {className: classPrefix + "next-icon", onClick: self.goIcon.bind(self, -1)})
+				nextTh = React.createElement("th", {className: classPrefix + "next"}, 
+							React.createElement("i", {className: classPrefix + "next-icon", onClick: self.goIcon.bind(self, -1)})
 						);
 			if(stateArgs.panel == 1){
-				table = __ReactCreateElement("table", {className: tableClass}, 
-							__ReactCreateElement("thead", null, 
-									__ReactCreateElement("tr", {className: headClass}, prevTh, 
-										__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
-											__ReactCreateElement("div", {className: selectClass, onClick: self.changePanel}, 
+				table = React.createElement("table", {className: tableClass}, 
+							React.createElement("thead", null, 
+									React.createElement("tr", {className: headClass}, prevTh, 
+										React.createElement("th", {colSpan: "5", className: switchClass}, 
+											React.createElement("div", {className: selectClass, onClick: self.changePanel}, 
 												_lang.dateTitle(stateArgs.current.y, stateArgs.current.m, stateArgs.d)
 											)
 										), nextTh
 									), 
-									__ReactCreateElement("tr", null, 
+									React.createElement("tr", null, 
 										_lang.dayTitle.map(function(day, index){
-										    return __ReactCreateElement("th", {key: "th-"+ index, className: classPrefix + "dow"}, day)
+										    return React.createElement("th", {key: "th-"+ index, className: classPrefix + "dow"}, day)
 										})
 									)
 							), 
-		  					__ReactCreateElement(DatepickerDayTbody, {from: propArgs.from, 
+		  					React.createElement(DatepickerDayTbody, {from: propArgs.from, 
 												to: propArgs.to, 
 												current: stateArgs.current, 
 												select: self.selectDay})
 		  				);
 			} else if(stateArgs.panel == 2){
-				table = __ReactCreateElement("table", {className: tableClass}, 
-							__ReactCreateElement("thead", null, 
-								__ReactCreateElement("tr", {className: headClass}, prevTh, 
-									__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
-										__ReactCreateElement("div", {className: selectClass, onClick: self.changePanel}, stateArgs.current.y)
+				table = React.createElement("table", {className: tableClass}, 
+							React.createElement("thead", null, 
+								React.createElement("tr", {className: headClass}, prevTh, 
+									React.createElement("th", {colSpan: "5", className: switchClass}, 
+										React.createElement("div", {className: selectClass, onClick: self.changePanel}, stateArgs.current.y)
 									), nextTh
 								)
 							), 
-							__ReactCreateElement(DatepickerMonthTbody, {from: propArgs.from, 
+							React.createElement(DatepickerMonthTbody, {from: propArgs.from, 
 												  to: propArgs.to, 
 												  current: stateArgs.current, 
 												  lang: propArgs.lang, 
@@ -363,22 +363,22 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 						);
 			} else if(stateArgs.panel == 3){
 				var start = stateArgs.current.y - stateArgs.current.y % 10;
-				table = __ReactCreateElement("table", {className: tableClass}, 
-							__ReactCreateElement("thead", null, 
-								__ReactCreateElement("tr", {className: headClass}, prevTh, 
-									__ReactCreateElement("th", {colSpan: "5", className: switchClass}, 
-										__ReactCreateElement("div", {className: selectClass}, start, "-", start + 11)
+				table = React.createElement("table", {className: tableClass}, 
+							React.createElement("thead", null, 
+								React.createElement("tr", {className: headClass}, prevTh, 
+									React.createElement("th", {colSpan: "5", className: switchClass}, 
+										React.createElement("div", {className: selectClass}, start, "-", start + 11)
 									), nextTh
 								)
 							), 
-							__ReactCreateElement(DatepickerYearTbody, {from: propArgs.from, 
+							React.createElement(DatepickerYearTbody, {from: propArgs.from, 
 												 to: propArgs.to, 
 												 current: stateArgs.current, 
 												 select: self.selectPanel.bind(self, 2)})
 						);
 			}
-		    return __ReactCreateElement("div", {className: "am-datepicker", style: {display: "block"}, onWheel: self.onWheel}, 
-			    		__ReactCreateElement("div", {className: classPrefix + "days", style: {display: "block"}}, table)
+		    return React.createElement("div", {className: "am-datepicker", style: {display: "block"}, onWheel: self.onWheel}, 
+			    		React.createElement("div", {className: classPrefix + "days", style: {display: "block"}}, table)
 			    	);
 		 }
     }),
@@ -422,13 +422,13 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		},
 		render: function(){
 			var self = this, stateArgs = self.state, propArgs = self.props;
-			return  __ReactCreateElement("div", {className: "am-input-group"}, 
-					  __ReactCreateElement("input", {type: "text", 
+			return  React.createElement("div", null, 
+					  React.createElement("input", {type: "text", 
 					  		 className: "am-form-field", 
 					  		 value: stateArgs.current.format(propArgs.format), 
 					  		 onClick: self.onClick}), 
-					  __ReactCreateElement("div", {style: {display: stateArgs.visible ? null : "none"}}, 
-					  	__ReactCreateElement(DatepickerPanel, {from: propArgs.from, 
+					  React.createElement("div", {style: {display: stateArgs.visible ? null : "none"}}, 
+					  	React.createElement(DatepickerPanel, {from: propArgs.from, 
 					  					 to: propArgs.to, 
 					  					 panel: propArgs.panel, 
 					  					 current: stateArgs.current, 

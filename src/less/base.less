@@ -1,0 +1,247 @@
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ * hgroup has been removed from the HTML5 (W3C) specification
+ *        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup
+ */
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template,
+script {
+  display: none;
+}
+
+
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+
+a:focus {
+  outline: thin dotted;
+}
+
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove text-decoration
+ */
+
+a {
+  text-decoration: none;
+}
+
+
+
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+
+input {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+  line-height: normal;
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+html input[disabled] {
+  cursor: default;
+}
+
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+
+
+/* AMUI Base
+   ========================================================================== */
+
+/**
+ * `font-size` is set in `html` element to support the `rem` unit for font-sizes
+ * NOTE: IE9 & IE10 do not recognize `rem` units when used with the
+   `font` shorthand property.
+ */
+
+html {
+  font-size: 62.5%; // set base font-size to 10px (16px * 62.5), 1rem = 10px
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  position: relative;
+  background: @base-background;
+  font-family: @base-font-family;
+  font-weight: @base-font-weight;
+  line-height: @base-line-height;
+  color: @base-text-color;
+  font-size: @global-font-size;
+  .hook-base-body;
+}
+
+
+/**
+ * 1. http://usabilitypost.com/2012/11/15/w-optimizelegibility-on-mobile-devices/
+ * 2. http://maxvoltar.com/archive/-webkit-font-smoothing
+ * NOTE: http://usabilitypost.com/2012/11/05/stop-fixing-font-smoothing/
+ * 3. http://maximilianhoffmann.com/posts/better-font-rendering-on-osx
+ *    http://jaydenseric.com/blog/css-font-smoothing-for-firefox-mac
+ */
+
+body,
+input {
+  text-rendering: optimizeLegibility;  /* 1 */
+  -webkit-font-smoothing: antialiased; /* 2 */
+  -moz-osx-font-smoothing: grayscale;  /* 3 Default: auto */
+  -moz-font-feature-settings: "liga", "kern"
+}
+
+
+// Responsive font-size
+
+@media @medium-up {
+  body {
+    //font-size: 1.4rem;
+  }
+}
+
+/*Only phones */
+
+@media @small-only {
+
+  /**
+   * Break strings if their length exceeds the width of their container
+   */
+  body {
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+
+/**
+ * links
+ */
+
+a {
+  color: @link-color;
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    //text-decoration: underline;
+  }
+
+  &:focus {
+    .tab-focus();
+  }
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+  * Vertical alignment
+  * Exclude `radio` and `checkbox` elements because the default `baseline` value aligns better with text
+  */
+input:not([type="radio"]):not([type="checkbox"]) {
+  vertical-align: middle;
+}
+
+
+/**
+ * Fix viewport for IE10 snap mode
+ * http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
+ * http://msdn.microsoft.com/en-us/library/ie/hh869615%28v=vs.85%29.aspx
+ * http://msdn.microsoft.com/zh-cn/library/ie/hh708740(v=vs.85).aspx
+ * @2014.01.20: 设置一下属性以后，windows Phone 8 上显示的字体过小，暂时注释掉
+ * ========================================================================== */
+/*
+@-ms-viewport {
+  width: device-width;
+}
+*/
+
+
+// Base Hooks
+
+.hook-base-body() {}

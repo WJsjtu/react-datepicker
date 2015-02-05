@@ -20,17 +20,12 @@ module.exports = function(grunt) {
             expand: true,
             cwd: components + "react/",
             src: [ "react-with-addons.min.js"],
-            dest: "dist/vendor/js/"
-        }, {
-            expand: true,
-            cwd: components + "amazeui/dist/css/",
-            src: [ "amazeui.min.css" ],
-            dest: "dist/vendor/css/"
+            dest: "dist/js/"
         }, {
             expand: true,
             cwd: components + "amazeui/dist/",
             src: [ "fonts/*.*" ],
-            dest: "dist/vendor/"
+            dest: "dist/"
         }],
         uglify: {
             module: {
@@ -45,11 +40,31 @@ module.exports = function(grunt) {
                     mangle: true
                 }
             }
+        },
+        less: {
+            main: {
+                files: {
+                  "dist/css/datepicker.css": ["src/less/datepicker.less"]
+                }
+            }
+        },
+        cssmin: {
+            main: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/css',
+                    src: ['*.css', '!*.min.css'],
+                    dest: 'dist/css',
+                    ext: '.min.css'
+                }]
+            }
         }
     });
 
     grunt.loadNpmTasks("wjsjtu-reactjs");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-uglify");
-    grunt.registerTask("default", ["reactjs", "copy", "uglify:module"]);
+    grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.registerTask("default", ["reactjs", "copy", "uglify:module", "less:main", "cssmin:main"]);
 };
