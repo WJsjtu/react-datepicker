@@ -1,25 +1,16 @@
-// Name:                       Forms
-//
-// Description:                Define style for form elements
-//
-// Component:                 `.am-form`
-//
-// Modifiers:                  ``
-//
-// =============================================================================
-
+@import "variables.less";
 /* ==========================================================================
    Component: Form
  ============================================================================ */
 
 /* Common form controls */
 
-.@{ns}form-field {
+.@{ns}datepicker-input-field {
   display: block;
   width:  @datepicker-width;
   padding: @input-padding;
   font-size: @form-font-size;
-  line-height: @form-line-height;
+  line-height: @form-line-height * 1.6;
   color: @input-color;
   vertical-align: middle;
   background-color: @input-bg;
@@ -45,8 +36,7 @@
 
   // Disabled and read-only inputs
   &[disabled],
-  &[readonly],
-  fieldset[disabled] & {
+  &[readonly]{
     cursor: not-allowed;
     background-color: @input-bg-disabled;
   }

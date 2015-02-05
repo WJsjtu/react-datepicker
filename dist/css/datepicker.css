@@ -1,195 +1,13 @@
-/* HTML5 display definitions
-   ========================================================================== */
-/**
- * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
- * Correct `block` display not defined for `main` in IE 11.
- * hgroup has been removed from the HTML5 (W3C) specification
- *        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup
- */
-/**
- * Address `[hidden]` styling not present in IE 8/9/10.
- * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
- */
-[hidden],
-template,
-script {
-  display: none;
-}
-/* Links
-   ========================================================================== */
-/**
- * Remove the gray background color from active links in IE 10.
- */
-a {
-  background-color: transparent;
-}
-/**
- * Address `outline` inconsistency between Chrome and other browsers.
- */
-a:focus {
-  outline: thin dotted;
-}
-/**
- * Improve readability when focused and also mouse hovered in all browsers.
- */
-a:active,
-a:hover {
-  outline: 0;
-}
-/* Text-level semantics
-   ========================================================================== */
-/**
- * Remove text-decoration
- */
-a {
-  text-decoration: none;
-}
-/* Forms
-   ========================================================================== */
-/**
- * 1. Correct color not being inherited.
- *    Known issue: affects color of disabled elements.
- * 2. Correct font properties not being inherited.
- * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
- */
-input {
-  color: inherit;
-  /* 1 */
-  font: inherit;
-  /* 2 */
-  margin: 0;
-  /* 3 */
-}
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
-input {
-  line-height: normal;
-}
-/**
- * Re-set default cursor for disabled elements.
- */
-html input[disabled] {
-  cursor: default;
-}
-/**
- * Remove inner padding and border in Firefox 4+.
- */
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-/* Tables
-   ========================================================================== */
-/**
- * Remove most spacing between table cells.
- */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-td,
-th {
-  padding: 0;
-}
-/* AMUI Base
-   ========================================================================== */
-/**
- * `font-size` is set in `html` element to support the `rem` unit for font-sizes
- * NOTE: IE9 & IE10 do not recognize `rem` units when used with the
-   `font` shorthand property.
- */
-html {
-  font-size: 62.5%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-body {
-  position: relative;
-  background: #ffffff;
-  font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
-  font-weight: normal;
-  line-height: 1.6;
-  color: #333333;
-  font-size: 1.6rem;
-}
-/**
- * 1. http://usabilitypost.com/2012/11/15/w-optimizelegibility-on-mobile-devices/
- * 2. http://maxvoltar.com/archive/-webkit-font-smoothing
- * NOTE: http://usabilitypost.com/2012/11/05/stop-fixing-font-smoothing/
- * 3. http://maximilianhoffmann.com/posts/better-font-rendering-on-osx
- *    http://jaydenseric.com/blog/css-font-smoothing-for-firefox-mac
- */
-body,
-input {
-  text-rendering: optimizeLegibility;
-  /* 1 */
-  -webkit-font-smoothing: antialiased;
-  /* 2 */
-  -moz-osx-font-smoothing: grayscale;
-  /* 3 Default: auto */
-  -moz-font-feature-settings: "liga", "kern";
-}
-/*Only phones */
-@media only screen and (max-width: 640px) {
-  /**
-   * Break strings if their length exceeds the width of their container
-   */
-  body {
-    word-wrap: break-word;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens: auto;
-  }
-}
-/**
- * links
- */
-a {
-  color: #0e90d2;
-}
-a:hover,
-a:focus {
-  color: #095f8a;
-}
-a:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-/* Forms
-   ========================================================================== */
-/**
-  * Vertical alignment
-  * Exclude `radio` and `checkbox` elements because the default `baseline` value aligns better with text
-  */
-input:not([type="radio"]):not([type="checkbox"]) {
-  vertical-align: middle;
-}
-/**
- * Fix viewport for IE10 snap mode
- * http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
- * http://msdn.microsoft.com/en-us/library/ie/hh869615%28v=vs.85%29.aspx
- * http://msdn.microsoft.com/zh-cn/library/ie/hh708740(v=vs.85).aspx
- * @2014.01.20: 设置一下属性以后，windows Phone 8 上显示的字体过小，暂时注释掉
- * ========================================================================== */
-/*
-@-ms-viewport {
-  width: device-width;
-}
-*/
 /* ==========================================================================
    Component: Form
  ============================================================================ */
 /* Common form controls */
-.am-form-field {
+.am-datepicker-input-field {
   display: block;
   width: 238px;
-  padding: 0.625em;
-  font-size: 1.6rem;
-  line-height: 1.2;
+  padding: 0.4em;
+  font-size: 1rem;
+  line-height: 1.92;
   color: #555555;
   vertical-align: middle;
   background-color: #ffffff;
@@ -199,39 +17,38 @@ input:not([type="radio"]):not([type="checkbox"]) {
   -webkit-appearance: none;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.am-form-field:focus {
+.am-datepicker-input-field:focus {
   outline: 0;
 }
-.am-form-field:focus {
+.am-datepicker-input-field:focus {
   background-color: #fefffe;
   border-color: #3bb4f2;
   outline: 0;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(59, 180, 242, 0.3);
 }
-.am-form-field::placeholder {
+.am-datepicker-input-field::placeholder {
   color: #999999;
 }
-.am-form-field::-moz-placeholder {
+.am-datepicker-input-field::-moz-placeholder {
   opacity: 1;
 }
-.am-form-field[disabled],
-.am-form-field[readonly],
-fieldset[disabled] .am-form-field {
+.am-datepicker-input-field[disabled],
+.am-datepicker-input-field[readonly] {
   cursor: not-allowed;
   background-color: #eeeeee;
 }
-.am-form-field.am-radius {
+.am-datepicker-input-field.am-radius {
   border-radius: 2px;
 }
-.am-form-field.am-round {
+.am-datepicker-input-field.am-round {
   border-radius: 1000px;
 }
 /* Form field size */
 .am-input-sm {
-  font-size: 1.4rem !important;
+  font-size: 0.8rem !important;
 }
 .am-input-lg {
-  font-size: 1.8rem !important;
+  font-size: 1.2rem !important;
 }
 .am-datepicker {
   top: 0;
@@ -244,6 +61,14 @@ fieldset[disabled] .am-form-field {
   color: #555555;
   display: none;
 }
+.am-datepicker table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.am-datepicker td,
+.am-datepicker th {
+  padding: 0;
+}
 .am-datepicker > div {
   display: none;
 }
@@ -251,7 +76,7 @@ fieldset[disabled] .am-form-field {
   width: 100%;
 }
 .am-datepicker tr.am-datepicker-header {
-  font-size: 1.6rem;
+  font-size: 1rem;
   color: #ffffff;
   background: #3bb4f2;
 }
@@ -265,7 +90,7 @@ fieldset[disabled] .am-form-field {
   height: 48px;
 }
 .am-datepicker td {
-  font-size: 1.4rem;
+  font-size: 0.875rem;
 }
 .am-datepicker td.am-datepicker-day {
   height: 34px;
@@ -318,6 +143,7 @@ fieldset[disabled] .am-form-field {
   display: inline-block;
   width: 0;
   height: 0;
+  font-weight: 700;
   vertical-align: middle;
   border-bottom: 7px solid #3bb4f2;
   border-right: 7px solid transparent;
@@ -338,6 +164,7 @@ fieldset[disabled] .am-form-field {
   display: inline-block;
   width: 0;
   height: 0;
+  font-weight: 700;
   vertical-align: middle;
   border-top: 7px solid #ffffff;
   border-right: 7px solid transparent;
@@ -384,7 +211,7 @@ fieldset[disabled] .am-form-field {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transform: translate(0, 0);
-  content: "\f053";
+  content: "<";
 }
 .am-datepicker-next-icon:before {
   display: inline-block;
@@ -397,7 +224,7 @@ fieldset[disabled] .am-form-field {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transform: translate(0, 0);
-  content: "\f054";
+  content: ">";
 }
 .am-datepicker-dropdown {
   position: absolute;
