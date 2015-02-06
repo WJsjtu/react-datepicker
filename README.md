@@ -82,7 +82,7 @@ If yoo want to know more about it, click the link above.
 		current: null,
 		panel: 2,
 		lang: "en",
-		format: "M/dd/yyyy",
+		format: "m/dd/yyyy",
 		onSelect: function(date) {
 		  console.log(date);
 		}
@@ -119,7 +119,7 @@ Set the language of this datepicker.
 
 Type: `String`
 
-Default: `"yyyy-dd-MM"`
+Default: `"yyyy-dd-mm"`
 
 Set the format of value of input.
 
