@@ -125,66 +125,11 @@ Set the format of value of input.
 
 #### onSelect
 
-Type: `"Function( Object )"`
+Type: `"Function(Date)"`
 
 Default: `null`
 
-This sets the callback when you select a day.And the`Object` is a new class `DateItem`, the following code is about its details:
-```javascript
-DateItem = function(date){
-	if(!(date instanceof Date)){
-		date = new Date;
-	}
-	var self = this; self.init = {};
-	self.init.y = self.y = date.getFullYear();
-	self.init.m = self.m = date.getMonth() + 1;
-	self.init.d = self.d = date.getDate();
-},
-DateItem.prototype.toDate = function(){
-	var self = this, date = new Date;
-	date.setFullYear(self.y);
-	date.setMonth(self.m - 1);
-	date.setDate(self.d);
-	return date;
-};
-DateItem.prototype.monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1];
-DateItem.prototype.nextMonth = function(){
-	var self = this;
-	if(self.m == 12){
-		self.y += 1;
-		self.m = 1;
-	} else {
-		self.m += 1;
-	}
-	self.d = 1;
-	return self;
-};
-DateItem.prototype.prevMonth = function(){
-	var self = this;
-	if(self.m == 1){
-		self.y -= 1;
-		self.m = 12;
-	} else {
-		self.m -= 1;
-	}
-	self.d = 1;
-	return self;
-};
-DateItem.prototype.getMonthDays = function(){
-	var self = this, leap = (self.m == 2) && (self.y % 4 == 0 && self.y % 100!=0 || self.y % 400 == 0) ? 1 : 0;
-    return self.monthDays[self.m - 1] + 30 + leap;
-};
-DateItem.prototype.format = function(fmt) {
-	var self = this, o = {
-		"M+": self.m,
-		"d+": self.d,
-		"q+": Math.floor((self.m + 2) / 3)
-	};
-	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (self.y + "").substr(4 - RegExp.$1.length));
-	for (var k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-	return fmt;
-};
-```
+This sets the callback when you select a day. And the argument of this callback is a `Date` object.
 
 ### Methods
 
