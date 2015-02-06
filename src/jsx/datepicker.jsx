@@ -383,6 +383,17 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		 }
     }),
 	DatepickerInput = React.createClass({
+		/*
+		propTypes: {
+			from: React.PropTypes.instanceOf(Date),
+			to: React.PropTypes.instanceOf(Date),
+			current: React.PropTypes.instanceOf(Date),
+			format: React.PropTypes.string,
+			onSelect: React.PropTypes.func,
+			lang: React.PropTypes.string,
+			panel: React.PropTypes.number
+		},
+		*/
 		getDefaultProps: function() {
 		    return {
 		    	from: null,
