@@ -125,7 +125,7 @@ Set the format of value of input.
 
 #### onSelect
 
-Type: `"Function(Date)"`
+Type: `Function(Date)`
 
 Default: `null`
 
