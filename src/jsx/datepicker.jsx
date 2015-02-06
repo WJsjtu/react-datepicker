@@ -414,7 +414,7 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 		},
 		onSelect: function(current){
 			var self = this, callBack = self.props.onSelect;
-			typeof callBack === "function" && callBack(current);
+			typeof callBack === "function" && callBack(current.toDate());
 			self.setState({
 				visible: false,
 				current: current
