@@ -60,6 +60,15 @@ var monthDays = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
 			dateTitle: function(y, m, d){
 				return y + " 年 " + m + " 月";
 			}
+		},
+		"en": {
+			dayTitle: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+			monthTitle: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(function (item) {
+				return item ;
+			}),
+			dateTitle: function (y, m, d) {
+				return this.monthTitle[m-1] + " " + y;
+			}
 		}
 	},
 	dayTitle = function(year, month){
