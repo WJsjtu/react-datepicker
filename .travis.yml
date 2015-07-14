@@ -6,9 +6,11 @@ sudo: false
 cache:
   directories:
   - node_modules
-before_install:
+install:
   - npm install -g bower
   - npm install -g gulp
   - npm install -g webpack
   - npm install
   - bower install
+script:
+  - gulp
