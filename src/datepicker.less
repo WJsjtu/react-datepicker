@@ -1,0 +1,182 @@
+@import "../bower_components/bootstrap/less/variables.less";
+@import "../bower_components/bootstrap/less/mixins.less";
+
+@td-width: 36px;
+@td-height: 30px; //min 30 in bootstrap3 because of line height and padding
+
+.datepicker-button-variant(@color; @background; @border) {
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+
+  &:focus {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 25%);
+  }
+  &:hover {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+  }
+  &.active {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+
+    &:hover,
+    &:focus {
+      color: @color;
+      background-color: darken(@background, 17%);
+          border-color: darken(@border, 25%);
+    }
+  }
+  &:active,
+  &.active {
+    background-image: none;
+  }
+  &.disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+}
+
+.datepicker {
+	border-radius: @border-radius-base;
+	&-inline {
+		width: 7 * @td-width + 2px;
+		height: 8 * @td-height + 12px;
+	}
+	direction: ltr;
+	&&-rtl {
+		direction: rtl;
+		table tr td span {
+			float: right;
+		}
+	}
+	&-dropdown {
+		position: absolute;
+		z-index: @zindex-dropdown;
+		width: 7 * @td-width + 2px;
+		height: 8 * @td-height + 12px;
+		padding: 5px 0;
+		margin: auto;
+		list-style: none;
+		font-size: @font-size-base;
+		text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+		background-color: @dropdown-bg;
+		border: 1px solid @dropdown-fallback-border; // IE8 fallback
+		border: 1px solid @dropdown-border;
+		border-radius: @border-radius-base;
+		.box-shadow(0 6px 12px rgba(0,0,0,.175));
+		background-clip: padding-box;
+	}
+	&.days .datepicker-days,
+	&.months .datepicker-months,
+	&.years .datepicker-years {
+		display: block;
+	}
+	table {
+		width: 100%;
+		margin: 0;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		border-spacing: 0;
+  		border-collapse: collapse;
+		tr {
+			td, th {
+				text-align: center;
+				width: @td-width;
+				height: @td-height;
+				border-radius: 4px;
+				border: none;
+				padding: 5px;
+			}
+		}
+	}
+	table tr td {
+		&.day:hover {
+			background: @gray-lighter;
+			cursor: pointer;
+		}
+		&.old,
+		&.new {
+			color: @btn-link-disabled-color;
+		}
+		&.disabled,
+		&.disabled:hover {
+			background: none;
+			color: @btn-link-disabled-color;
+			cursor: default;
+			cursor: not-allowed;
+		}
+		&.today {
+			@today-bg: lighten(orange, 30%);
+			.datepicker-button-variant(#000, @today-bg, darken(@today-bg, 20%));
+		}
+		&.active {
+			.datepicker-button-variant(@btn-primary-color, @btn-primary-bg, @btn-primary-border);
+			text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+		}
+		span {
+			display: block;
+			width: (7 * @td-width - 12) / 4;
+			height: (7 * @td-height - 10) / 3;
+			line-height: 54px;
+			float: left;
+			margin: 0;
+			cursor: pointer;
+			border-radius: 4px;
+			&:hover {
+				background: @gray-lighter;
+			}
+			&.disabled {
+				background: none;
+				color: @btn-link-disabled-color;
+				cursor: default;
+			}
+			&.active {
+				.datepicker-button-variant(@btn-primary-color, @btn-primary-bg, @btn-primary-border);
+				text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+			}
+			&.old,
+			&.new {
+				color: @btn-link-disabled-color;
+			}
+		}
+	}
+
+	.datepicker-switch {
+		width: 145px;
+	}
+
+	thead tr:first-child th,
+	tfoot tr th {
+		cursor: pointer;
+		&:hover {
+			background: @gray-lighter;
+		}
+	}
+
+	// Basic styling for calendar-week cells
+	.cw {
+		font-size: 10px;
+		width: 12px;
+		padding: 0 2px 0 5px;
+		vertical-align: middle;
+	}
+	thead tr:first-child .cw {
+		cursor: default;
+		background-color: transparent;
+	}
+}
