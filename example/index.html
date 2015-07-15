@@ -145,14 +145,20 @@
 						</div>
 						<br/>
 					</div>
+					<div class="span12 col-md-12" id="fmt">
+						<a href="#">What is fmt below?</a>
+					</div>
+					<br/>
 					<div class="span12 col-md-12">
+						<p>fmt is a very useful function that format the date by using format string such as "mm/dd/yyyy", it receives two args, Date object or null and format string. If null it will return empty string. Its source is shown below.</p>
 						<pre class="prettyprint linenums" id="prettify-format"></pre>
 					</div>
 					<div class="span6 col-md-6">
 						<div style="padding: 0px 20px;border: #ccc 1px solid;">
 							<h3>format</h3>
+							<p>format the day you've select, note date could be null if prop is not set.</p>
 <textarea class="form-control" name="format" rows="5">function(date, fmt){
-	return fmt(date, "yyyy-mm-dd");
+	return fmt(date, "mm/dd/yyyy");
 }</textarea><br/>
 				        </div>
 						<br/>
@@ -160,8 +166,10 @@
 					<div class="span6 col-md-6">
 						<div style="padding: 0px 20px;border: #ccc 1px solid;">
 							<h3>rule</h3>
+							<p>Determine if a day can be selected, this provides flexible ways to accomplish complex rules.(Note the day is disabled only when rule function return false not null or undefined, so you don't need to return true explicitly.</p>
 <textarea class="form-control" name="rule" rows="5">function(date, fmt){
 	if(date.getDay() == 3){
+		// disable all Wednesday
 		return false;
 	}
 }</textarea><br/>
@@ -172,6 +180,7 @@
 						<div class="span6 col-md-6">
 							<div style="padding: 0px 20px;border: #ccc 1px solid;">
 								<h3>onSelect</h3>
+								<p>Triggered when a day is selected. (Note the active prop which set the default day will not trigger this function.)</p>
 <textarea class="form-control" name="onSelect" rows="5">function(date, fmt){
 	alert(fmt(date, "yyyy-mm-dd"));
 }</textarea><br/>
@@ -267,7 +276,12 @@ var dateFormat = function(date, fmt) {
             	js,
             	'js',
             	true
-            )).hide();
+            )).parent().hide();
+
+            $("#fmt").on("click", function(e){
+            	e.preventDefault();
+            	$('#prettify-format').parent().toggle();
+            });
 
             String.prototype.trim = function(){
 			     return this.replace(/(^\s*)|(\s*$)/g, '');
