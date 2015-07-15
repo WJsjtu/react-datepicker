@@ -120,7 +120,7 @@
 								<span class="input-group-addon">current</span>
 								<input type="text" class="form-control" placeholder="undefined or Date Object (for example: new Date) or million second" name="current">
 							</div>
-							<p style="color:#666;font-weight: bold;">This prop is set to set the day datepicker goes by default. Usually it is used when preserve prop is true except that the datepicker is inline.</p>
+							<p style="color:#666;font-weight: bold;">This prop is set to set the day datepicker goes by default. Usually it is used when `preserve` prop is true except that the datepicker is inline.</p>
 						</div>
 						<div class="clearfix"></div>
 						<br/>
@@ -156,7 +156,7 @@
 					<div class="span6 col-md-6">
 						<div style="padding: 0px 20px;border: #ccc 1px solid;">
 							<h3>format</h3>
-							<p>format the day you've select, note date could be null if prop is not set.</p>
+							<p>format the day you've select, note date could be null if `active` prop is not set.</p>
 <textarea class="form-control" name="format" rows="5">function(date, fmt){
 	return fmt(date, "mm/dd/yyyy");
 }</textarea><br/>
@@ -180,7 +180,7 @@
 						<div class="span6 col-md-6">
 							<div style="padding: 0px 20px;border: #ccc 1px solid;">
 								<h3>onSelect</h3>
-								<p>Triggered when a day is selected. (Note the active prop which set the default day will not trigger this function.)</p>
+								<p>Triggered when a day is selected. (Note the `active` prop which set the default day will not trigger this function.)</p>
 <textarea class="form-control" name="onSelect" rows="5">function(date, fmt){
 	alert(fmt(date, "yyyy-mm-dd"));
 }</textarea><br/>

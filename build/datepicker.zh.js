@@ -1,5 +1,5 @@
 /**
- * react-datepicker v0.1.0 A flexible datepicker component in Bootstrap style using Facebook React.
+ * react-ui-datepicker v0.1.0 A flexible datepicker component in Bootstrap style using Facebook React.
  * Repository git@github.com:WJsjtu/react-datepicker.git
  * Homepage http://wjsjtu.github.io/react-datepicker/
  * Copyright 2015 王健（Jason Wang）
