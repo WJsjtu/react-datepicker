@@ -6,11 +6,10 @@
     "example"
   ],
   "ignore": [
-    "example",
     "src",
-    "*.json",
     "*.bowerrc",
-    "*.gitignore"
+    "*.gitignore",
+    "./*.js"
   ],
   "authors": [
     "Jason Wang"
