@@ -1,5 +1,5 @@
 {
-  "name": "react-datepicker",
+  "name": "react-ui-datepicker",
   "version": "0.1.0",
   "description": "A flexible datepicker component in Bootstrap style using Facebook React.",
   "dependencies": {},

@@ -2,15 +2,15 @@
   "name": "react-ui-datepicker",
   "version": "0.1.0",
   "main": [
-    "build"
+    "build",
+    "example"
   ],
   "ignore": [
     "example",
     "src",
     "*.json",
     "*.bowerrc",
-    "*.gitignore",
-    "*.js"
+    "*.gitignore"
   ],
   "authors": [
     "Jason Wang"
