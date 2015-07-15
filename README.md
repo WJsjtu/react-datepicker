@@ -7,7 +7,7 @@ bower install react-ui-datepicker
 ```
 ####online demo
 
-[See demos here.](http://wjsjtu.github.io/react-datepicker/master)
+[See demos here.](http://wjsjtu.github.io/react-datepicker/master/demo)
 
 ###The MIT License (MIT)
 
