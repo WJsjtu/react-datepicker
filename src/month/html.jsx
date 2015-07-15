@@ -1,6 +1,9 @@
 // import language file
 var locales = require("../locales/" + __LOCALE__ + ".js");
 
+// import Month class
+var Month = require("../utils/month.js");
+
 module.exports = function(currMonth){
 
 	/**
@@ -31,6 +34,18 @@ module.exports = function(currMonth){
 	for(var i = 0; i < 12; i++){
 		spans.push([locales.month[i], "month"]);
 	}
+
+	var addSpecialMonth = function(date, className){
+		if(!date){
+			return;
+		}
+		var month = Month.prototype.parse(date);
+		if(month.year == currMonth.year){
+			spans[month.month][1] += className;
+		}
+	};
+	addSpecialMonth(new Date, " today");
+	addSpecialMonth(instance.state.active, " active");
 
 	var tbody = <tbody onWheel={eventBinder("wheel", currMonth.year)}>
 					<tr>

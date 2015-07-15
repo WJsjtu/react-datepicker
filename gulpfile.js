@@ -77,7 +77,12 @@ localeConfig.forEach(function(locale){
 
     gulp.task("build" + taskName, ["webpack" + taskName], function(callback){
         gulp.src(webpackConfigBuild.output.filename)
-            .pipe(reactUglify())
+            .pipe(reactUglify(null, (
+                "prototype bind state props exports setState " + 
+                "push map length replace " + 
+                "year month days current active focused isEnter setFullYear getDate setDate date onMouseEvent events"
+                ).split(" ")
+            ))
             .pipe(reactWrapper(banner + "\n", "", {pkg : pkg}))
             .pipe(gulp.dest("./build"));
     });

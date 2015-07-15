@@ -145,6 +145,10 @@
 				color: @btn-link-disabled-color;
 				cursor: default;
 			}
+			&.today {
+				@today-bg: lighten(orange, 30%);
+				.datepicker-button-variant(#000, @today-bg, darken(@today-bg, 20%));
+			}
 			&.active {
 				.datepicker-button-variant(@btn-primary-color, @btn-primary-bg, @btn-primary-border);
 				text-shadow: 0 -1px 0 rgba(0,0,0,.25);

@@ -308,35 +308,39 @@
 /***/ function(module, exports) {
 
 	function Month(year, month){
-		this.year = year;
-		this.month = month;
-		this.leap = ((month == 2) && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0));
-		this.days = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1][month] + 30 + this.leap;
+		var self = this;
+		self.year = year;
+		self.month = month;
+		self.leap = ((month == 2) && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0));
+		self.days = [1, -2, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1][month] + 30 + self.leap;
 	}
 
 	var proto = Month.prototype;
 
 	proto.next = function(){
-		if(this.month != 11){
-			return new Month(this.year, this.month + 1);
+		var self = this;
+		if(self.month != 11){
+			return new Month(self.year, self.month + 1);
 		} else {
-			return new Month(this.year + 1, 1);
+			return new Month(self.year + 1, 1);
 		}
 	};
 
 	proto.prev = function(){
-		if(this.month != 0){
-			return new Month(this.year, this.month - 1);
+		var self = this;
+		if(self.month != 0){
+			return new Month(self.year, self.month - 1);
 		} else {
-			return new Month(this.year - 1, 11);
+			return new Month(self.year - 1, 11);
 		}
 	};
 
 	proto.compare = function(monthObj){
-		if(this.year == monthObj.year){
-			return this.month - monthObj.month;
+		var self = this;
+		if(self.year == monthObj.year){
+			return self.month - monthObj.month;
 		} else {
-			return this.year - monthObj.year;
+			return self.year - monthObj.year;
 		}
 	}
 
@@ -641,6 +645,9 @@
 
 	var locales = __webpack_require__(8);
 
+	// import Month class
+	var Month = __webpack_require__(3);
+
 	module.exports = function (currMonth) {
 
 		/**
@@ -688,6 +695,18 @@
 			spans.push([locales.month[i], "month"]);
 		}
 
+		var addSpecialMonth = function addSpecialMonth(date, className) {
+			if (!date) {
+				return;
+			}
+			var month = Month.prototype.parse(date);
+			if (month.year == currMonth.year) {
+				spans[month.month][1] += className;
+			}
+		};
+		addSpecialMonth(new Date(), " today");
+		addSpecialMonth(instance.state.active, " active");
+
 		var tbody = React.createElement(
 			"tbody",
 			{ onWheel: eventBinder("wheel", currMonth.year) },
@@ -722,9 +741,13 @@
 
 /***/ },
 /* 10 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	
+	// import Month class
 	"use strict";
+
+	var Month = __webpack_require__(3);
 
 	module.exports = function (currMonth) {
 
@@ -778,6 +801,18 @@
 		}
 		spans[0][1] += " old";
 		spans[11][1] += " new";
+
+		var addSpecialYear = function addSpecialYear(date, className) {
+			if (!date) {
+				return;
+			}
+			var month = Month.prototype.parse(date);
+			if (startYear <= month.year && startYear + 11 >= month.year) {
+				spans[month.year - startYear][1] += className;
+			}
+		};
+		addSpecialYear(new Date(), " today");
+		addSpecialYear(instance.state.active, " active");
 
 		var tbody = React.createElement(
 			"tbody",

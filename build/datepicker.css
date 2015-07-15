@@ -166,6 +166,44 @@
   color: #777777;
   cursor: default;
 }
+.datepicker table tr td span.today {
+  color: #000000;
+  background-color: #ffdb99;
+  border-color: #ffb733;
+}
+.datepicker table tr td span.today:focus {
+  color: #000000;
+  background-color: #ffc966;
+  border-color: #b37400;
+}
+.datepicker table tr td span.today:hover {
+  color: #000000;
+  background-color: #ffc966;
+  border-color: #f59e00;
+}
+.datepicker table tr td span.today.active {
+  color: #000000;
+  background-color: #ffc966;
+  border-color: #f59e00;
+}
+.datepicker table tr td span.today.active:hover,
+.datepicker table tr td span.today.active:focus {
+  color: #000000;
+  background-color: #ffbc42;
+  border-color: #b37400;
+}
+.datepicker table tr td span.today:active,
+.datepicker table tr td span.today.active {
+  background-image: none;
+}
+.datepicker table tr td span.today.disabled,
+.datepicker table tr td span.today.disabled:hover,
+.datepicker table tr td span.today.disabled:focus,
+.datepicker table tr td span.today.disabled:active,
+.datepicker table tr td span.today.disabled.active {
+  background-color: #ffdb99;
+  border-color: #ffb733;
+}
 .datepicker table tr td span.active {
   color: #ffffff;
   background-color: #337ab7;

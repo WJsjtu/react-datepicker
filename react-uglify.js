@@ -5,7 +5,7 @@ var es = require('event-stream');
 var gutil = require('gulp-util');
 var UglifyJS = require("uglify-js");
 
-var reactUglifyPlugin = function(replaceWord, unsafe) {
+var reactUglifyPlugin = function(replaceWord, props) {
 	replaceWord = replaceWord || '__react_create_element';
 	var rawWord = "React.createElement";
 
@@ -13,21 +13,21 @@ var reactUglifyPlugin = function(replaceWord, unsafe) {
 
 		var contentStr = String(file.contents).replace(new RegExp(rawWord, "g"), replaceWord);
 
-		var otherVars = "";
-		
-		if(unsafe){
-			contentStr = contentStr.replace(new RegExp("\.prototype", "g"), "[__prototype__]");
-			contentStr = contentStr.replace(new RegExp("\.bind", "g"), "[__bind__]");
-			contentStr = contentStr.replace(new RegExp("\.state", "g"), "[__state__]");
-			contentStr = contentStr.replace(new RegExp("\.props", "g"), "[__props__]");
+		var otherVars = [], otherVarsStr = "";
 
-			otherVars = "var __prototype__='prototype', __state__='state',__props__='props',__bind__='bind';";
+		props.forEach(function(prop){
+			contentStr = contentStr.replace(new RegExp("[.]" + prop, "g"), "[__prop_" + prop + "__]");
+			otherVars.push("__prop_" + prop + "__='" + prop + "'");
+		});
+		
+		if(otherVars.length){
+			otherVarsStr = "var " + otherVars.join(",") + ";";
 		}
 
 		//contentStr = contentStr.replace(new RegExp("\"use strict\";", "g"), "");
 
 
-		var fileStr = "(function(React){var " + replaceWord + " = " + rawWord + ";" + otherVars
+		var fileStr = "(function(React){var " + replaceWord + " = " + rawWord + ";" + otherVarsStr
 			+ contentStr
 			+ "})(React);";
 

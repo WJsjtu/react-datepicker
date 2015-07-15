@@ -1,3 +1,7 @@
+
+// import Month class
+var Month = require("../utils/month.js");
+
 module.exports = function(currMonth){
 
 	/**
@@ -32,6 +36,18 @@ module.exports = function(currMonth){
 	}
 	spans[0][1] += " old";
 	spans[11][1] += " new";
+
+	var addSpecialYear = function(date, className){
+		if(!date){
+			return;
+		}
+		var month = Month.prototype.parse(date);
+		if(startYear <= month.year && startYear  + 11 >= month.year){
+			spans[month.year - startYear][1] += className;
+		}
+	};
+	addSpecialYear(new Date, " today");
+	addSpecialYear(instance.state.active, " active");
 
 	var tbody = <tbody onWheel={eventBinder("wheel", currMonth.year)}>
 					<tr>
