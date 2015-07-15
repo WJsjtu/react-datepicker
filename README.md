@@ -2,4 +2,6 @@
 A flexible datepicker component in Bootstrap style using Facebook React.
 
 #Install
-##bower install react-ui-datepicker
+```
+bower install react-ui-datepicker
+```
