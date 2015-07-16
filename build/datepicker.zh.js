@@ -54,6 +54,8 @@
 
 	"use strict";
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	__webpack_require__(2);
 
 	var Month = __webpack_require__(3);
@@ -173,11 +175,11 @@
 
 			var inline = func.bind(self, Month.prototype.parse(stateArgs.current))(),
 			    position = +self.props.position,
-			    input = React.createElement("input", { type: "text", key: 0, ref: "input",
+			    input = React.createElement("input", _extends({}, this.props, { type: "text", key: 0, ref: "input",
 				className: "form-control",
 				value: format(stateArgs.active, dateFormat),
 				onFocus: self.onFocus,
-				onBlur: self.onBlur }),
+				onBlur: self.onBlur })),
 			    style = {};
 
 			if (!(position < 7 || position >= 0)) {

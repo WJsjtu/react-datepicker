@@ -112,7 +112,7 @@ window.Datepicker = React.createClass({
 
 		var inline = func.bind(self, Month.prototype.parse(stateArgs.current))(),
 			position = +self.props.position,
-			input = <input type="text" key={0} ref="input"
+			input = <input {...this.props} type="text" key={0} ref="input"
 							className="form-control" 
 							value={format(stateArgs.active, dateFormat)} 
 							onFocus={self.onFocus} 

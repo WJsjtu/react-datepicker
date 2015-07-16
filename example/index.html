@@ -376,23 +376,5 @@ var dateFormat = function(date, fmt) {
 
 		});
         </script>
-
-
-        <script type="text/javascript" id="js-date-format">
-			var datepickerProp = {
-				format: function(date, fmt){
-					return fmt(date, "yyyy-mm-dd");
-				},
-				rule: function (date) {
-					if(date.getDay() == 3){
-						return false;
-					}
-				},
-				onSelect: function(date, fmt){
-					alert(fmt(date, "yyyy-mm-dd"));
-				}
-			};
-			React.render(React.createElement(Datepicker, datepickerProp), document.getElementById('datepicker'));
-		</script>
 	</body>
 </html>
