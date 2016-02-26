@@ -1,7 +1,7 @@
 var fs = require("fs");
 var UglifyJS = require("uglify-js");
 
-module.exports = function (filePath, functionNames, propsNames) {
+module.exports = function (filePath, functionNames, propsNames, stringNames) {
     fs.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
         if (err) {
             console.error(err);
@@ -17,6 +17,8 @@ module.exports = function (filePath, functionNames, propsNames) {
                 Super_expression_must_either_be_null_or_a_function: "Super expression must either be null or a function, not "
             };
 
+            stringReplacePairs = Object.assign({}, stringNames, stringReplacePairs, functionNames);
+
             var propReplacePairs = {
                 prop__enumerable: "enumerable",
                 prop__configurable: "configurable",
@@ -26,8 +28,11 @@ module.exports = function (filePath, functionNames, propsNames) {
                 Component: "Component",
                 createElement: "createElement",
                 prop__prototype: "prototype",
-                setPrototypeOf: "setPrototypeOf",
-                defineProperty: "defineProperty",
+                prop__proto__: "__proto__",
+                prop_setPrototypeOf: "setPrototypeOf",
+                prop_defineProperty: "defineProperty",
+                prop_getPrototypeOf: "getPrototypeOf",
+                prop_call: "call",
                 state: "state",
                 props: "props",
                 PropTypes: "PropTypes",
@@ -35,14 +40,12 @@ module.exports = function (filePath, functionNames, propsNames) {
                 setState: "setState",
                 stopPropagation: "stopPropagation",
                 preventDefault: "preventDefault",
-                current: "current",
-                active: "active",
-                activeDate: "activeDate",
-                currentDate: "currentDate",
-                dayCount: "dayCount",
-                _year: "_year",
-                _month: "_month"
+                onClick: "onClick",
+                prop_key: "key",
+                prop_length: "length"
             };
+
+            propReplacePairs = Object.assign({}, propsNames, propReplacePairs, functionNames);
 
             var propsArr = [], propsDeclareStr = "";
 
@@ -63,7 +66,7 @@ module.exports = function (filePath, functionNames, propsNames) {
                 stringContent = stringContent.replace(/\(/g, "\\(");
                 stringContent = stringContent.replace(/\)/g, "\\)");
                 var newStringName = "__stringReplacement_" + i + "__";
-                data = data.replace(new RegExp("\"" + stringContent + "\"", "g"), newStringName);
+                data = data.replace(new RegExp("\"" + stringContent + "\"(?=[^a-zA-Z0-9])", "g"), newStringName);
                 stringArr.push(newStringName + "=\"" + stringContent + "\"");
             }
             stringArr.push("__stringReplacement_default__ = \"default\"");
