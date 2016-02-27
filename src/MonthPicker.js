@@ -21,7 +21,7 @@ export default class MonthPicker extends Component {
 
     onPrevClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current - 1
         });
@@ -29,7 +29,7 @@ export default class MonthPicker extends Component {
 
     onNextClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current + 1
         });
@@ -38,7 +38,7 @@ export default class MonthPicker extends Component {
     onWheel(deltaMode) {
         deltaMode.stopPropagation();
         deltaMode.preventDefault();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current + (deltaMode.deltaY < 0 ? 1 : -1)
         });
@@ -57,8 +57,8 @@ export default class MonthPicker extends Component {
          *monthText     -   func(index  -   number) index ranges from 0 to 11
          *
          * */
-        let {onYearTitleClick, yearTitle, monthText, onMonthSelect} = me.props;
-        let {current, active} = me.state;
+        const {onYearTitleClick, yearTitle, monthText, onMonthSelect} = me.props;
+        const {current, active} = me.state;
 
 
         let monthArr = [];

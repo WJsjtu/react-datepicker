@@ -55,7 +55,7 @@ export default class DatePicker extends Component {
 
     onMonthSelect(month, event) {//range from 0 to 11
         event.stopPropagation();
-        let {currentDate} = this.state;
+        const {currentDate} = this.state;
         currentDate.setMonth(month);
         this.setState({
             currentDate: clearTime(currentDate),
@@ -65,7 +65,7 @@ export default class DatePicker extends Component {
 
     onYearSelect(year, event) {
         event.stopPropagation();
-        let {currentDate} = this.state;
+        const {currentDate} = this.state;
         currentDate.setFullYear(year);
         this.setState({
             currentDate: clearTime(currentDate),
@@ -117,11 +117,11 @@ export default class DatePicker extends Component {
     }
 
     render() {
-        let me = this;
 
+        const me = this;
 
-        let {position, dayRule, weekTitle, monthTitle, yearTitle, monthText, format} = me.props;
-        let {activeDate, currentDate, picker, isFocused} = me.state;
+        const {position, dayRule, weekTitle, monthTitle, yearTitle, monthText, format} = me.props;
+        const {activeDate, currentDate, picker, isFocused} = me.state;
 
         let html = null;
         let monthObject = MonthObject.fromDate(currentDate);

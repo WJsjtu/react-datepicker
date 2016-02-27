@@ -21,7 +21,7 @@ export default class DayPicker extends Component {
 
     onPrevClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current.prev()
         });
@@ -29,7 +29,7 @@ export default class DayPicker extends Component {
 
     onNextClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current.next()
         });
@@ -38,7 +38,7 @@ export default class DayPicker extends Component {
     onWheel(deltaMode) {
         deltaMode.stopPropagation();
         deltaMode.preventDefault();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: deltaMode.deltaY < 0 ? current.next() : current.prev()
         });
@@ -55,10 +55,11 @@ export default class DayPicker extends Component {
          *monthTitle         -   func(year   -   number, month   -   number)
          *
          * */
-        let {dayRule, onMonthTitleClick, weekTitle, monthTitle, onDaySelect} = this.props;
-        let {current, active} = this.state;
+        const me = this;
+        const {dayRule, onMonthTitleClick, weekTitle, monthTitle, onDaySelect} = me.props;
+        const {current, active} = me.state;
 
-        let prevMonth = current.prev(), nextMonth = current.next();
+        const prevMonth = current.prev(), nextMonth = current.next();
 
         //get the day in a week by calling getDay (toDate return the first day of the month)
         let prevDays = current.toDate().getDay();
@@ -137,15 +138,15 @@ export default class DayPicker extends Component {
                 <table className='table'>
                     <thead>
                     <tr>
-                        <th className='prev' onClick={this.onPrevClick.bind(this)}>«</th>
+                        <th className='prev' onClick={me.onPrevClick.bind(me)}>«</th>
                         <th colSpan='5' className='datepicker-switch' onClick={(event) => { onMonthTitleClick(event); }}>
                             {monthTitle(current.year, current.month - 1)}
                         </th>
-                        <th className='next' onClick={this.onNextClick.bind(this)}>»</th>
+                        <th className='next' onClick={me.onNextClick.bind(me)}>»</th>
                     </tr>
                     <tr>{weekTitleArray}</tr>
                     </thead>
-                    <tbody onWheel={this.onWheel.bind(this)}>{rows}</tbody>
+                    <tbody onWheel={me.onWheel.bind(me)}>{rows}</tbody>
                 </table>
             </div>
         );

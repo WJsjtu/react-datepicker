@@ -21,7 +21,7 @@ export default class YearPicker extends Component {
 
     onPrevClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current - 9
         });
@@ -29,7 +29,7 @@ export default class YearPicker extends Component {
 
     onNextClick(event) {
         event.stopPropagation();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current + 11
         });
@@ -38,7 +38,7 @@ export default class YearPicker extends Component {
     onWheel(deltaMode) {
         deltaMode.stopPropagation();
         deltaMode.preventDefault();
-        let {current} = this.state;
+        const {current} = this.state;
         this.setState({
             current: current + (deltaMode.deltaY < 0 ? 11 : -9)
         });
@@ -51,8 +51,9 @@ export default class YearPicker extends Component {
          *current        -   String(MonthObject.year)
          *active         -   Date
          * */
-        let {onYearSelect} = this.props;
-        let {current, active} = this.state;
+        const me= this;
+        const {onYearSelect} = me.props;
+        const {current, active} = me.state;
 
 
         let yearArr = [];
@@ -83,12 +84,12 @@ export default class YearPicker extends Component {
                 <table className='table'>
                     <thead>
                     <tr>
-                        <th className='prev' onClick={this.onPrevClick.bind(this)}>«</th>
+                        <th className='prev' onClick={me.onPrevClick.bind(me)}>«</th>
                         <th colSpan='5' className='datepicker-switch'>{current + 1}-{current + 10}</th>
-                        <th className='next' onClick={this.onNextClick.bind(this)}>»</th>
+                        <th className='next' onClick={me.onNextClick.bind(me)}>»</th>
                     </tr>
                     </thead>
-                    <tbody onWheel={this.onWheel.bind(this)}>
+                    <tbody onWheel={me.onWheel.bind(me)}>
                     <tr>
                         <td colSpan='7'>
                             {spans}
