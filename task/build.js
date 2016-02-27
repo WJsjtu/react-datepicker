@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var optimization = require('./optimization');
+var zlib = require('zlib');
 
 var config = {
     entry: './src/DatePicker',
@@ -50,7 +51,8 @@ webpack(config, function (err, stats) {
         });
     } else {
         console.info('==> JS build success!');
-        optimization(path.join(config.output.path, config.output.filename), {
+        var filePath = path.join(config.output.path, config.output.filename);
+        optimization(filePath, {
             onNextClick: "onNextClick",
             onPrevClick: "onPrevClick",
             onWheel: "onWheel",
@@ -102,6 +104,11 @@ webpack(config, function (err, stats) {
             _old: " old",
             _new: " new"
         });
+
+        var gzip = zlib.createGzip();
+        var input = fs.createReadStream(filePath);
+        var output = fs.createWriteStream(filePath + '.gz');
+        input.pipe(gzip).pipe(output);
     }
 });
 
