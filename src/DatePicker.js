@@ -5,9 +5,40 @@ import DayPicker from './DayPicker';
 import MonthPicker from './MonthPicker';
 import YearPciker from './YearPicker';
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
     require('./DatePicker.less');
 }
+
+const doc = document;
+
+let onEvent = (name, cb) => {
+    if (!doc.addEventListener && doc.attachEvent) {
+        doc.attachEvent('on' + name, cb);
+    } else {
+        doc.addEventListener(name, cb);
+    }
+};
+
+let offEvent = (name, cb) => {
+    if (!doc.removeEventListener && doc.detachEvent) {
+        doc.detachEvent('on' + name, cb);
+    } else {
+        doc.removeEventListener(name, cb);
+    }
+};
+
+let isOutside = (elements, event) => {
+    let eventTarget = (event.target) ? event.target : event.srcElement;
+    if (eventTarget.parentElement == null && eventTarget != doc.body.parentElement) {
+        return false;
+    }
+    while (eventTarget != null) {
+        if (elements.indexOf(eventTarget) != -1) return false;
+        eventTarget = eventTarget.parentElement;
+    }
+    return true;
+};
+
 
 let clearTime = (dateObj) => {
     dateObj.setHours(0);
@@ -23,7 +54,6 @@ export default class DatePicker extends Component {
         this.state = {
             activeDate: clearTime(props.activeDate),
             currentDate: clearTime(props.currentDate),
-            isFocused: !!props.isFocused,
             picker: +props.picker
         }
     }
@@ -32,15 +62,47 @@ export default class DatePicker extends Component {
         this.setState({
             activeDate: clearTime(newProps.activeDate),
             currentDate: clearTime(newProps.currentDate),
-            isFocused: !!newProps.isFocused,
             picker: +newProps.picker
         });
     }
 
     componentDidMount() {
-        if (this.state.isFocused) {
-            ReactDOM.findDOMNode(this.refs.input).focus();
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        offEvent('click', me.closePicker.bind(me));
+        this.mounted = false;
+    }
+
+    closePicker(event) {
+
+        event && (event.stopPropagation ? event.stopPropagation() : event.cancelBubble = true);
+
+        const me = this;
+
+        if (!me.state.isFocused) {
+            return;
         }
+
+        if (isOutside([ReactDOM.findDOMNode(me.refs.picker)], event)) {
+            if (!me.mounted) return;
+            this.setState({
+                isFocused: false
+            }, () => {
+                offEvent('click', me.closePicker.bind(me));
+            });
+        }
+    }
+
+    onInputFocus(event) {
+        event && event.stopPropagation();
+        const me = this;
+        me.setState({
+            isFocused: true
+        }, () => {
+            onEvent('click', me.closePicker.bind(me));
+        });
     }
 
     onDaySelect(dateObj, event) {
@@ -80,40 +142,12 @@ export default class DatePicker extends Component {
         });
     }
 
-    get isEnter() {
-        return this._isEnter;
+    set mounted(mounted) {
+        this._mounted = mounted;
     }
 
-    set isEnter(isEnter) {
-        this._isEnter = isEnter;
-    }
-
-    onInputFocus(event) {
-        event.stopPropagation();
-        if (!this.state.isFocused) {
-            this.setState({
-                isFocused: true
-            });
-        }
-    }
-
-    onInputBlur(event) {
-        event.stopPropagation();
-        if (!this.isEnter) {
-            let stateObject = {
-                isFocused: false
-            };
-            if (!this.props.shouldPreserve) {
-                stateObject.picker = 1;
-                stateObject.currentDate = clearTime(this.state.activeDate || new Date);
-            }
-            this.setState(stateObject);
-        }
-    }
-
-    setIsEnter(isEnter, event) {
-        event.stopPropagation();
-        this._isEnter = isEnter;
+    get mounted() {
+        return this._mounted;
     }
 
     render() {
@@ -123,44 +157,39 @@ export default class DatePicker extends Component {
         const {position, dayRule, weekTitle, monthTitle, yearTitle, monthText, format} = me.props;
         const {activeDate, currentDate, picker, isFocused} = me.state;
 
-        let html = null;
         let monthObject = MonthObject.fromDate(currentDate);
 
-        if (picker == 1) {
-            html = (
-                <DayPicker active={activeDate}
+        let html = (
+            <div>
+                <DayPicker style={{display: picker == 1 ? 'block' : 'none'}}
+                           active={activeDate}
                            current={monthObject}
                            dayRule={dayRule}
                            weekTitle={weekTitle}
                            monthTitle={monthTitle}
                            onMonthTitleClick={me.setPicker.bind(me, 2)}
                            onDaySelect={me.onDaySelect.bind(me)}/>
-            );
-        } else if (picker == 2) {
-            html = (
-                <MonthPicker active={activeDate}
+                <MonthPicker style={{display: picker == 2 ? 'block' : 'none'}}
+                             active={activeDate}
                              current={monthObject.year}
                              onYearTitleClick={me.setPicker.bind(me, 3)}
                              yearTitle={yearTitle}
                              monthText={monthText}
                              onMonthSelect={me.onMonthSelect.bind(me)}/>
-            );
-        } else if (picker == 3) {
-            html = (
-                <YearPciker active={activeDate}
+                <YearPciker style={{display: picker == 3 ? 'block' : 'none'}}
+                            active={activeDate}
                             current={monthObject.year}
                             onYearSelect={me.onYearSelect.bind(me)}/>
-            );
-        }
+            </div>
+        );
 
 
         let inputHtml = (
             <input onChange={() => {}}
+                   onFocus={me.onInputFocus.bind(me)}
                    type='text' key='input' ref='input'
                    className='form-control'
-                   value={format(activeDate)}
-                   onFocus={me.onInputFocus.bind(me)}
-                   onBlur={me.onInputBlur.bind(me)}/>
+                   value={format(activeDate)}/>
         );
 
         let style = {};
@@ -188,9 +217,7 @@ export default class DatePicker extends Component {
             }
 
             return (
-                <div style={{position: 'relative'}}
-                     onMouseEnter={me.setIsEnter.bind(me, true)}
-                     onMouseLeave={me.setIsEnter.bind(me, false)}>
+                <div style={{position: 'relative'}} ref='picker'>
                     {isFocused ? [inputHtml, pickerHtml] : [inputHtml]}
                 </div>
             );
@@ -201,10 +228,8 @@ export default class DatePicker extends Component {
 DatePicker.displayName = 'DatePicker';
 
 DatePicker.propTypes = {
-
     activeDate: React.PropTypes.instanceOf(Date),
     currentDate: React.PropTypes.instanceOf(Date),
-    isFocused: React.PropTypes.bool,
     shouldPreserve: React.PropTypes.bool,
     picker: React.PropTypes.oneOf([1, 2, 3]),
     position: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
@@ -234,7 +259,6 @@ DatePicker.defaultProps = {
 
     activeDate: clearTime(new Date),
     currentDate: clearTime(new Date),
-    isFocused: false,
     shouldPreserve: true,
     picker: 1,
     position: 5,

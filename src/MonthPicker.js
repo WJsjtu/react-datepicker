@@ -57,7 +57,7 @@ export default class MonthPicker extends Component {
          *monthText     -   func(index  -   number) index ranges from 0 to 11
          *
          * */
-        const {onYearTitleClick, yearTitle, monthText, onMonthSelect} = me.props;
+        const {onYearTitleClick, yearTitle, monthText, onMonthSelect, style} = me.props;
         const {current, active} = me.state;
 
 
@@ -83,7 +83,7 @@ export default class MonthPicker extends Component {
         }
 
         return (
-            <div className='datepicker-days' style={{display: 'block'}}>
+            <div className='datepicker-days' style={style}>
                 <table className='table'>
                     <thead>
                     <tr>

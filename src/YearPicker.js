@@ -51,8 +51,8 @@ export default class YearPicker extends Component {
          *current        -   String(MonthObject.year)
          *active         -   Date
          * */
-        const me= this;
-        const {onYearSelect} = me.props;
+        const me = this;
+        const {onYearSelect, style} = me.props;
         const {current, active} = me.state;
 
 
@@ -80,7 +80,7 @@ export default class YearPicker extends Component {
         }
 
         return (
-            <div className='datepicker-days' style={{display: 'block'}}>
+            <div className='datepicker-days' style={style}>
                 <table className='table'>
                     <thead>
                     <tr>

@@ -75,8 +75,8 @@ module.exports = function (filePath, functionNames, propsNames, stringNames, cb)
 
             data = data.replace(new RegExp("\"use strict\"", "g"), "");
 
-            var fileStr = "(function(Object){" + propsDeclareStr + stringDeclareStr + data
-                + "})(Object);";
+            var fileStr = "(function(Object,TypeError,ReferenceError){" + propsDeclareStr + stringDeclareStr + data
+                + "})(Object,TypeError,ReferenceError);";
             fileStr = UglifyJS.minify(fileStr, {fromString: true, mangle: true}).code;
 
             fs.writeFile(filePath, fileStr, {encoding: 'utf8'}, function (_err) {

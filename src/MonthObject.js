@@ -4,7 +4,7 @@ export default class MonthObject {
     constructor(year, month) {
         let _y = parseInt(+year), _m = parseInt(+month);
         if (isNaN(_y) || isNaN(_m) || _m < 1 || _m > 12) {
-            if (process.env.NODE_ENV !== "production") {
+            if (process.env.NODE_ENV !== 'production') {
                 throw new TypeError('MonthObject constructor should receive a valid number!');
             }
         }

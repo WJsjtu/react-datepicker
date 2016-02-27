@@ -103,11 +103,17 @@
             <div class="span12 col-md-12">
                 <div style="padding: 0 20px;border: #ccc 1px solid;">
                     <div class="span6 col-md-6" style="float:left;">
-                        <label for="isFocused" class="checkbox">
-                            <input id="isFocused" name="isFocused" value="true" type="checkbox">
-                            isFocused
-                        </label>
-                        <p style="color:#666;">Whether the datepicker is focus when it is loaded or not.</p>
+
+                        <label for="picker" class="radio" style="padding-left:10px;">
+                            <input name="picker" value="DatePicker.Pickers.DAY" type="radio">
+                            DatePicker.Pickers.DAY</label>
+                        <label for="picker" class="radio" style="padding-left:10px;">
+                            <input name="picker" value="DatePicker.Pickers.MONTH" type="radio">
+                            DatePicker.Pickers.MONTH</label>
+                        <label for="picker" class="radio" style="padding-left:10px;">
+                            <input name="picker" value="DatePicker.Pickers.YEAR" type="radio">
+                            DatePicker.Pickers.YEAR</label>
+                        <p style="color:#666;">Which picker should be shown when mounted.</p>
                     </div>
                     <div class="span6 col-md-6" style="float:left;">
                         <label for="shouldPreserve" class="checkbox">

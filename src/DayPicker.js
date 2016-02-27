@@ -56,7 +56,7 @@ export default class DayPicker extends Component {
          *
          * */
         const me = this;
-        const {dayRule, onMonthTitleClick, weekTitle, monthTitle, onDaySelect} = me.props;
+        const {dayRule, onMonthTitleClick, weekTitle, monthTitle, onDaySelect, style} = me.props;
         const {current, active} = me.state;
 
         const prevMonth = current.prev(), nextMonth = current.next();
@@ -134,12 +134,13 @@ export default class DayPicker extends Component {
         }
 
         return (
-            <div className='datepicker-days' style={{display: 'block'}}>
+            <div className='datepicker-days' style={style}>
                 <table className='table'>
                     <thead>
                     <tr>
                         <th className='prev' onClick={me.onPrevClick.bind(me)}>«</th>
-                        <th colSpan='5' className='datepicker-switch' onClick={(event) => { onMonthTitleClick(event); }}>
+                        <th colSpan='5' className='datepicker-switch'
+                            onClick={(event) => { onMonthTitleClick(event); }}>
                             {monthTitle(current.year, current.month - 1)}
                         </th>
                         <th className='next' onClick={me.onNextClick.bind(me)}>»</th>

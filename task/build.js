@@ -86,13 +86,15 @@ var buildTasks = function () {
                 fromDate: "fromDate",
                 compare: "compare",
                 dayCount: "dayCount",
-                setIsEnter: "setIsEnter",
                 setPicker: "setPicker",
                 input: "input",
                 year: "year",
                 month: "month",
                 prev: "prev",
-                next: "next"
+                next: "next",
+                picker: "picker",
+                onInputFocus: "onInputFocus",
+                closePicker: "closePicker"
             }, {
                 current: "current",
                 active: "active",
@@ -102,7 +104,13 @@ var buildTasks = function () {
                 _month: "_month",
                 isFocused: "isFocused",
                 findDOMNode: "findDOMNode",
-                prop_push: "push"
+                prop_push: "push",
+                prop_addEventListener: "addEventListener",
+                prop_attachEvent: "attachEvent",
+                prop_removeEventListener: "removeEventListener",
+                prop_detachEvent: "detachEvent",
+                parentElement: "parentElement",
+                target: "target"
             }, {
                 div: "div",
                 th: "th",
@@ -110,6 +118,7 @@ var buildTasks = function () {
                 thead: "thead",
                 tbody: "tbody",
                 block: "block",
+                none: "none",
                 tr: "tr",
                 td: "td",
                 dow: "dow",
