@@ -6,7 +6,7 @@ import MonthPicker from './MonthPicker';
 import YearPciker from './YearPicker';
 
 if (process.env.NODE_ENV !== "production") {
-    require('./datepicker.less');
+    require('./DatePicker.less');
 }
 
 let clearTime = (dateObj) => {
