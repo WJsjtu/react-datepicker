@@ -1,7 +1,7 @@
 var fs = require("fs");
 var UglifyJS = require("uglify-js");
 
-module.exports = function (filePath, functionNames, propsNames, stringNames) {
+module.exports = function (filePath, functionNames, propsNames, stringNames, cb) {
     fs.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
         if (err) {
             console.error(err);
@@ -80,11 +80,7 @@ module.exports = function (filePath, functionNames, propsNames, stringNames) {
             fileStr = UglifyJS.minify(fileStr, {fromString: true, mangle: true}).code;
 
             fs.writeFile(filePath, fileStr, {encoding: 'utf8'}, function (_err) {
-                if (_err) {
-                    console.error(_err);
-                } else {
-                    console.log("Optimization finished!");
-                }
+                cb(_err);
             });
         }
     });
