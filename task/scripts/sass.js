@@ -38,7 +38,7 @@ var sassTask = function (srcPath, options) {
     return deferred.promise;
 };
 
-module.exports = function (srcNames) {
+module.exports = function (srcNames, defaultOptions) {
 
     var build = recurseTask(function (filePath, options) {
         sassTask(filePath, options).then(function () {
@@ -58,7 +58,7 @@ module.exports = function (srcNames) {
         }
     } else if (srcNames.length) {
         srcNames.forEach(function (srcName) {
-            build(path.join(cwd, srcName));
+            build(path.join(cwd, srcName), defaultOptions || {});
         });
     }
 };
