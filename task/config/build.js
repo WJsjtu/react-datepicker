@@ -9,8 +9,13 @@ var ReactPropArray = [
     "bind",
     "setState",
     "stopPropagation",
-    "preventDefault",
-    "onClick"
+    "preventDefault"
+];
+
+var ReactFuncArray = [
+    "onClick",
+    "render",
+    "componentWillReceiveProps"
 ];
 
 var propArr = [
@@ -76,7 +81,8 @@ var strArr = [
     "month",
     "year",
     " old",
-    " new"
+    " new",
+    "click"
 ];
 
 module.exports = {
@@ -90,7 +96,7 @@ module.exports = {
         ['DatePicker.js', {
             name: 'react-datepicker', useOptimization: {
                 prop: ReactPropArray.concat(propArr),
-                func: funcArr,
+                func: ReactFuncArray.concat(funcArr),
                 str: strArr
             }
         }]

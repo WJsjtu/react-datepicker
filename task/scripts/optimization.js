@@ -1,4 +1,5 @@
 var fs = require('fs');
+var uglifyJS = require('uglify-js');
 
 var regSpecialChars = '\\$()*+.[]?^{}|'.split('');
 var regSpecialCharsEscape = '\\\\ \\$ \\( \\) \\* \\+ \\. \\[ \\] \\? \\^ \\{ \\} \\|'.split(' ');
@@ -8,9 +9,6 @@ var jsKeywords = 'break do instanceof typeof case else new var catch finally ret
 var stringReplace = [
     "object",
     "function",
-    "render",
-    "__esModule",
-    "componentWillReceiveProps",
     "Cannot call a class as a function",
     "this hasn't been initialised - super() hasn't been called",
     "Super expression must either be null or a function, not ",
@@ -21,16 +19,19 @@ var propsReplace = [
     "enumerable",
     "configurable",
     "writable",
-    "__esModule",
-    "exports",
     "prototype",
     "__proto__",
     "setPrototypeOf",
     "defineProperty",
     "getPrototypeOf",
     "call",
-    "key",
     "length"
+];
+
+var funcReplace = [
+    "__esModule",
+    "exports",
+    "key"
 ];
 
 /*
@@ -51,27 +52,36 @@ module.exports = function (filePath, option, cb) {
         } else {
 
             var getUniqueArray = function (arr) {
-                var n = {}, r = []; //n为hash表，r为临时数组
+                var hashObject = {}, result = []; //n为hash表，r为临时数组
                 for (var i = 0; i < arr.length; i++) //遍历当前数组
                 {
-                    if (!n[arr[i]]) //如果hash表中没有当前项
+                    if (!hashObject['getUniqueArrayHash_' + arr[i]]) //如果hash表中没有当前项
                     {
-                        n[arr[i]] = true; //存入hash表
-                        r.push(arr[i]); //把当前数组的当前项push到临时数组里面
+                        hashObject['getUniqueArrayHash_' + arr[i]] = true; //存入hash表
+                        result.push(arr[i]); //把当前数组的当前项push到临时数组里面
                     }
                 }
-                return r;
+                return result;
             };
 
-            var _stringReplace = getUniqueArray(Array.prototype.concat.call(stringReplace, option.str || [], option.func || []));
-            var _propsReplace = getUniqueArray(Array.prototype.concat.call(propsReplace, option.prop || [], option.func || []));
+            if (!option.func.length) {
+                option.func = [];
+            }
+            if (!option.prop.length) {
+                option.prop = [];
+            }
+            if (!option.str.length) {
+                option.str = [];
+            }
+            var _stringReplace = getUniqueArray(Array.prototype.concat.call(stringReplace, option.str, option.func, funcReplace));
+            var _propsReplace = getUniqueArray(Array.prototype.concat.call(propsReplace, option.prop, option.func, funcReplace));
             var declareArr = [];
 
             for (var i in _propsReplace) {
                 if (_propsReplace.hasOwnProperty(i)) {
                     var propContent = _propsReplace[i];
                     regSpecialChars.forEach(function (ele, index) {
-                        propContent = propContent.replace(new RegExp('\\' + ele, 'g'), '\\' + ele);
+                        propContent = propContent.replace(new RegExp('\\' + ele, 'g'), regSpecialCharsEscape[index]);
                     });
                     var newPropVar = "optimization__propReplacement_" + i + "__";
                     if (data.match(new RegExp("[.]" + propContent + "(?=[^a-zA-Z0-9])", "g"))) {
@@ -93,6 +103,10 @@ module.exports = function (filePath, option, cb) {
                             data = data.replace(new RegExp("[\\[]\"" + stringContent + "\"[\\]]", 'g'), "[" + newStringVar + "]");
                             declareArr.push(newStringVar + "=\"" + stringContent + "\"");
                         }
+                        if (data.match(new RegExp("\"" + stringContent + "\"(?=!=typeof)", 'g'))) {
+                            data = data.replace(new RegExp("\"" + stringContent + "\"(?=!=typeof)", 'g'), newStringVar + " ");
+                            declareArr.push(newStringVar + "=\"" + stringContent + "\"");
+                        }
                     } else {
                         if (data.match(new RegExp("\"" + stringContent + "\"(?=[^a-zA-Z0-9])", "g"))) {
                             data = data.replace(new RegExp("\"" + stringContent + "\"(?=[^a-zA-Z0-9])", "g"), newStringVar);
@@ -108,8 +122,7 @@ module.exports = function (filePath, option, cb) {
 
             var fileStr = "(function(Object,TypeError,ReferenceError){" + declareStr + data + "})(Object,TypeError,ReferenceError);";
 
-            var uglify = require('uglify-js');
-            fileStr = uglify.minify(fileStr, {
+            fileStr = uglifyJS.minify(fileStr, {
                 fromString: true, mangle: {
                     eval: true
                 }

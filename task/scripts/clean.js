@@ -13,7 +13,7 @@ module.exports = function () {
             if (err) {
                 deferred.reject(err);
             } else {
-                console.log('Cleaning...');
+                console.log('==> Clean finished!');
                 fs.mkdirSync(buildPath);
                 deferred.resolve();
             }
