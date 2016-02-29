@@ -5,6 +5,7 @@ var buildConfig = require('./config.js');
 var recurseTask = require('./recursion');
 var mkdir = require('./mkdir');
 var sass = require('node-sass');
+var options = require('./../config/options');
 
 
 var sassTask = function (srcPath, options) {
@@ -38,7 +39,7 @@ var sassTask = function (srcPath, options) {
     return deferred.promise;
 };
 
-module.exports = function (srcNames, defaultOptions) {
+module.exports = function (srcNames) {
 
     var build = recurseTask(function (filePath, options) {
         sassTask(filePath, options).then(function () {
@@ -53,12 +54,13 @@ module.exports = function (srcNames, defaultOptions) {
         var rawList = buildConfig.sass;
         for (var index in rawList) {
             if (rawList.hasOwnProperty(index)) {
-                build(path.join(cwd, rawList[index][0]), rawList[index][1]);
+                build(path.join(cwd, index), rawList[index]);
             }
         }
     } else if (srcNames.length) {
         srcNames.forEach(function (srcName) {
-            build(path.join(cwd, srcName), defaultOptions || {});
+            var buildOption = buildConfig.sass[srcName] ? buildConfig.sass[srcName] : options.sass || {};
+            build(path.join(cwd, srcName), buildOption);
         });
     }
 };

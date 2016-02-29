@@ -5,6 +5,7 @@ var Q = require('q');
 var buildConfig = require('./config.js');
 var recurseTask = require('./recursion');
 var mkdir = require('./mkdir');
+var options = require('./../config/options');
 
 var lessTask = function (srcPath, options) {
     var srcDir = srcPath.substr(0, srcPath.lastIndexOf('/'));
@@ -43,7 +44,7 @@ var lessTask = function (srcPath, options) {
     return deferred.promise;
 };
 
-module.exports = function (srcNames, defaultOptions) {
+module.exports = function (srcNames) {
 
     var build = recurseTask(function (filePath, options) {
         lessTask(filePath, options).then(function () {
@@ -58,12 +59,13 @@ module.exports = function (srcNames, defaultOptions) {
         var rawList = buildConfig.less;
         for (var index in rawList) {
             if (rawList.hasOwnProperty(index)) {
-                build(path.join(cwd, rawList[index][0]), rawList[index][1]);
+                build(path.join(cwd, index), rawList[index]);
             }
         }
     } else if (srcNames.length) {
         srcNames.forEach(function (srcName) {
-            build(path.join(cwd, srcName), defaultOptions || {});
+            var buildOption = buildConfig.less[srcName] ? buildConfig.less[srcName] : options.less || {};
+            build(path.join(cwd, srcName), buildOption);
         });
     }
 };

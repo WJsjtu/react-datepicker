@@ -2,7 +2,6 @@ var cleanTask = require('./scripts/clean');
 var webpackTask = require('./scripts/webpack');
 var lessTask = require('./scripts/less');
 var sassTask = require('./scripts/sass');
-var options = require('./config/options');
 
 var argsFiles = process.argv.splice(2);
 
@@ -26,9 +25,9 @@ if (!noneArgs) {
 }
 
 var build = function () {
-    noneArgs ? webpackTask('*') : webpackTask(jsFiles, options.webpack);
-    noneArgs ? lessTask('*') : lessTask(lessFiles);
-    noneArgs ? sassTask('*') : sassTask(sassFiles);
+    webpackTask(noneArgs ? '*' : jsFiles);
+    lessTask(noneArgs ? '*' : lessFiles);
+    sassTask(noneArgs ? '*' : sassFiles);
 };
 
 if (noneArgs) {

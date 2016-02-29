@@ -8,10 +8,11 @@ module.exports = {
         'react': 'React',
         'react-dom': 'ReactDOM'
     },
-    js: [
-        ['DatePicker.js', Object.assign({}, options.webpack, {name: 'react-datepicker'})]
-    ],
-    less: [
-        ['DatePicker.less', {name: 'react-datepicker'}]
-    ]
+    js: {
+        'DatePicker.js': Object.assign({}, options.webpack, {name: 'react-datepicker'})
+    },
+    less: {
+        'DatePicker.less': {name: 'react-datepicker'}
+    },
+    sass: {}
 };
