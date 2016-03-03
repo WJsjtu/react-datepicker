@@ -59,11 +59,18 @@ export default class DatePicker extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({
-            activeDate: clearTime(newProps.activeDate),
-            currentDate: clearTime(newProps.currentDate),
-            picker: +newProps.picker
-        });
+        let _actvieDate = clearTime(newProps.activeDate);
+        let _currentDate = clearTime(newProps.currentDate);
+        if (this.state.activeDate.getTime() != _actvieDate.getTime() ||
+            this.state.currentDate.getTime() != _currentDate.getTime() ||
+            this.state.picker != +newProps.picker
+        ) {
+            this.setState({
+                activeDate: _actvieDate,
+                currentDate: _currentDate,
+                picker: +newProps.picker
+            });
+        }
     }
 
     componentDidMount() {

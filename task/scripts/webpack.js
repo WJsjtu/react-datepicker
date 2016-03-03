@@ -5,6 +5,7 @@ var buildConfig = require('./config.js');
 var optimization = require('./optimization');
 var recurseTask = require('./recursion');
 var options = require('./../config/options');
+var logger = require('./console');
 
 var webpackTask = function (srcPath, options) {
     var srcDir = srcPath.substr(0, srcPath.lastIndexOf('/'));
@@ -28,7 +29,8 @@ var webpackTask = function (srcPath, options) {
             }),
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
-                    warnings: false
+                    warnings: false,
+                    join_vars: true
                 }
             })
         ],
@@ -37,7 +39,13 @@ var webpackTask = function (srcPath, options) {
                 test: /\.js$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react', 'stage-0'],
+                    plugins: [
+                        'transform-es3-member-expression-literals',
+                        'transform-es3-property-literals',
+                        'transform-es5-property-mutators',
+                        'transform-class-properties'
+                    ]
                 },
                 include: buildConfig.srcDir,
                 exclude: ['node_modules']
@@ -81,8 +89,9 @@ var webpackTask = function (srcPath, options) {
 module.exports = function (srcNames) {
 
     var build = recurseTask(function (filePath, options) {
+        var startObject = logger.start('webpack', filePath.replace(buildConfig.srcDir, 'src'));
         webpackTask(filePath, options).then(function () {
-            console.log("==> Webpack finished:\n\t" + filePath);
+            logger.end(startObject);
         }, function (rejected) {
             console.error(rejected);
         });

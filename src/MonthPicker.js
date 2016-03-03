@@ -13,10 +13,12 @@ export default class MonthPicker extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({
-            current: newProps.current,
-            active: newProps.active
-        });
+        if (this.state.current !== newProps.current || this.state.active !== newProps.active) {
+            this.setState({
+                current: newProps.current,
+                active: newProps.active
+            });
+        }
     }
 
     onPrevClick(event) {
@@ -104,7 +106,6 @@ export default class MonthPicker extends Component {
                     </tbody>
                 </table>
             </div>
-        )
-            ;
+        );
     }
 }

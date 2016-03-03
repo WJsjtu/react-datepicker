@@ -1,25 +1,37 @@
 var fs = require('fs');
-var exec = require('child_process').exec;
+var path = require('path');
 var buildConfig = require('./config.js');
-var Q = require('q');
+var logger = require('./console');
 
 var buildPath = buildConfig.destDir;
 
-module.exports = function () {
-    var deferred = Q.defer();
-
-    if (fs.existsSync(buildPath)) {
-        exec('rm -rf ' + buildPath, function (err) {
-            if (err) {
-                deferred.reject(err);
+var deleteFolderRecursive = function (folderPath, callback) {
+    var files = [];
+    if (fs.existsSync(folderPath)) {
+        files = fs.readdirSync(folderPath);
+        files.forEach(function (file) {
+            var curPath = path.join(folderPath, file);
+            if (fs.statSync(curPath).isDirectory()) {
+                deleteFolderRecursive(curPath);
             } else {
-                console.log('==> Clean finished!');
-                fs.mkdirSync(buildPath);
-                deferred.resolve();
+                fs.unlinkSync(curPath);
             }
         });
+        fs.rmdirSync(folderPath);
+        if (typeof callback == 'function') {
+            callback();
+        }
     } else {
-        deferred.resolve();
+        callback();
     }
-    return deferred.promise;
+};
+
+module.exports = function () {
+    return new Promise(function (resolve, reject) {
+        var startObject = logger.start('clean', buildConfig.destDir.substr(buildConfig.destDir.lastIndexOf('/') + 1));
+        deleteFolderRecursive(buildPath, function () {
+            logger.end(startObject);
+            resolve();
+        });
+    });
 };

@@ -6,6 +6,7 @@ var buildConfig = require('./config.js');
 var recurseTask = require('./recursion');
 var mkdir = require('./mkdir');
 var options = require('./../config/options');
+var logger = require('./console');
 
 var lessTask = function (srcPath, options) {
     var srcDir = srcPath.substr(0, srcPath.lastIndexOf('/'));
@@ -47,8 +48,9 @@ var lessTask = function (srcPath, options) {
 module.exports = function (srcNames) {
 
     var build = recurseTask(function (filePath, options) {
+        var startObject = logger.start('less', filePath.replace(buildConfig.srcDir, 'src'));
         lessTask(filePath, options).then(function () {
-            console.log("==> Less build finished:\n\t" + filePath);
+            logger.end(startObject);
         }, function (rejected) {
             console.error(rejected);
         });

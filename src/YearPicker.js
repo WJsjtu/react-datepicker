@@ -13,10 +13,13 @@ export default class YearPicker extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({
-            current: parseInt(newProps.current / 10) * 10 - 1,
-            active: newProps.active
-        });
+        let _current = parseInt(newProps.current / 10) * 10 - 1;
+        if (this.state.current !== _current || this.state.active !== newProps.active) {
+            this.setState({
+                current: _current,
+                active: newProps.active
+            });
+        }
     }
 
     onPrevClick(event) {

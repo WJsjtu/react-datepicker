@@ -2,6 +2,7 @@ var cleanTask = require('./scripts/clean');
 var webpackTask = require('./scripts/webpack');
 var lessTask = require('./scripts/less');
 var sassTask = require('./scripts/sass');
+var clc = require('cli-color');
 
 var argsFiles = process.argv.splice(2);
 
@@ -31,8 +32,10 @@ var build = function () {
 };
 
 if (noneArgs) {
-    cleanTask().then(build, function (err) {
-        console.error(err);
+    cleanTask().then(build, function () {
+        console.error(clc.red(arguments));
+    }).catch(function () {
+        console.error(clc.red(arguments));
     });
 } else {
     build();

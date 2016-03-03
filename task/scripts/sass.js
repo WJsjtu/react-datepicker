@@ -6,6 +6,7 @@ var recurseTask = require('./recursion');
 var mkdir = require('./mkdir');
 var sass = require('node-sass');
 var options = require('./../config/options');
+var logger = require('./console');
 
 
 var sassTask = function (srcPath, options) {
@@ -42,8 +43,9 @@ var sassTask = function (srcPath, options) {
 module.exports = function (srcNames) {
 
     var build = recurseTask(function (filePath, options) {
+        var startObject = logger.start('sass', filePath.replace(buildConfig.srcDir, 'src'));
         sassTask(filePath, options).then(function () {
-            console.log("==> Sass build finished:\n\t" + filePath);
+            logger.end(startObject);
         }, function (rejected) {
             console.error(rejected);
         });
