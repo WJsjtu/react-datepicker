@@ -1,28 +1,24 @@
 var path = require('path');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-
-var srcDir = path.join(__dirname, '../../src');
-var destDir = path.join(__dirname, '../../build');
+var buildConfig = require('./build');
 
 module.exports = function (entries, port) {
     port = port || 3000;
-    entries = entries.length || [path.join(srcDir, 'index')];
+    entries = entries.length || [path.join(buildConfig.srcDir, 'index')];
 
     var config = {
         entry: {
             vendor: [
-                'react',
-                'react-dom',
                 'react-hot-api',
                 'react-hot-loader',
                 'webpack-dev-server/client?http://localhost:' + port,
                 'webpack/hot/only-dev-server'
-            ],
+            ].concat(Object.keys(buildConfig.externals)),
             app: entries
         },
         output: {
-            path: destDir,
+            path: buildConfig.buildDir,
             filename: 'bundle.js',
             publicPath: '/build/'
         },
@@ -42,16 +38,22 @@ module.exports = function (entries, port) {
             }, {
                 test: /\.js$/,
                 loader: 'react-hot',
-                include: srcDir,
-                exclude: ['node_modules']
+                include: buildConfig.srcDir,
+                exclude: [buildConfig.nodeDir]
             }, {
                 test: /\.js$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react', 'stage-0'],
+                    plugins: [
+                        'transform-es3-member-expression-literals',
+                        'transform-es3-property-literals',
+                        'transform-es5-property-mutators',
+                        'transform-class-properties'
+                    ]
                 },
-                include: srcDir,
-                exclude: ['node_modules']
+                include: buildConfig.srcDir,
+                exclude: [buildConfig.nodeDir]
             }]
         }
     };

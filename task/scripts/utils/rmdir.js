@@ -1,9 +1,5 @@
-var fs = require('fs');
-var path = require('path');
-var buildConfig = require('./config.js');
-var logger = require('./console');
-
-var buildPath = buildConfig.destDir;
+var fs = require('fs'),
+    path = require('path');
 
 var deleteFolderRecursive = function (folderPath, callback) {
     var files = [];
@@ -26,12 +22,8 @@ var deleteFolderRecursive = function (folderPath, callback) {
     }
 };
 
-module.exports = function () {
+module.exports = function (dirPath) {
     return new Promise(function (resolve, reject) {
-        var startObject = logger.start('clean', buildConfig.destDir.substr(buildConfig.destDir.lastIndexOf('/') + 1));
-        deleteFolderRecursive(buildPath, function () {
-            logger.end(startObject);
-            resolve();
-        });
+        deleteFolderRecursive(dirPath, resolve.bind(this));
     });
 };

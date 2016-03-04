@@ -1,18 +1,13 @@
 var path = require('path');
-var options = require('./options');
 
 module.exports = {
     srcDir: path.join(__dirname, '../../src'),
-    destDir: path.join(__dirname, '../../build'),
+    buildDir: path.join(__dirname, '../../build'),
+    nodeDir: path.join(__dirname, '../../node_modules'),
     externals: {
         'react': 'React',
-        'react-dom': 'ReactDOM'
-    },
-    js: {
-        'DatePicker.js': Object.assign({}, options.webpack, {name: 'react-datepicker'})
-    },
-    less: {
-        'DatePicker.less': {name: 'react-datepicker'}
-    },
-    sass: {}
+        'react-dom': 'ReactDOM',
+        'immutable': 'Immutable',
+        'jquery': 'jQuery'
+    }
 };

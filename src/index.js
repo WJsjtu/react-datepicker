@@ -1,6 +1,7 @@
 import DatePicker from './DatePicker';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
