@@ -35,7 +35,7 @@ var defaultOptions = {
             include: config.srcDir,
             exclude: [config.nodeDir]
         }, {
-            test: /\.less$/, loader: 'style-loader!css-loader!less-loader',
+            test: /\.(less|css)$/, loader: 'style-loader!css-loader!less-loader',
             include: config.srcDir,
             exclude: [config.nodeDir]
         }]

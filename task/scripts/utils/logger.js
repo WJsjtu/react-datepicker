@@ -36,7 +36,7 @@ function TaskLogger(taskName, fileName) {
     this.error = function (args) {
         this.errorTime = new Date();
         console.error(
-            '[' + clc.blackBright(parseDate(errorTime)) + '] ' +
+            '[' + clc.blackBright(parseDate(this.errorTime)) + '] ' +
             clc.red('Error') +
             '\' after ' +
             clc.magenta('' + this.errorTime.getTime() - this.startTime.getTime() + ' ms ') +
