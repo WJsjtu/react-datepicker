@@ -1,5 +1,7 @@
-# react-datepicker [![Build Status](https://travis-ci.org/WJsjtu/react-datepicker.svg?branch=master)](https://travis-ci.org/WJsjtu/react-datepicker)
+# react-datepicker (Deprecated) 
 A flexible datepicker component using Facebook React.
+
+##Note: This branch is deprecated. The component has errors in date calculating.
 
 ###Run in browser (127.0.0.1:3000)
 ```
@@ -10,10 +12,6 @@ npm start
 ```
 npm run build
 ```
-
-###Online demo
-
-[View demo](http://wjsjtu.github.io/react-datepicker)
 
 ###The MIT License (MIT)
 
