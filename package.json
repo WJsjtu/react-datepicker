@@ -1,49 +1,43 @@
 {
-  "name": "react-ui-datepicker",
-  "version": "1.0.0",
-  "description": "A flexible datepicker component in Bootstrap style using Facebook React.",
+  "name": "react-datepicker",
+  "version": "2.0.0",
+  "description": "A date-picker component for React",
   "scripts": {
-    "start": "node task/server.js",
-    "build": "node task/build.js"
-  },
-  "dependencies": {
-    "immutable": "^3.7.6",
-    "jquery": "^2.2.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
-  },
-  "devDependencies": {
-    "babel-core": "^6.4.0",
-    "babel-loader": "^6.2.1",
-    "babel-plugin-transform-class-properties": "^6.5.2",
-    "babel-plugin-transform-es3-member-expression-literals": "^6.5.0",
-    "babel-plugin-transform-es3-property-literals": "^6.5.0",
-    "babel-plugin-transform-es5-property-mutators": "^6.3.13",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.5.0",
-    "bootstrap": "^3.3.6",
-    "bootstrap-sass": "^3.3.6",
-    "cli-color": "^1.1.0",
-    "css-loader": "^0.23.1",
-    "es5-shim": "^4.5.7",
-    "es6-shim": "^0.35.0",
-    "less": "^2.5.3",
-    "less-loader": "^2.2.2",
-    "node-sass": "^3.4.2",
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
-    "react-hot-loader": "^1.3.0",
-    "style-loader": "^0.13.0",
-    "uglify-js": "^2.6.2",
-    "webpack": "^1.12.11",
-    "webpack-dev-server": "^1.14.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:WJsjtu/react-datepicker.git"
+    "start": "node tool/editor.js",
+    "test": "node tool/component.js datepicker"
   },
   "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
+    "babel-plugin-transform-es3-property-literals": "^6.8.0",
+    "babel-plugin-transform-es5-property-mutators": "^6.8.0",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "cli-color": "^1.1.0",
+    "css-loader": "^0.26.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "raw-loader": "^0.5.1",
+    "react-addons-pure-render-mixin": "^15.4.0",
+    "react-addons-shallow-compare": "^15.4.0",
+    "style-loader": "^0.13.1",
+    "uglify-js": "^2.7.4",
+    "webpack": "^1.13.3"
+  },
+  "dependencies": {
+    "babel-standalone": "^6.19.0",
+    "bootstrap": "^3.3.7",
+    "codemirror": "^5.20.2",
+    "es5-shim": "^4.5.9",
+    "jquery": "^3.1.1",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0"
+  },
   "author": {
     "name": "王健（Jason Wang）",
     "email": "jasonwang0421@gmail.com",
@@ -52,8 +46,8 @@
   "homepage": "http://wjsjtu.github.io/react-datepicker/",
   "keywords": [
     "react",
+    "component",
     "datepicker",
-    "bootstrap",
-    "react-component"
+    "react-datepicker"
   ]
 }

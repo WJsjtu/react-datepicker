@@ -1,0 +1,127 @@
+@blueColor: #2DB7F5;
+@yellowColor: #FFFF99;
+@greenColor: #8BFC85;
+@redColor: #FF7373;
+
+@disableColor: #BBBBBB;
+@shadowColor: #D4D4D4;
+@darkColor: #666666;
+@fontColor: #444444;
+@backColor: #FFFFFF;
+
+@transitionTime: 0.3s;
+
+div.date-picker {
+  color: #666666;
+  background-color: #FFFFFF;
+  div.input {
+    cursor: text;
+    border: 1px #D4D4D4 solid;
+    span {
+      line-height: 2.1;
+    }
+  }
+  div.picker-wrapper {
+    position: relative;
+    div.picker {
+      position: absolute;
+      background-color: #FFFFFF;
+      z-index: 999;
+      box-shadow: @shadowColor 3px 3px 3px;
+      -moz-box-shadow: @shadowColor 3px 3px 3px;
+      -webkit-box-shadow: @shadowColor 3px 3px 3px;
+      border: 1px @shadowColor solid;
+    }
+  }
+  table {
+    * {
+      margin: 0;
+      padding: 0;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 0;
+    thead {
+      tr {
+        border-bottom: 1px @disableColor solid;
+        color: @darkColor;
+        th {
+          text-align: center;
+          cursor: pointer;
+          line-height: 2.1;
+          &:hover {
+            background-color: lighten(@disableColor, 20%);
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        .cell {
+          text-align: center;
+          border: none;
+          border-radius: 0;
+          line-height: 2.1;
+          overflow: hidden;
+          word-wrap: normal;
+          text-overflow: clip;
+          white-space: nowrap;
+          &.large {
+            line-height: 4.9;
+            display: inline-block;
+            *zoom: 1;
+            *display: inline;
+            width: 25%;
+          }
+          transition: all @transitionTime;
+          transition-timing-function: linear;
+          -moz-transition: all @transitionTime;
+          -moz-transition-timing-function: linear;
+          -webkit-transition: all @transitionTime;
+          -webkit-transition-timing-function: linear;
+          -o-transition: all @transitionTime;
+          -o-transition-timing-function: linear;
+
+          cursor: pointer;
+          &.old, &.new {
+            color: @disableColor;
+          }
+          &:hover {
+            background-color: darken(@disableColor, 20%);
+            color: @backColor;
+          }
+          &.current {
+            background-color: @yellowColor;
+            color: darken(@disableColor, 20%);
+            &:hover {
+              background-color: darken(@yellowColor, 20%);
+              color: @disableColor;
+            }
+          }
+          &.active {
+            background-color: @blueColor;
+            color: @backColor;
+          }
+
+          &.disabled {
+            cursor: not-allowed;
+            background-color: lighten(@disableColor, 10%);
+            color: @backColor;
+            &:hover {
+              background-color: lighten(@disableColor, 10%);
+              color: @backColor;
+            }
+          }
+        }
+      }
+    }
+  }
+}

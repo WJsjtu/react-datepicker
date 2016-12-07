@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>DatePicker</title>
+    <meta name="viewport" content="width=device-width">
+    <meta property="og:title" content="Scope">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="./../../dist/tool/editor/codemirror.css" type="text/css">
+
+    <!--[if lte IE 8]>
+    <script src="./../../node_modules/es5-shim/es5-shim.min.js"></script>
+    <script src="./../../node_modules/es5-shim/es5-sham.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="container">
+</div>
+<script src="./../../dist/tool/editor/codemirror.js"></script>
+<script src="./../../dist/tool/editor/javascript.js"></script>
+<script src="./../../dist/tool/editor/xml.js"></script>
+<script src="./../../dist/tool/editor/jsx.js"></script>
+<script src="./../../dist/tool/editor/babel.min.js"></script>
+<script src="./../../node_modules/react/dist/react-with-addons.js"></script>
+<script src="./../../node_modules/react-dom/dist/react-dom.js"></script>
+<script src="./../../dist/tool/editor/editor.js"></script>
+<script src="./../../dist/components/datepicker.js"></script>
+<script type="text/plain" id="code">
+/*
+propTypes: {
+    fontSize: PropTypes.number,
+    date: PropTypes.shape({
+        year: PropTypes.number,
+        month: PropTypes.number,
+        day: PropTypes.number
+    }),
+    onSelect: PropTypes.func,
+    rule: PropTypes.func,
+    format: PropTypes.string,
+    lang: PropTypes.oneOf(['en', 'zh']),
+    position: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
+}
+*/
+
+ReactDOM.render(
+    <DatePicker fontSize={13}
+                rule={(year, month, day) => { return day != 13; }}
+                date={{year: 2012, month: 12, day: 22}}
+                lang="en"
+                position={"bottom"}
+    /> , mountNode
+);
+</script>
+<script>
+    var TIMER_COMPONENT = document.getElementById('code').innerHTML.trim();
+
+    ReactDOM.render(React.createElement(ReactPlayground, {codeText: TIMER_COMPONENT}), document.getElementById('container'));
+</script>
+</body>
+</html>
