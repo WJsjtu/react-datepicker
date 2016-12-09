@@ -49,6 +49,13 @@ module.exports = React.createClass({
         };
     },
 
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({
+            fontSize: nextProps.fontSize,
+            date: nextProps.date
+        });
+    },
+
     componentDidMount: function () {
         this.mounted = true;
 
