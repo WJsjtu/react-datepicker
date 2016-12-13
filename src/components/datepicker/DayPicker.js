@@ -3,6 +3,8 @@ const PureRenderMixin = require('react-addons-pure-render-mixin');
 const PanelMixin = require('./PanelMixin');
 const DateMixin = require('./DateMixin');
 
+const styles = require('./style.less');
+
 module.exports = React.createClass({
 
     displayName: 'DayPicker',
@@ -49,7 +51,7 @@ module.exports = React.createClass({
 
             return (
                 <td key={keyIndex++}
-                    className={classArray.join(' ')}
+                    className={classArray.map((className) => styles[className]).join(' ')}
                     onClick={validate !== false ? this.onCellClick.bind(this, year, month, day) : null}
                 >
                     {day}

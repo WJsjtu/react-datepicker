@@ -3,6 +3,8 @@ const PureRenderMixin = require('react-addons-pure-render-mixin');
 const PanelMixin = require('./PanelMixin');
 const DateMixin = require('./DateMixin');
 
+const styles = require('./style.less');
+
 module.exports = React.createClass({
 
     displayName: 'MonthPicker',
@@ -29,7 +31,7 @@ module.exports = React.createClass({
 
             return (
                 <div key={keyIndex++}
-                     className={classArray.join(' ')}
+                     className={classArray.map((className) => styles[className]).join(' ')}
                      onClick={this.onCellClick.bind(this, year)}
                 >
                     <span>{year}</span>

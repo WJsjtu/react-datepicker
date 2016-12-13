@@ -4,6 +4,8 @@ const PanelMixin = require('./PanelMixin');
 const DateMixin = require('./DateMixin');
 const language = require('./language');
 
+const styles = require('./style.less');
+
 module.exports = React.createClass({
 
     displayName: 'MonthPicker',
@@ -32,7 +34,7 @@ module.exports = React.createClass({
 
             return (
                 <div key={keyIndex++}
-                     className={classArray.join(' ')}
+                     className={classArray.map((className) => styles[className]).join(' ')}
                      onClick={this.onCellClick.bind(this, month)}
                 >
                     <span>{lang.month[month - 1]}</span>

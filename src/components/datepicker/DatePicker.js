@@ -6,7 +6,7 @@ const DateMixin = require('./DateMixin');
 const language = require('./language');
 const PickerPanel = require('./PickerPanel');
 
-require('./style.less');
+const styles = require('./style.less');
 
 module.exports = React.createClass({
 
@@ -48,7 +48,7 @@ module.exports = React.createClass({
             focused: false
         };
     },
-
+    
     componentWillReceiveProps: function (nextProps) {
         this.setState({
             fontSize: nextProps.fontSize,
@@ -73,6 +73,10 @@ module.exports = React.createClass({
         dateObject.setFullYear(date.year);
         dateObject.setMonth(date.month - 1);
         dateObject.setDate(date.day);
+        dateObject.setHours(0);
+        dateObject.setMinutes(0);
+        dateObject.setSeconds(0);
+        dateObject.setMilliseconds(0);
         return this.dateFormat(dateObject, this.props.format);
     },
 
@@ -133,13 +137,13 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className='date-picker' ref='comp'>
-                <div className='input' style={style} onClick={this.onFocus}>
+            <div className={styles['date-picker']} ref='comp'>
+                <div className={styles['input']} style={style} onClick={this.onFocus}>
                     <span style={{padding: `0 ${fontSize}px`}}>{this.getDateText()}</span>
                 </div>
                 {focused &&
-                <div className='picker-wrapper'>
-                    <div className='picker' style={style}>
+                <div className={styles['picker-wrapper']}>
+                    <div className={styles['picker']} style={style}>
                         <PickerPanel lang={this.props.lang}
                                      width={width}
                                      date={date}

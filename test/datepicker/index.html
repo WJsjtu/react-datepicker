@@ -10,7 +10,6 @@
 
     <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="./../../dist/tool/editor/codemirror.css" type="text/css">
-
     <!--[if lte IE 8]>
     <script src="./../../node_modules/es5-shim/es5-shim.min.js"></script>
     <script src="./../../node_modules/es5-shim/es5-sham.min.js"></script>
@@ -49,6 +48,7 @@ ReactDOM.render(
     <DatePicker fontSize={13}
                 rule={(year, month, day) => { return day != 13; }}
                 date={{year: 2012, month: 12, day: 22}}
+                format="yyyy-MM-dd"
                 lang="en"
                 position={"bottom"}
     /> , mountNode

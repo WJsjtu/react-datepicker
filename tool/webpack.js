@@ -34,7 +34,7 @@ var defaultOptions = {
             test: /\.js$/,
             loader: 'babel'
         }, {
-            test: /\.(less|css)$/, loader: 'style-loader!css-loader?minimize=true!less-loader?minimize=true'
+            test: /\.(less|css)$/, loader: 'style-loader!css-loader?modules&localIdentName=[local]_[hash:base64:5]&minimize=true!less-loader?minimize=true'
         }, {
             test: /\.(tmpl|txt)$/, loader: 'raw-loader'
         }]
