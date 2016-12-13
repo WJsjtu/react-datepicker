@@ -5,6 +5,10 @@ A flexible datepicker component using Facebook React.
 
 [View online demo](http://wjsjtu.github.io/react-datepicker/test/datepicker/index.html)
 
+###Install
+
+`npm install react-ui-datepicker``
+
 ###The MIT License (MIT)
 
 Copyright (c) 2016 Jason Wang, contributors
