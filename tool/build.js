@@ -10,7 +10,7 @@ mkdir(distPath);
 var logger = log('build:datepicker', 'index.js');
 logger.start();
 webpack(
-    path.join(__dirname, './../index.js'),
+    path.join(__dirname, './../src/DatePicker.js'),
     path.join(__dirname, './../dist/datepicker.js'),
     true
 ).then(function () {
@@ -19,7 +19,7 @@ webpack(
     logger.error(e);
 });
 webpack(
-    path.join(__dirname, './../index.js'),
+    path.join(__dirname, './../src/DatePicker.js'),
     path.join(__dirname, './../dist/datepicker.min.js')
 ).then(function () {
     logger.finish();

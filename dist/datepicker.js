@@ -46,7 +46,183 @@
 
 	'use strict';
 
-	module.exports = __webpack_require__(10);
+	var _React = React,
+	    PropTypes = _React.PropTypes,
+	    createElement = _React.createElement;
+	var _ReactDOM = ReactDOM,
+	    findDOMNode = _ReactDOM.findDOMNode;
+
+
+	var PureRenderMixin = __webpack_require__(1);
+	var DateMixin = __webpack_require__(2);
+	var language = __webpack_require__(5);
+	var PickerPanel = __webpack_require__(12);
+
+	var styles = __webpack_require__(3);
+
+	module.exports = React.createClass({
+
+	    displayName: 'DatePicker',
+
+	    mixins: [PureRenderMixin, DateMixin],
+
+	    propTypes: {
+	        fontSize: PropTypes.number,
+	        date: PropTypes.shape({
+	            year: PropTypes.number,
+	            month: PropTypes.number,
+	            day: PropTypes.number
+	        }),
+	        onSelect: PropTypes.func,
+	        rule: PropTypes.func,
+	        format: PropTypes.string,
+	        lang: PropTypes.oneOf(['en', 'zh']),
+	        position: PropTypes.oneOf(['bottom', 'top', 'left', 'right'])
+	    },
+
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            fontSize: 12,
+	            date: {},
+	            onSelect: console.log.bind(console),
+	            rule: function rule() {
+	                return true;
+	            },
+	            format: 'yyyy-MM-dd',
+	            lang: 'en',
+	            position: 'bottom'
+	        };
+	    },
+
+	    getInitialState: function getInitialState() {
+	        var _props = this.props,
+	            fontSize = _props.fontSize,
+	            date = _props.date;
+
+	        return {
+	            fontSize: fontSize,
+	            date: date,
+	            focused: false
+	        };
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({
+	            fontSize: nextProps.fontSize,
+	            date: nextProps.date
+	        });
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        this.mounted = true;
+	    },
+
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.mounted = false;
+	    },
+
+	    getDateText: function getDateText() {
+	        var date = this.state.date;
+	        var lang = language[this.props.lang] || language.en;
+	        if (!date.year || !date.month || !date.day) return lang.placeholder;
+	        var dateObject = new Date();
+	        dateObject.setFullYear(date.year);
+	        dateObject.setMonth(date.month - 1);
+	        dateObject.setDate(date.day);
+	        dateObject.setHours(0);
+	        dateObject.setMinutes(0);
+	        dateObject.setSeconds(0);
+	        dateObject.setMilliseconds(0);
+	        return this.dateFormat(dateObject, this.props.format);
+	    },
+
+	    onSelect: function onSelect(year, month, day) {
+	        this.setState({
+	            date: { year: year, month: month, day: day }
+	        }, function () {
+	            this.props.onSelect(year, month, day);
+	        });
+	    },
+
+	    onBlur: function onBlur(event) {
+	        var element = event.srcElement;
+	        while (element && element != findDOMNode(this.refs.comp)) {
+	            element = element.parentElement;
+	        }
+	        if (!element) {
+	            this.mounted && this.setState({
+	                focused: false
+	            }, function () {
+	                document.removeEventListener('click', this.onBlur);
+	            });
+	        }
+	    },
+
+	    onFocus: function onFocus() {
+	        this.mounted && this.setState({
+	            focused: true
+	        }, function () {
+	            document.addEventListener('click', this.onBlur);
+	        });
+	    },
+
+	    render: function render() {
+	        var _state = this.state,
+	            fontSize = _state.fontSize,
+	            date = _state.date,
+	            focused = _state.focused;
+
+
+	        var width = fontSize * 21;
+
+	        var style = { width: width, fontSize: fontSize };
+
+	        var position = this.props.position;
+
+	        var height = fontSize * 16.8 + 3;
+
+	        if (position == 'top') {
+	            style.top = -height - fontSize * 2.1 - 6;
+	            style.left = 0;
+	        } else if (position == 'left') {
+	            style.left = -3 - width;
+	            style.top = -height / 2 - fontSize - 1;
+	        } else if (position == 'right') {
+	            style.left = 3 + width;
+	            style.top = -height / 2 - fontSize - 1;
+	        } else {
+	            style.top = 0;
+	            style.left = 0;
+	        }
+
+	        return createElement(
+	            'div',
+	            { className: styles['date-picker'], ref: 'comp' },
+	            createElement(
+	                'div',
+	                { className: styles['input'], style: style, onClick: this.onFocus },
+	                createElement(
+	                    'span',
+	                    { style: { padding: '0 ' + fontSize + 'px' } },
+	                    this.getDateText()
+	                )
+	            ),
+	            focused && createElement(
+	                'div',
+	                { className: styles['picker-wrapper'] },
+	                createElement(
+	                    'div',
+	                    { className: styles['picker'], style: style },
+	                    createElement(PickerPanel, { lang: this.props.lang,
+	                        width: width,
+	                        date: date,
+	                        rule: this.props.rule,
+	                        onSelect: this.onSelect })
+	                )
+	            )
+	        );
+	    }
+	});
 
 /***/ },
 /* 1 */
@@ -124,10 +300,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(17);
+	var content = __webpack_require__(16);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(18)(content, {});
+	var update = __webpack_require__(17)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -196,8 +372,8 @@
 	'use strict';
 
 	module.exports = {
-	    en: __webpack_require__(15),
-	    zh: __webpack_require__(16)
+	    en: __webpack_require__(14),
+	    zh: __webpack_require__(15)
 	};
 
 /***/ },
@@ -417,190 +593,6 @@
 	'use strict';
 
 	var _React = React,
-	    PropTypes = _React.PropTypes,
-	    createElement = _React.createElement;
-	var _ReactDOM = ReactDOM,
-	    findDOMNode = _ReactDOM.findDOMNode;
-
-
-	var PureRenderMixin = __webpack_require__(1);
-	var DateMixin = __webpack_require__(2);
-	var language = __webpack_require__(5);
-	var PickerPanel = __webpack_require__(13);
-
-	var styles = __webpack_require__(3);
-
-	module.exports = React.createClass({
-
-	    displayName: 'DatePicker',
-
-	    mixins: [PureRenderMixin, DateMixin],
-
-	    propTypes: {
-	        fontSize: PropTypes.number,
-	        date: PropTypes.shape({
-	            year: PropTypes.number,
-	            month: PropTypes.number,
-	            day: PropTypes.number
-	        }),
-	        onSelect: PropTypes.func,
-	        rule: PropTypes.func,
-	        format: PropTypes.string,
-	        lang: PropTypes.oneOf(['en', 'zh']),
-	        position: PropTypes.oneOf(['bottom', 'top', 'left', 'right'])
-	    },
-
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            fontSize: 12,
-	            date: {},
-	            onSelect: console.log.bind(console),
-	            rule: function rule() {
-	                return true;
-	            },
-	            format: 'yyyy-MM-dd',
-	            lang: 'en',
-	            position: 'bottom'
-	        };
-	    },
-
-	    getInitialState: function getInitialState() {
-	        var _props = this.props,
-	            fontSize = _props.fontSize,
-	            date = _props.date;
-
-	        return {
-	            fontSize: fontSize,
-	            date: date,
-	            focused: false
-	        };
-	    },
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        this.setState({
-	            fontSize: nextProps.fontSize,
-	            date: nextProps.date
-	        });
-	    },
-
-	    componentDidMount: function componentDidMount() {
-	        this.mounted = true;
-	    },
-
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.mounted = false;
-	    },
-
-	    getDateText: function getDateText() {
-	        var date = this.state.date;
-	        var lang = language[this.props.lang] || language.en;
-	        if (!date.year || !date.month || !date.day) return lang.placeholder;
-	        var dateObject = new Date();
-	        dateObject.setFullYear(date.year);
-	        dateObject.setMonth(date.month - 1);
-	        dateObject.setDate(date.day);
-	        dateObject.setHours(0);
-	        dateObject.setMinutes(0);
-	        dateObject.setSeconds(0);
-	        dateObject.setMilliseconds(0);
-	        return this.dateFormat(dateObject, this.props.format);
-	    },
-
-	    onSelect: function onSelect(year, month, day) {
-	        this.setState({
-	            date: { year: year, month: month, day: day }
-	        }, function () {
-	            this.props.onSelect(year, month, day);
-	        });
-	    },
-
-	    onBlur: function onBlur(event) {
-	        var element = event.srcElement;
-	        while (element && element != findDOMNode(this.refs.comp)) {
-	            element = element.parentElement;
-	        }
-	        if (!element) {
-	            this.mounted && this.setState({
-	                focused: false
-	            }, function () {
-	                document.removeEventListener('click', this.onBlur);
-	            });
-	        }
-	    },
-
-	    onFocus: function onFocus() {
-	        this.mounted && this.setState({
-	            focused: true
-	        }, function () {
-	            document.addEventListener('click', this.onBlur);
-	        });
-	    },
-
-	    render: function render() {
-	        var _state = this.state,
-	            fontSize = _state.fontSize,
-	            date = _state.date,
-	            focused = _state.focused;
-
-
-	        var width = fontSize * 21;
-
-	        var style = { width: width, fontSize: fontSize };
-
-	        var position = this.props.position;
-
-	        var height = fontSize * 16.8 + 3;
-
-	        if (position == 'top') {
-	            style.top = -height - fontSize * 2.1 - 6;
-	            style.left = 0;
-	        } else if (position == 'left') {
-	            style.left = -3 - width;
-	            style.top = -height / 2 - fontSize - 1;
-	        } else if (position == 'right') {
-	            style.left = 3 + width;
-	            style.top = -height / 2 - fontSize - 1;
-	        } else {
-	            style.top = 0;
-	            style.left = 0;
-	        }
-
-	        return createElement(
-	            'div',
-	            { className: styles['date-picker'], ref: 'comp' },
-	            createElement(
-	                'div',
-	                { className: styles['input'], style: style, onClick: this.onFocus },
-	                createElement(
-	                    'span',
-	                    { style: { padding: '0 ' + fontSize + 'px' } },
-	                    this.getDateText()
-	                )
-	            ),
-	            focused && createElement(
-	                'div',
-	                { className: styles['picker-wrapper'] },
-	                createElement(
-	                    'div',
-	                    { className: styles['picker'], style: style },
-	                    createElement(PickerPanel, { lang: this.props.lang,
-	                        width: width,
-	                        date: date,
-	                        rule: this.props.rule,
-	                        onSelect: this.onSelect })
-	                )
-	            )
-	        );
-	    }
-	});
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _React = React,
 	    createElement = _React.createElement;
 
 	var PureRenderMixin = __webpack_require__(1);
@@ -709,7 +701,7 @@
 	});
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -801,7 +793,7 @@
 	});
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -818,9 +810,9 @@
 	var DateMixin = __webpack_require__(2);
 	var language = __webpack_require__(5);
 
-	var DayPicker = __webpack_require__(11);
-	var MonthPicker = __webpack_require__(12);
-	var YearPicker = __webpack_require__(14);
+	var DayPicker = __webpack_require__(10);
+	var MonthPicker = __webpack_require__(11);
+	var YearPicker = __webpack_require__(13);
 
 	module.exports = React.createClass({
 
@@ -1093,7 +1085,7 @@
 	});
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1182,7 +1174,7 @@
 	});
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1210,7 +1202,7 @@
 	};
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1236,7 +1228,7 @@
 	};
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(6)();
@@ -1262,7 +1254,7 @@
 	};
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
