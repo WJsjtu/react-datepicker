@@ -7,7 +7,7 @@ A flexible datepicker component using Facebook React.
 
 ###Install
 
-`npm install react-ui-datepicker``
+`npm install react-ui-datepicker`
 
 ###The MIT License (MIT)
 

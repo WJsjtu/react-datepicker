@@ -1,1 +1,1 @@
-window.DatePicker = require('./../src/index.js');
+window.DatePicker = require('./../src/DatePicker.js');
