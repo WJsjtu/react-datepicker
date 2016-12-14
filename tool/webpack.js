@@ -25,7 +25,6 @@ var orderPlugin = new webpack.optimize.OccurrenceOrderPlugin();
 
 var defaultOptions = {
     externals: {
-        'jquery': 'jQuery',
         'react': 'React',
         'react-dom': 'ReactDOM'
     },
@@ -47,7 +46,7 @@ module.exports = function (srcFile, distFile, disableCompress) {
         output: {
             path: path.dirname(distFile),
             filename: path.basename(distFile),
-            chunkFilename: '[hash]-[chunkhash].js'
+            libraryTarget: 'commonjs2'
         },
         externals: defaultOptions.externals,
         plugins: [definePlugin, orderPlugin].concat(!disableCompress ? compressPlugin : [])
