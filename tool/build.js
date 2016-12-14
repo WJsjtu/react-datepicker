@@ -12,7 +12,8 @@ logger.start();
 webpack(
     path.join(__dirname, './../src/DatePicker.js'),
     path.join(__dirname, './../dist/datepicker.js'),
-    true
+    true,
+    'commonjs2'
 ).then(function () {
     logger.finish();
 }, function (e) {
@@ -20,7 +21,9 @@ webpack(
 });
 webpack(
     path.join(__dirname, './../src/DatePicker.js'),
-    path.join(__dirname, './../dist/datepicker.min.js')
+    path.join(__dirname, './../dist/datepicker.min.js'),
+    false,
+    'commonjs2'
 ).then(function () {
     logger.finish();
 }, function (e) {

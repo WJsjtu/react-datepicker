@@ -33,21 +33,23 @@ var defaultOptions = {
             test: /\.js$/,
             loader: 'babel'
         }, {
-            test: /\.(less|css)$/, loader: 'style-loader!css-loader?modules&localIdentName=[local]_[hash:base64:5]&minimize=true!less-loader?minimize=true'
+            test: /\.(less|css)$/,
+            loader: 'style-loader!css-loader?modules&localIdentName=[local]_[hash:base64:5]&minimize=true!less-loader?minimize=true'
         }, {
             test: /\.(tmpl|txt)$/, loader: 'raw-loader'
         }]
     }
 };
 
-module.exports = function (srcFile, distFile, disableCompress) {
+module.exports = function (srcFile, distFile, disableCompress, moduleTarget) {
     var options = Object.assign({}, defaultOptions, {
         entry: srcFile,
-        output: {
+        output: Object.assign({
             path: path.dirname(distFile),
-            filename: path.basename(distFile),
-            libraryTarget: 'commonjs2'
-        },
+            filename: path.basename(distFile)
+        }, moduleTarget ? {
+            libraryTarget: moduleTarget
+        } : undefined),
         externals: defaultOptions.externals,
         plugins: [definePlugin, orderPlugin].concat(!disableCompress ? compressPlugin : [])
     });
