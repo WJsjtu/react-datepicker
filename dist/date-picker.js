@@ -1,5 +1,5 @@
 /**
-* react-ui-datepicker v2.0.5
+* react-ui-datepicker v2.0.6
 *
 * Copyright 2016-present, 王健（Jason Wang）, contributors.
 * All rights reserved.
@@ -1054,7 +1054,7 @@ Picker.DUMMY_FUNC = PICKER_DUMMY_FUNC;
 
 module.exports = {
 	"name": "react-ui-datepicker",
-	"version": "2.0.5",
+	"version": "2.0.6",
 	"description": "A date-picker component for React",
 	"scripts": {
 		"start": "node tool/build.js"
