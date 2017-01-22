@@ -9,7 +9,6 @@ import Picker, {PICKER_EMPTY_DATE, PICKER_DUMMY_FUNC} from './Picker';
 
 import styles from './style.less';
 
-
 /**
  * @class DatePicker
  * @export DatePicker
@@ -300,4 +299,4 @@ DatePicker.defaultProps = {
 
 export const EMPTY_DATE = PICKER_EMPTY_DATE;
 export const DUMMY_FUNC = PICKER_DUMMY_FUNC;
-export const version = require('./../package.json').version;
+export const VERSION = '2.0.7';

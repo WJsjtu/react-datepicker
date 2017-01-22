@@ -1,5 +1,5 @@
 /**
-* react-ui-datepicker v2.0.6
+* react-ui-datepicker v2.0.7
 *
 * Copyright 2016-present, 王健（Jason Wang）, contributors.
 * All rights reserved.
@@ -17,7 +17,7 @@
 		exports["DatePicker"] = factory(require("React"), require("ReactDOM"));
 	else
 		root["DatePicker"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_11__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_10__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -258,11 +258,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DEFAULT_LANGUAGE = undefined;
 
-var _en = __webpack_require__(15);
+var _en = __webpack_require__(14);
 
 var _en2 = _interopRequireDefault(_en);
 
-var _zh = __webpack_require__(16);
+var _zh = __webpack_require__(15);
 
 var _zh2 = _interopRequireDefault(_zh);
 
@@ -287,10 +287,10 @@ var DEFAULT_LANGUAGE = exports.DEFAULT_LANGUAGE = 'en';
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(33);
+var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(38)(content, {});
+var update = __webpack_require__(37)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -434,56 +434,56 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-var _override = __webpack_require__(28);
+var _override = __webpack_require__(27);
 
 exports.override = _interopRequire(_override);
 
-var _deprecate = __webpack_require__(21);
+var _deprecate = __webpack_require__(20);
 
 exports.deprecate = _interopRequire(_deprecate);
 exports.deprecated = _interopRequire(_deprecate);
 
-var _suppressWarnings = __webpack_require__(30);
+var _suppressWarnings = __webpack_require__(29);
 
 exports.suppressWarnings = _interopRequire(_suppressWarnings);
 
-var _memoize = __webpack_require__(24);
+var _memoize = __webpack_require__(23);
 
 exports.memoize = _interopRequire(_memoize);
 
-var _autobind = __webpack_require__(18);
+var _autobind = __webpack_require__(17);
 
 exports.autobind = _interopRequire(_autobind);
 
-var _readonly = __webpack_require__(29);
+var _readonly = __webpack_require__(28);
 
 exports.readonly = _interopRequire(_readonly);
 
-var _enumerable = __webpack_require__(22);
+var _enumerable = __webpack_require__(21);
 
 exports.enumerable = _interopRequire(_enumerable);
 
-var _nonenumerable = __webpack_require__(27);
+var _nonenumerable = __webpack_require__(26);
 
 exports.nonenumerable = _interopRequire(_nonenumerable);
 
-var _nonconfigurable = __webpack_require__(26);
+var _nonconfigurable = __webpack_require__(25);
 
 exports.nonconfigurable = _interopRequire(_nonconfigurable);
 
-var _debounce = __webpack_require__(19);
+var _debounce = __webpack_require__(18);
 
 exports.debounce = _interopRequire(_debounce);
 
-var _throttle = __webpack_require__(31);
+var _throttle = __webpack_require__(30);
 
 exports.throttle = _interopRequire(_throttle);
 
-var _decorate = __webpack_require__(20);
+var _decorate = __webpack_require__(19);
 
 exports.decorate = _interopRequire(_decorate);
 
-var _mixin = __webpack_require__(25);
+var _mixin = __webpack_require__(24);
 
 exports.mixin = _interopRequire(_mixin);
 exports.mixins = _interopRequire(_mixin);
@@ -492,17 +492,17 @@ var _lazyInitialize = __webpack_require__(8);
 
 exports.lazyInitialize = _interopRequire(_lazyInitialize);
 
-var _time = __webpack_require__(32);
+var _time = __webpack_require__(31);
 
 exports.time = _interopRequire(_time);
 
-var _extendDescriptor = __webpack_require__(23);
+var _extendDescriptor = __webpack_require__(22);
 
 exports.extendDescriptor = _interopRequire(_extendDescriptor);
 
 // Helper to apply decorators to a class without transpiler support
 
-var _applyDecorators = __webpack_require__(17);
+var _applyDecorators = __webpack_require__(16);
 
 exports.applyDecorators = _interopRequire(_applyDecorators);
 
@@ -510,7 +510,7 @@ exports.applyDecorators = _interopRequire(_applyDecorators);
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(35);
 
 /***/ }),
 /* 7 */
@@ -665,15 +665,15 @@ var _locale = __webpack_require__(2);
 
 var _locale2 = _interopRequireDefault(_locale);
 
-var _DayPicker = __webpack_require__(12);
+var _DayPicker = __webpack_require__(11);
 
 var _DayPicker2 = _interopRequireDefault(_DayPicker);
 
-var _MonthPicker = __webpack_require__(13);
+var _MonthPicker = __webpack_require__(12);
 
 var _MonthPicker2 = _interopRequireDefault(_MonthPicker);
 
-var _YearPicker = __webpack_require__(14);
+var _YearPicker = __webpack_require__(13);
 
 var _YearPicker2 = _interopRequireDefault(_YearPicker);
 
@@ -1052,69 +1052,10 @@ Picker.DUMMY_FUNC = PICKER_DUMMY_FUNC;
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"name": "react-ui-datepicker",
-	"version": "2.0.6",
-	"description": "A date-picker component for React",
-	"scripts": {
-		"start": "node tool/build.js"
-	},
-	"main": "dist/datepicker.js",
-	"files": [
-		"dist",
-		"src"
-	],
-	"license": "MIT",
-	"devDependencies": {
-		"babel-core": "^6.22.1",
-		"babel-loader": "^6.2.10",
-		"babel-plugin-transform-class-properties": "^6.22.0",
-		"babel-plugin-transform-decorators-legacy": "^1.3.4",
-		"babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
-		"babel-plugin-transform-es3-property-literals": "^6.22.0",
-		"babel-plugin-transform-es5-property-mutators": "^6.22.0",
-		"babel-plugin-transform-flow-strip-types": "^6.22.0",
-		"babel-preset-es2015": "^6.22.0",
-		"babel-preset-react": "^6.22.0",
-		"babel-preset-stage-0": "^6.22.0",
-		"cli-color": "^1.1.0",
-		"core-decorators": "^0.15.0",
-		"css-loader": "^0.26.0",
-		"es5-shim": "^4.5.9",
-		"less": "^2.7.2",
-		"less-loader": "^2.2.3",
-		"react-addons-pure-render-mixin": "^15.4.2",
-		"react-addons-shallow-compare": "^15.4.2",
-		"react-ui-playground": "^1.0.2",
-		"style-loader": "^0.13.1",
-		"webpack": "^2.2.0"
-	},
-	"dependencies": {
-		"react": "^15.4.2",
-		"react-dom": "^15.4.2"
-	},
-	"author": {
-		"name": "王健（Jason Wang）",
-		"email": "jasonwang0421@gmail.com",
-		"url": "http://github.com/wjsjtu"
-	},
-	"homepage": "http://wjsjtu.github.io/react-datepicker/",
-	"keywords": [
-		"react",
-		"component",
-		"datepicker",
-		"react-datepicker"
-	]
-};
+module.exports = __WEBPACK_EXTERNAL_MODULE_10__;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1299,7 +1240,7 @@ var DayPicker = (0, _PanelDecorator2['default'])(_class = (_class2 = function (_
 exports['default'] = DayPicker;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1430,7 +1371,7 @@ var MonthPicker = (0, _PanelDecorator2['default'])(_class = function (_Component
 exports['default'] = MonthPicker;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1554,7 +1495,7 @@ var YearPicker = (0, _PanelDecorator2['default'])(_class = function (_Component)
 exports['default'] = YearPicker;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1596,7 +1537,7 @@ var assets = {
 exports['default'] = assets;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1636,7 +1577,7 @@ var assets = {
 exports['default'] = assets;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1668,7 +1609,7 @@ function applyDecorators(Class, props) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1813,7 +1754,7 @@ function autobind() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1886,7 +1827,7 @@ function debounce() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1959,7 +1900,7 @@ function decorate() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2016,7 +1957,7 @@ function deprecate() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2045,7 +1986,7 @@ function enumerable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2087,7 +2028,7 @@ function extendDescriptor() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2187,7 +2128,7 @@ function memoize() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2266,7 +2207,7 @@ function mixin() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2295,7 +2236,7 @@ function nonconfigurable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2324,7 +2265,7 @@ function nonenumerable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2617,7 +2558,7 @@ function override() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2646,7 +2587,7 @@ function readonly() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2697,7 +2638,7 @@ function suppressWarnings() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2793,7 +2734,7 @@ function throttle() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2871,10 +2812,10 @@ function time() {
 }
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)();
+exports = module.exports = __webpack_require__(33)();
 // imports
 
 
@@ -2897,7 +2838,7 @@ exports.locals = {
 };
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports) {
 
 /*
@@ -2953,7 +2894,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3026,7 +2967,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3042,7 +2983,7 @@ module.exports = shallowEqual;
 
 
 
-var shallowCompare = __webpack_require__(37);
+var shallowCompare = __webpack_require__(36);
 
 /**
  * If your React component's render function is "pure", e.g. it will render the
@@ -3079,7 +3020,7 @@ var ReactComponentWithPureRenderMixin = {
 module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3095,7 +3036,7 @@ module.exports = ReactComponentWithPureRenderMixin;
 
 
 
-var shallowEqual = __webpack_require__(35);
+var shallowEqual = __webpack_require__(34);
 
 /**
  * Does a shallow comparison for props and state.
@@ -3109,7 +3050,7 @@ function shallowCompare(instance, nextProps, nextState) {
 module.exports = shallowCompare;
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports) {
 
 /*
@@ -3361,7 +3302,7 @@ function updateLink(linkElement, obj) {
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3370,7 +3311,7 @@ function updateLink(linkElement, obj) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.version = exports.DUMMY_FUNC = exports.EMPTY_DATE = exports['default'] = undefined;
+exports.VERSION = exports.DUMMY_FUNC = exports.EMPTY_DATE = exports['default'] = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3378,7 +3319,7 @@ var _desc, _value, _class;
 
 var _react = __webpack_require__(1);
 
-var _reactDom = __webpack_require__(11);
+var _reactDom = __webpack_require__(10);
 
 var _reactAddonsPureRenderMixin = __webpack_require__(6);
 
@@ -3761,7 +3702,7 @@ DatePicker.defaultProps = {
 
 var EMPTY_DATE = exports.EMPTY_DATE = _Picker.PICKER_EMPTY_DATE;
 var DUMMY_FUNC = exports.DUMMY_FUNC = _Picker.PICKER_DUMMY_FUNC;
-var version = exports.version = __webpack_require__(10).version;
+var VERSION = exports.VERSION = '2.0.7';
 
 /***/ })
 /******/ ]);
