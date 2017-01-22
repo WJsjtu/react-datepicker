@@ -1,48 +1,60 @@
-const {createElement} = React;
-const PureRenderMixin = require('react-addons-pure-render-mixin');
-const PanelMixin = require('./PanelMixin');
-const DateMixin = require('./DateMixin');
+import {Component} from 'react';
+import {autobind} from 'core-decorators';
 
-const styles = require('./style.less');
+import PanelDecorator  from './../utils/PanelDecorator';
+import styles from './../style.less';
+import DateUtils from './../utils/DateUtils';
 
-module.exports = React.createClass({
 
-    displayName: 'DayPicker',
+/**
+ * @class DayPicker
+ * @extends React.Component
+ */
+@PanelDecorator
+class DayPicker extends Component {
 
-    mixins: [PureRenderMixin, PanelMixin, DateMixin],
-
-    getLastMonthDays: function () {
+    /**
+     * Get day count of last month.
+     * @return {number} The day count of last month.
+     */
+    @autobind
+    getLastMonthDays() {
         const date = new Date();
-        date.setFullYear(this.state.panelYear);
-        date.setMonth(this.state.panelMonth - 1);
+        date.setFullYear(this.props.panelYear);
+        date.setMonth(this.props.panelMonth - 1);
         date.setDate(1);
 
         let prevDays = date.getDay();
         if (!prevDays) prevDays = 7;
         return prevDays;
-    },
+    }
 
+    render() {
+        const {
+            panelYear,
+            panelMonth,
+            currentYear,
+            currentMonth,
+            currentDay,
+            activeYear,
+            activeMonth,
+            activeDay,
+        } = this.props;
 
-    onCellClick: function (year, month, day, event) {
-        event.stopPropagation();
-        this.props.onCellSelect(year, month, day);
-    },
+        const pCount = this.getLastMonthDays(),
+            cCount = DateUtils.getDayCount(panelYear, panelMonth),
+            nCount = 42 - pCount - cCount;
 
-    render: function () {
+        const pMonthArray = DateUtils.getPrevMonth(panelYear, panelMonth),
+            nMonthArray = DateUtils.getNextMonth(panelYear, panelMonth);
 
-        const {panelYear, panelMonth, currentYear, currentMonth, currentDay, activeYear, activeMonth, activeDay} = this.state;
-
-        const pCount = this.getLastMonthDays(), cCount = this.getDayCount(panelYear, panelMonth), nCount = 42 - pCount - cCount;
-
-        const pMonthArray = this.getPrevMonth(panelYear, panelMonth), nMonthArray = this.getNextMonth(panelYear, panelMonth);
-
-        const pStartDate = this.getDayCount.apply(this, pMonthArray) - pCount + 1;
+        const pStartDate = DateUtils.getDayCount.apply(null, pMonthArray) - pCount + 1;
 
         const cellArray = [];
 
         let keyIndex = 0;
 
-        const getCellElement = (function (year, month, day, classNames) {
+        const getCellElement = (year, month, day, classNames) => {
             const classArray = ['cell', 'small'].concat(classNames);
             const validate = (this.props.rule(year, month, day) !== false);
             if (validate === false) classArray.push('disabled');
@@ -57,7 +69,7 @@ module.exports = React.createClass({
                     {day}
                 </td>
             );
-        }).bind(this);
+        };
 
         for (let i = 0; i < pCount; i++) {
             cellArray.push(getCellElement(pMonthArray[0], pMonthArray[1], pStartDate + i, ['old']));
@@ -82,4 +94,11 @@ module.exports = React.createClass({
 
         return <tbody>{tableRows}</tbody>;
     }
-});
+
+}
+
+/**
+ * @export DayPicker
+ * @module DayPicker
+ */
+export default DayPicker;

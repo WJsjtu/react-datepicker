@@ -1,33 +1,35 @@
-const {createElement} = React;
-const PureRenderMixin = require('react-addons-pure-render-mixin');
-const PanelMixin = require('./PanelMixin');
-const DateMixin = require('./DateMixin');
-const language = require('./language');
+import locale from './../locale';
 
-const styles = require('./style.less');
+import {Component} from 'react';
 
-module.exports = React.createClass({
+import PanelDecorator  from './../utils/PanelDecorator';
+import styles from './../style.less';
 
-    displayName: 'MonthPicker',
+/**
+ * @class MonthPicker
+ * @extends React.Component
+ */
+@PanelDecorator
+class MonthPicker extends Component {
 
-    mixins: [PureRenderMixin, PanelMixin, DateMixin],
+    render() {
 
-    onCellClick: function (month, event) {
-        event.stopPropagation();
-        this.props.onCellSelect(month);
-    },
-
-    render: function () {
-
-        const {panelYear, currentYear, currentMonth, activeYear, activeMonth} = this.state;
+        const {
+            panelYear,
+            currentYear,
+            currentMonth,
+            activeYear,
+            activeMonth,
+            lang
+        } = this.props;
 
         const cellArray = [];
 
         let keyIndex = 0;
 
-        const lang = language[this.props.lang] || language.en;
+        const language = locale[lang] || locale.en;
 
-        const getCellElement = (function (year, month, classNames) {
+        const getCellElement = (year, month, classNames) => {
             const classArray = ['cell', 'large'].concat(classNames);
             if (year == currentYear && month == currentMonth) classArray.push('current');
             if (year == activeYear && month == activeMonth) classArray.push('active');
@@ -37,10 +39,10 @@ module.exports = React.createClass({
                      className={classArray.map((className) => styles[className]).join(' ')}
                      onClick={this.onCellClick.bind(this, month)}
                 >
-                    <span>{lang.month[month - 1]}</span>
+                    <span>{language.month[month - 1]}</span>
                 </div>
             );
-        }).bind(this);
+        };
 
         for (let i = 0; i < 12; i++) {
             cellArray.push(getCellElement(panelYear, i + 1, []));
@@ -61,4 +63,10 @@ module.exports = React.createClass({
 
         return <tbody>{tableRows}</tbody>;
     }
-});
+}
+
+/**
+ * @export MonthPicker
+ * @module MonthPicker
+ */
+export default MonthPicker;

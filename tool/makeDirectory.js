@@ -1,7 +1,14 @@
-var fs = require('fs');
-var path = require('path');
+'use strict';
 
-module.exports = function (dirPath) {
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * @module makeDirectory
+ * @exports makeDirectory
+ * @param {string} dirPath
+ */
+module.exports = (dirPath) => {
 
     if (!dirPath || typeof dirPath !== 'string' || fs.existsSync(dirPath)) return;
 
@@ -11,7 +18,7 @@ module.exports = function (dirPath) {
 
     var currentPath = pathArray[0] + '/';
 
-    for (var i = 1; i < pathArray.length; i++) {
+    for (let i = 1, l = pathArray.length; i < l; i++) {
         if (!fs.existsSync(currentPath)) {
             fs.mkdirSync(currentPath);
         }

@@ -18,26 +18,30 @@
 <script src="./../node_modules/react/dist/react-with-addons.js"></script>
 <script src="./../node_modules/react-dom/dist/react-dom.js"></script>
 <script src="./../node_modules/react-ui-playground/dist/playground.min.js"></script>
-<script src="./datepicker.test.js"></script>
+<script src="./../dist/date-picker.js"></script>
 <script type="text/plain" id="code">
+
 /*
 propTypes: {
     fontSize: PropTypes.number,
-    date: PropTypes.shape({
-        year: PropTypes.number,
-        month: PropTypes.number,
-        day: PropTypes.number
-    }),
+    date: PropTypes.oneOfType([
+        PropTypes.shape({
+            year: PropTypes.number.isRequired,
+            month: PropTypes.number.isRequired,
+            day: PropTypes.number.isRequired
+        }),
+        DatePicker.EMPTY_DATE
+    ]),
     onSelect: PropTypes.func,
     rule: PropTypes.func,
     format: PropTypes.string,
-    lang: PropTypes.oneOf(['en', 'zh']),
-    position: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
+    lang: PropTypes.oneOf(Object.keys(locale)),
+    position: PropTypes.oneOf(['bottom', 'top', 'left', 'right', 'inline'])
 }
 */
 
 ReactDOM.render(
-    <DatePicker fontSize={13}
+    <DatePicker.default fontSize={13}
                 onSelect={console.log.bind(console)}
                 rule={(year, month, day) => { return day != 13; }}
                 date={{year: 2012, month: 12, day: 22}}
@@ -46,10 +50,14 @@ ReactDOM.render(
                 position={"bottom"}
     /> , mountNode
 );
+
+
 </script>
 <script>
-    var COMPONENT = document.getElementById('code').innerHTML.trim();
 
+    console.log(DatePicker);
+
+    var COMPONENT = document.getElementById('code').innerHTML.trim();
     ReactDOM.render(React.createElement(ReactPlayground, {codeText: COMPONENT}), document.getElementById('container'));
 </script>
 </body>

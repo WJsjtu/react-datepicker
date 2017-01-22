@@ -1,4 +1,8 @@
-module.exports = {
+/**
+ *
+ * @type {{weekTitle: Array, month: number[], placeholder: string, panelTitle: {year: assets.panelTitle.year, month: assets.panelTitle.month, day: assets.panelTitle.day}}}
+ */
+const assets = {
     weekTitle: '日一二三四五六'.split('').map(function (day) {
         return '周' + day;
     }),
@@ -17,3 +21,9 @@ module.exports = {
         }
     }
 };
+
+/**
+ * @module assets
+ * @export assets
+ */
+export default assets;

@@ -1,10 +1,10 @@
-const {PropTypes, createElement} = React;
+const {PropTypes} = React;
 const {findDOMNode} = ReactDOM;
 
 const PureRenderMixin = require('react-addons-pure-render-mixin');
-const DateMixin = require('./DateMixin');
-const language = require('./language');
-const PickerPanel = require('./PickerPanel');
+import DateMixin from './utils/DateUtils';
+import language from './locale';
+import PickerPanel from './Picker';
 
 const styles = require('./style.less');
 
@@ -48,21 +48,12 @@ module.exports = React.createClass({
             focused: false
         };
     },
-    
+
     componentWillReceiveProps: function (nextProps) {
         this.setState({
             fontSize: nextProps.fontSize,
             date: nextProps.date
         });
-    },
-
-    componentDidMount: function () {
-        this.mounted = true;
-
-    },
-
-    componentWillUnmount: function () {
-        this.mounted = false;
     },
 
     getDateText: function () {
@@ -83,30 +74,39 @@ module.exports = React.createClass({
     onSelect: function (year, month, day) {
         this.setState({
             date: {year, month, day}
-        }, function () {
-            this.props.onSelect(year, month, day);
+        }, () => {
+            this.props.onSelect(year, month, day)
         });
+
     },
 
     onBlur: function (event) {
-        let element = event.srcElement;
-        while (element && element != findDOMNode(this.refs.comp)) {
-            element = element.parentElement;
-        }
-        if (!element) {
-            this.mounted && this.setState({
-                focused: false
-            }, function () {
-                document.removeEventListener('click', this.onBlur);
-            });
-        }
+        /*
+         if (!findDOMNode(this.refs.comp).contains(event.srcElement)) {
+         this.mounted && this.setState({
+         focused: false
+         }, function () {
+         document.removeEventListener('click', this.onBlur);
+         });
+         }
+         */
+
+        this.setState({
+            focused: false
+        });
+
     },
 
     onFocus: function () {
-        this.mounted && this.setState({
+        /*
+         this.mounted && this.setState({
+         focused: true
+         }, function () {
+         document.addEventListener('click', this.onBlur);
+         });
+         */
+        this.setState({
             focused: true
-        }, function () {
-            document.addEventListener('click', this.onBlur);
         });
     },
 
@@ -116,7 +116,7 @@ module.exports = React.createClass({
 
         const width = fontSize * 21;
 
-        const style = {width, fontSize};
+        const style = {width, fontSize, outline: 'none'};
 
         const position = this.props.position;
 
@@ -137,8 +137,9 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className={styles['date-picker']} ref='comp'>
-                <div className={styles['input']} style={style} onClick={this.onFocus}>
+            <div className={styles['date-picker']} ref='comp' tabIndex="0" onFocus={this.onFocus}
+                 onBlur={this.onBlur}>
+                <div className={styles['input']} style={style}>
                     <span style={{padding: `0 ${fontSize}px`}}>{this.getDateText()}</span>
                 </div>
                 {focused &&

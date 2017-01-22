@@ -1,30 +1,28 @@
-const {createElement} = React;
-const PureRenderMixin = require('react-addons-pure-render-mixin');
-const PanelMixin = require('./PanelMixin');
-const DateMixin = require('./DateMixin');
+import {Component} from 'react';
 
-const styles = require('./style.less');
+import PanelDecorator  from './../utils/PanelDecorator';
+import styles from './../style.less';
 
-module.exports = React.createClass({
+/**
+ * @class YearPicker
+ * @extends React.Component
+ */
+@PanelDecorator
+class YearPicker extends Component {
 
-    displayName: 'MonthPicker',
+    render() {
 
-    mixins: [PureRenderMixin, PanelMixin, DateMixin],
-
-    onCellClick: function (year, event) {
-        event.stopPropagation();
-        this.props.onCellSelect(year);
-    },
-
-    render: function () {
-
-        const {panelYear, currentYear, activeYear} = this.state;
+        const {
+            panelYear,
+            currentYear,
+            activeYear
+        } = this.props;
 
         const cellArray = [];
 
         let keyIndex = 0;
 
-        const getCellElement = (function (year, classNames) {
+        const getCellElement = (year, classNames) => {
             const classArray = ['cell', 'large'].concat(classNames);
             if (year == currentYear) classArray.push('current');
             if (year == activeYear) classArray.push('active');
@@ -37,7 +35,7 @@ module.exports = React.createClass({
                     <span>{year}</span>
                 </div>
             );
-        }).bind(this);
+        };
 
         const startYear = parseInt(panelYear / 10) * 10 - 1;
 
@@ -60,4 +58,10 @@ module.exports = React.createClass({
 
         return <tbody>{tableRows}</tbody>;
     }
-});
+}
+
+/**
+ * @export YearPicker
+ * @module YearPicker
+ */
+export default YearPicker;

@@ -1,10 +1,9 @@
 {
   "name": "react-ui-datepicker",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A date-picker component for React",
   "scripts": {
-    "start": "node tool/build.js",
-    "test": "node tool/test.js"
+    "start": "node tool/build.js"
   },
   "main": "dist/datepicker.js",
   "files": [
@@ -13,30 +12,32 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-plugin-transform-class-properties": "^6.19.0",
-    "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
-    "babel-plugin-transform-es3-property-literals": "^6.8.0",
-    "babel-plugin-transform-es5-property-mutators": "^6.8.0",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "babel-plugin-transform-es5-property-mutators": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
     "cli-color": "^1.1.0",
+    "core-decorators": "^0.15.0",
     "css-loader": "^0.26.0",
     "es5-shim": "^4.5.9",
-    "less": "^2.7.1",
+    "less": "^2.7.2",
     "less-loader": "^2.2.3",
-    "react-addons-pure-render-mixin": "^15.4.0",
-    "react-addons-shallow-compare": "^15.4.0",
+    "react-addons-pure-render-mixin": "^15.4.2",
+    "react-addons-shallow-compare": "^15.4.2",
     "react-ui-playground": "^1.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.3"
+    "webpack": "^2.2.0"
   },
   "dependencies": {
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0"
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "author": {
     "name": "王健（Jason Wang）",

@@ -7,14 +7,9 @@
   "plugins": [
     "transform-es5-property-mutators",
     "transform-es3-property-literals",
+    "transform-decorators-legacy",
     "transform-es3-member-expression-literals",
     "transform-class-properties",
-    "transform-flow-strip-types",
-    [
-      "transform-react-jsx",
-      {
-        "pragma": "createElement"
-      }
-    ]
+    "transform-flow-strip-types"
   ]
 }

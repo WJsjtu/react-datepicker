@@ -1,31 +1,76 @@
-var fs = require('fs');
-var path = require('path');
-var log = require('./log');
-var mkdir = require('./mkdir');
-var webpack = require('./webpack');
+const fs = require('fs');
+const path = require('path');
+const webpack = require('webpack');
 
-var distPath = path.join(__dirname, './../dist/');
-mkdir(distPath);
+const Logger = require('./Logger');
+const makeDirectory = require('./makeDirectory');
+const webpackTask = require('./webpackTask');
 
-var logger = log('build:datepicker', 'index.js');
-logger.start();
-webpack(
-    path.join(__dirname, './../src/DatePicker.js'),
-    path.join(__dirname, './../dist/datepicker.js'),
-    true,
-    'commonjs2'
-).then(function () {
-    logger.finish();
-}, function (e) {
-    logger.error(e);
-});
-webpack(
-    path.join(__dirname, './../src/DatePicker.js'),
-    path.join(__dirname, './../dist/datepicker.min.js'),
-    false,
-    'commonjs2'
-).then(function () {
-    logger.finish();
-}, function (e) {
-    logger.error(e);
-});
+const distPath = path.resolve(__dirname, '../dist/');
+const sourcePath = path.resolve(__dirname, '../src/');
+
+makeDirectory(distPath);
+
+const ChainedPromise = require('./ChainedPromise');
+
+ChainedPromise(
+    () => {
+        const logger = new Logger('build-uncompressed: date-picker', 'index.js');
+        logger.start();
+
+        return webpackTask(
+            {
+                entry: path.join(sourcePath, 'index.js'),
+                output: {
+                    path: distPath,
+                    filename: 'date-picker.js',
+                    library: 'DatePicker',
+                    libraryTarget: 'umd'
+                },
+                plugins: [
+                    new webpack.DefinePlugin({
+                        'process.env': {
+                            NODE_ENV: JSON.stringify('development')
+                        }
+                    })
+                ]
+            }
+        ).then(logger.finish.bind(logger), logger.error.bind(logger));
+    },
+    () => {
+        const logger = new Logger('build-compressed: date-picker', 'index.js');
+        logger.start();
+        return webpackTask(
+            {
+                entry: path.join(sourcePath, 'index.js'),
+                output: {
+                    path: distPath,
+                    filename: 'date-picker.min.js',
+                    library: 'DatePicker',
+                    libraryTarget: 'umd'
+                },
+                plugins: [
+                    new webpack.DefinePlugin({
+                        'process.env': {
+                            NODE_ENV: JSON.stringify('production')
+                        }
+                    }),
+                    new webpack.optimize.UglifyJsPlugin({
+                        sourceMap: false,
+                        compress: {
+                            dead_code: true,
+                            drop_debugger: true,
+                            unused: true,
+                            if_return: true,
+                            warnings: false,
+                            join_vars: true
+                        },
+                        output: {
+                            comments: false
+                        }
+                    })
+                ]
+            }
+        ).then(logger.finish.bind(logger), logger.error.bind(logger));
+    }
+);

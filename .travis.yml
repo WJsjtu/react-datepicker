@@ -7,8 +7,7 @@ cache:
   directories:
   - node_modules
 install:
-  - npm install -g webpack
+  - npm install -g webpack@2.2.0
   - npm install
 script:
-  - npm test
   - npm build

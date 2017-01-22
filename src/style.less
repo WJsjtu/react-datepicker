@@ -11,28 +11,22 @@
 
 @transitionTime: 0.3s;
 
-div.date-picker {
+span.date-picker {
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+  outline: none;
   color: #666666;
   background-color: #FFFFFF;
+  border: 1px #D4D4D4 solid;
   div.input {
-    cursor: text;
-    border: 1px #D4D4D4 solid;
     span {
       line-height: 2.1;
     }
   }
-  div.picker-wrapper {
-    position: relative;
-    div.picker {
-      position: absolute;
-      background-color: #FFFFFF;
-      z-index: 999;
-      box-shadow: @shadowColor 3px 3px 3px;
-      -moz-box-shadow: @shadowColor 3px 3px 3px;
-      -webkit-box-shadow: @shadowColor 3px 3px 3px;
-      border: 1px @shadowColor solid;
-    }
-  }
+}
+
+div.date-picker-drop-down, div.date-picker-inline {
   table {
     * {
       margin: 0;
@@ -124,4 +118,15 @@ div.date-picker {
       }
     }
   }
+}
+
+div.date-picker-drop-down {
+  position: absolute;
+  display: none;
+  background-color: #FFFFFF;
+  z-index: 999;
+  box-shadow: @shadowColor 3px 3px 3px;
+  -moz-box-shadow: @shadowColor 3px 3px 3px;
+  -webkit-box-shadow: @shadowColor 3px 3px 3px;
+  border: 1px @shadowColor solid;
 }
