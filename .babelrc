@@ -10,6 +10,12 @@
     "transform-decorators-legacy",
     "transform-es3-member-expression-literals",
     "transform-class-properties",
-    "transform-flow-strip-types"
+    "transform-flow-strip-types",
+    [
+      "transform-react-jsx",
+      {
+        "pragma": "React.createElement"
+      }
+    ]
   ]
 }

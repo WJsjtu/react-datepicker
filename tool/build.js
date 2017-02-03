@@ -9,6 +9,8 @@ const webpackTask = require('./webpackTask');
 const distPath = path.resolve(__dirname, '../dist/');
 const sourcePath = path.resolve(__dirname, '../src/');
 
+const version = require('./../package.json').version;
+
 makeDirectory(distPath);
 
 const ChainedPromise = require('./ChainedPromise');
@@ -30,7 +32,8 @@ ChainedPromise(
                 plugins: [
                     new webpack.DefinePlugin({
                         'process.env': {
-                            NODE_ENV: JSON.stringify('development')
+                            NODE_ENV: JSON.stringify('development'),
+                            LIB_VERSION: JSON.stringify(version)
                         }
                     })
                 ]
@@ -52,7 +55,8 @@ ChainedPromise(
                 plugins: [
                     new webpack.DefinePlugin({
                         'process.env': {
-                            NODE_ENV: JSON.stringify('production')
+                            NODE_ENV: JSON.stringify('production'),
+                            LIB_VERSION: JSON.stringify(version)
                         }
                     }),
                     new webpack.optimize.UglifyJsPlugin({

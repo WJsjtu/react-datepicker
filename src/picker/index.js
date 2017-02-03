@@ -1,6 +1,5 @@
 import {Component, PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {autobind} from 'core-decorators';
 
 import locale, {DEFAULT_LANGUAGE} from './../locale';
 
@@ -81,6 +80,10 @@ export default class Picker extends Component {
         super(props);
 
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+        this.onDaySelect = ::this.onDaySelect;
+        this.onMonthSelect = ::this.onMonthSelect;
+        this.onYearSelect = ::this.onYearSelect;
+        this.switchTitle = ::this.switchTitle;
 
         this.state = Object.assign(fixDateObject(this.props.date), {
             panel: 1
@@ -104,7 +107,6 @@ export default class Picker extends Component {
         );
     }
 
-    @autobind
     onDaySelect(year, month, day) {
         this.setState({
             activeYear: year,
@@ -116,7 +118,6 @@ export default class Picker extends Component {
         this.props.onSelect(year, month, day);
     }
 
-    @autobind
     onMonthSelect(month) {
         this.setState({
             panel: 1,
@@ -124,7 +125,6 @@ export default class Picker extends Component {
         });
     }
 
-    @autobind
     onYearSelect(year) {
         this.setState({
             panel: 2,
@@ -160,7 +160,6 @@ export default class Picker extends Component {
         }
     }
 
-    @autobind
     switchTitle(event) {
         event.stopPropagation();
 

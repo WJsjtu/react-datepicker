@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import {autobind} from 'core-decorators';
 
 import PanelDecorator  from './../utils/PanelDecorator';
 import styles from './../style.less';
@@ -17,7 +16,6 @@ class DayPicker extends Component {
      * Get day count of last month.
      * @return {number} The day count of last month.
      */
-    @autobind
     getLastMonthDays() {
         const date = new Date();
         date.setFullYear(this.props.panelYear);

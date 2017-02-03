@@ -1,7 +1,6 @@
 import {PropTypes, Component} from 'react';
 import {unmountComponentAtNode, findDOMNode, unstable_renderSubtreeIntoContainer} from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {autobind} from 'core-decorators';
 
 import DateUtils from './utils/DateUtils';
 import locale, {DEFAULT_LANGUAGE} from './locale';
@@ -21,6 +20,9 @@ export default class DatePicker extends Component {
         super(props);
 
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+        this.onBlur = ::this.onBlur;
+        this.onFocus = ::this.onFocus;
+        this.onSelect = ::this.onSelect;
 
         this.state = {
             fontSize: props.fontSize,
@@ -121,7 +123,6 @@ export default class DatePicker extends Component {
         this.node = null;
     }
 
-    @autobind
     onBlur(event) {
         event.stopPropagation();
         if (this.inPicker) {
@@ -131,13 +132,11 @@ export default class DatePicker extends Component {
         }
     }
 
-    @autobind
     onFocus(event) {
         event.stopPropagation();
         this.node && this.props.position.toLowerCase() != 'inline' && (this.node.style.display = 'block');
     }
 
-    @autobind
     onSelect(year, month, day) {
         this.setState({
             date: {year, month, day}
@@ -299,4 +298,4 @@ DatePicker.defaultProps = {
 
 export const EMPTY_DATE = PICKER_EMPTY_DATE;
 export const DUMMY_FUNC = PICKER_DUMMY_FUNC;
-export const VERSION = '2.0.7';
+export const VERSION = process.env.LIB_VERSION;
