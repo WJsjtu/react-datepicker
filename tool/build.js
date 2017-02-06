@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
+const FrequencyManglePlugin = require('frequency-mangle-plugin');
+
 const Logger = require('./Logger');
 const makeDirectory = require('./makeDirectory');
 const webpackTask = require('./webpackTask');
@@ -59,6 +61,7 @@ ChainedPromise(
                             LIB_VERSION: JSON.stringify(version)
                         }
                     }),
+                    new FrequencyManglePlugin(),
                     new webpack.optimize.UglifyJsPlugin({
                         sourceMap: false,
                         compress: {

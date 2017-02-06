@@ -1,5 +1,5 @@
 /**
-* react-ui-datepicker v2.0.8
+* react-ui-datepicker v2.0.9
 *
 * Copyright 2016-present, 王健（Jason Wang）, contributors.
 * All rights reserved.
@@ -2081,7 +2081,7 @@ DatePicker.defaultProps = {
 
 var EMPTY_DATE = exports.EMPTY_DATE = _Picker.PICKER_EMPTY_DATE;
 var DUMMY_FUNC = exports.DUMMY_FUNC = _Picker.PICKER_DUMMY_FUNC;
-var VERSION = exports.VERSION = "2.0.8";
+var VERSION = exports.VERSION = "2.0.9";
 
 /***/ })
 /******/ ]);

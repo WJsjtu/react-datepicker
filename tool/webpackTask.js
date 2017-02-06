@@ -77,87 +77,111 @@ const buildLoaderString = (loaders) => {
 /**
  * Default webpack options for the project.
  */
-const webpackOptions = {
-    externals: {
-        'react': 'React',
-        'react-dom': 'ReactDOM'
-    },
-    entry: '',
-    output: {},
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-            }, {
-                test: /\.(less|css)$/,
-
-                include: [
-                    path.resolve(__dirname, '../src')
-                ],
-                exclude: [
-                    path.resolve(__dirname, '../node_modules')
-                ],
-
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            localIdentName: '[local]_[hash:base64:5]',
-                            minimize: true
+const getWebpackOptions = function () {
+    return {
+        externals: {
+            'react': 'React',
+            'react-dom': 'ReactDOM',
+            'jquery': 'jQuery'
+        },
+        entry: '',
+        output: {},
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    include: [
+                        path.resolve(__dirname, '../src')
+                    ],
+                    exclude: [
+                        path.resolve(__dirname, '../node_modules')
+                    ],
+                    use: [
+                        {
+                            loader: 'babel-loader'
                         }
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            minimize: true
+                    ]
+                }, {
+                    test: /\.(less|css)$/,
+
+                    include: [
+                        path.resolve(__dirname, '../src')
+                    ],
+                    exclude: [
+                        path.resolve(__dirname, '../node_modules')
+                    ],
+
+                    use: [
+                        {
+                            loader: 'style-loader'
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[local]_[hash:base64:5]',
+                                minimize: true
+                            }
+                        },
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                minimize: true
+                            }
                         }
-                    }
-                ]
-            }, {
-                test: /\.(tmpl|txt)$/,
-                exclude: /node_modules/,
-                loader: 'raw-loader'
+                    ]
+                }, {
+                    test: /\.(tmpl|txt)$/,
+                    exclude: /node_modules/,
+                    loader: 'raw-loader'
+                }
+            ]
+        },
+        plugins: [
+            //new webpack.optimize.OccurrenceOrderPlugin(),
+            new webpack.BannerPlugin({
+                banner: banner,
+                raw: true,
+                entryOnly: true
+            })
+        ],
+
+        resolve: {
+            modules: [
+                'node_modules',
+                path.resolve(__dirname, '../src'),
+                'node_modules/blueimp-load-image/js',
+                'node_modules/blueimp-canvas-to-blob/js'
+            ],
+
+            alias: {
+                'jquery-ui/ui/widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
             }
-        ]
-    },
-    plugins: [
-        //new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.BannerPlugin({
-            banner: banner,
-            raw: true,
-            entryOnly: true
-        })
-    ],
 
-    resolve: {
-        modules: [
-            'node_modules',
-            path.resolve(__dirname, '../src')
-        ]
-    },
+        },
 
-    target: 'web',
+        target: 'web',
 
-    context: path.resolve(__dirname, '../src'),
+        context: path.resolve(__dirname, '../src'),
 
-    devtool: false//'source-map'
+        devtool: false//'source-map'
+    };
 };
 
 /**
  * @module WebpackTask
  * @exports WebpackTask
  * @param options {object} Webpack options
+ * @param process {function|null}
  * @return {Promise}
  */
-module.exports = (options) => {
+module.exports = (options, process) => {
 
-    options = mergeObject(webpackOptions, options);
+    options = mergeObject(getWebpackOptions(), options);
+
+    if (typeof process === 'function') {
+        process(options);
+    }
 
     return new Promise((resolve, reject) => {
         webpack(options, (err, stats) => {
