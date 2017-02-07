@@ -31,7 +31,7 @@
     "less-loader": "^2.2.3",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.2",
-    "react-ui-playground": "^1.0.2",
+    "react-ui-playground": "^2.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.0"
   },
