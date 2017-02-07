@@ -38,7 +38,8 @@ ChainedPromise(
                             LIB_VERSION: JSON.stringify(version)
                         }
                     })
-                ]
+                ],
+                devtool: 'source-map'
             }
         ).then(logger.finish.bind(logger), logger.error.bind(logger));
     },
@@ -61,9 +62,8 @@ ChainedPromise(
                             LIB_VERSION: JSON.stringify(version)
                         }
                     }),
-                    new FrequencyManglePlugin(),
                     new webpack.optimize.UglifyJsPlugin({
-                        sourceMap: false,
+                        sourceMap: true,
                         compress: {
                             dead_code: true,
                             drop_debugger: true,
@@ -76,7 +76,8 @@ ChainedPromise(
                             comments: false
                         }
                     })
-                ]
+                ],
+                devtool: 'source-map'
             }
         ).then(logger.finish.bind(logger), logger.error.bind(logger));
     }

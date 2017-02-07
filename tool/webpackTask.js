@@ -81,8 +81,7 @@ const getWebpackOptions = function () {
     return {
         externals: {
             'react': 'React',
-            'react-dom': 'ReactDOM',
-            'jquery': 'jQuery'
+            'react-dom': 'ReactDOM'
         },
         entry: '',
         output: {},
@@ -146,25 +145,7 @@ const getWebpackOptions = function () {
             })
         ],
 
-        resolve: {
-            modules: [
-                'node_modules',
-                path.resolve(__dirname, '../src'),
-                'node_modules/blueimp-load-image/js',
-                'node_modules/blueimp-canvas-to-blob/js'
-            ],
-
-            alias: {
-                'jquery-ui/ui/widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
-            }
-
-        },
-
-        target: 'web',
-
-        context: path.resolve(__dirname, '../src'),
-
-        devtool: false//'source-map'
+        target: 'web'
     };
 };
 
