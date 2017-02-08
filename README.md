@@ -3,7 +3,7 @@ A flexible datepicker component using Facebook React.
 
 ###Online demo
 
-[View online demo](http://wjsjtu.github.io/react-datepicker/test/index.html)
+[View online demo](http://wjsjtu.github.io/demos/date-picker.html)
 
 ###Install
 
