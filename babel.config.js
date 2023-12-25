@@ -83,7 +83,7 @@ module.exports = {
     ],
     !isEnvDevelopment && [
       // Remove PropTypes from production build
-      "@babel-plugin-transform-react-remove-prop-types",
+      "babel-plugin-transform-react-remove-prop-types",
       {
         removeImport: true,
       },
