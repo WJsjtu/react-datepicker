@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "node compile.js --ts webpack.config.ts --o webpack.config.js && webpack serve --env NODE_ENV=development --config webpack.config.js",
     "build": "node compile.js --ts webpack.config.ts --o webpack.config.js && webpack --env NODE_ENV=production --config webpack.config.js",
-    "lib": "node compile.js --ts webpack.config.ts --o webpack.config.js && webpack --env NODE_ENV=library --config webpack.config.js",
+    "lib": "node compile.js --ts webpack.config.ts --o webpack.config.js && webpack --env NODE_ENV=production --env library --config webpack.config.js",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "devDependencies": {

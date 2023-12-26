@@ -41,26 +41,9 @@ const babelRuntimeRegenerator = require.resolve("@babel/runtime/regenerator", {
 
 const configBasePath = __dirname;
 
-const config = {
-  outputDir: "dist",
-  outputLibDir: "lib",
-  libEntry: "src/picker.tsx",
-
-  dev: {
-    publicPath: "/",
-    port: 8080,
-  },
-
-  build: {
-    publicPath: "/",
-  },
-};
-
 const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
 
-  const WebapckMode = (env.NODE_ENV === "production" || env.NODE_ENV === "library") ? "production" : "development";
-
-  const IsLibrary = env.NODE_ENV === "library";
+  const WebapckMode = env.NODE_ENV === "production" ? "production" : "development";
 
   if (process.env.NODE_ENV == null) {
     process.env.NODE_ENV = WebapckMode;
@@ -72,6 +55,38 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
   const isEnvProduction = WebapckMode === "production";
   const isEnvDevelopment = !isEnvProduction;
   const outputAssetFileName = isEnvDevelopment ? "[name].[hash].[ext]" : "[contenthash:8][ext][query]";
+
+  const config = {
+
+    getEntry() {
+      return env.library ? "src/picker.tsx" : "src/main.tsx";
+    },
+
+    getOutput() {
+      return env.library ? "lib" : "dist";
+    },
+
+    getFileName(isChunk: boolean) {
+      return `${env.library ? "datepicker" : "js/[name]"}${(isEnvProduction && !env.library) ? ".[contenthash:8]" : ""}${isChunk ? ".chunk" : ""}.js`
+    },
+
+    useChunk() {
+      return !env.library
+    },
+
+    copyHtml() {
+      return !env.library;
+    },
+
+    dev: {
+      publicPath: "/",
+      port: 8080,
+    },
+
+    build: {
+      publicPath: "/",
+    },
+  };
 
   const shouldUseSourceMap = true;
   const BabelLoaderOptions = {
@@ -101,12 +116,10 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
     path.join(__dirname, "tailwind.config.js"),
   );
 
-  const byndleCss = true;
-
-  const getStyleLoaders = (cssOptions: object, preProcessor?: string): webpack.RuleSetUseItem[] => {
+  const getStyleLoaders = (cssOptions: object, preProcessor?: string, extractCss: boolean = false): webpack.RuleSetUseItem[] => {
     const loaders = [
       isEnvDevelopment && require.resolve("style-loader"),
-      byndleCss ? false : (isEnvProduction && {
+      extractCss && (isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
       }),
       {
@@ -182,7 +195,7 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
 
   const webpackConfig: webpack.Configuration = {
     mode: isEnvProduction ? "production" : "development",
-    devtool: !isEnvProduction ? "inline-source-map" : undefined,
+    devtool: isEnvProduction ? "inline-source-map" : "source-map",
     context: configBasePath,
     devServer: !isEnvProduction
       ? {
@@ -212,13 +225,13 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
       ? true
       : undefined,
 
-    entry: IsLibrary ? path.join(configBasePath, config.libEntry) : path.join(configBasePath, "src/main.tsx"),
+    entry: path.join(configBasePath, config.getEntry()),
 
     output: {
-      path: path.join(configBasePath, IsLibrary ? config.outputLibDir : config.outputDir),
+      path: path.join(configBasePath, config.getOutput()),
       publicPath: isEnvProduction ? config.dev.publicPath : config.build.publicPath,
-      filename: IsLibrary ? `datepicker.js` : `js/[name]${isEnvProduction ? ".[contenthash:8]" : ""}.js`,
-      chunkFilename: IsLibrary ? `datepicker.js` : `js/[name]${isEnvProduction ? ".[contenthash:8]" : ""}.chunk.js`,
+      filename: config.getFileName(false),
+      chunkFilename: config.getFileName(true),
     },
 
     optimization: {
@@ -284,7 +297,7 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
         new CssMinimizerPlugin(),
       ],
       moduleIds: "deterministic",
-      splitChunks: IsLibrary ? false : {
+      splitChunks: config.useChunk() && {
         cacheGroups: {
           defaultVendors: {
             name: `chunk-vendors`,
@@ -332,7 +345,7 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
         formatter: require("eslint-formatter-friendly"),
       }),
-      IsLibrary ? false : new HtmlWebpackPlugin({
+      config.copyHtml() && new HtmlWebpackPlugin({
         template: path.join(configBasePath, "public/index.html"),
         inject: "body",
         ... (isEnvProduction ? {
@@ -363,7 +376,7 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(configBasePath),
-      IsLibrary ? false : new CopyPlugin({
+      config.copyHtml() && new CopyPlugin({
         patterns: [
           {
             from: path.join(configBasePath, "public"),
@@ -384,12 +397,12 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
        * ts-loader设置了transpileOnly加速webpack的编译，但是类型检查需要另外启动
        */
       new ForkTsCheckerWebpackPlugin(),
-      byndleCss ? (isEnvProduction ? new MiniCssExtractPlugin({
+      isEnvProduction ? new MiniCssExtractPlugin({
         filename: `css/[name].[contenthash:8].css`,
         chunkFilename: `css/[name].[contenthash:8].chunk.css`,
       }) : new webpack.HotModuleReplacementPlugin({
         // Options...
-      })) : false,
+      }),
       isEnvDevelopment && new ReactRefreshWebpackPlugin({
         overlay: false,
       }),
@@ -403,7 +416,7 @@ const CreateWebpackConfig = (env: { [key: string]: unknown }) => {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
-      IsLibrary ? false : new WebpackManifestPlugin({
+      config.useChunk() && new WebpackManifestPlugin({
         fileName: "asset-manifest.json",
         publicPath: isEnvDevelopment ? config.dev.publicPath : config.build.publicPath,
         generate: (seed, files, entrypoints) => {
